@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Masteroids {
-    /// <summary>
+    testc 
     /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game {
