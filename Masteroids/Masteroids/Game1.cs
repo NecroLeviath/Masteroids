@@ -7,8 +7,13 @@ namespace Masteroids {
     /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game {
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D bosstex, skottTex;
+        Vector2 bosspos;
+        Boss boss;
+
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -34,8 +39,10 @@ namespace Masteroids {
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            bosstex = Content.Load<Texture2D>("boss");
+            skottTex = Content.Load<Texture2D>("laser");
+            boss = new Boss(bosstex, skottTex, bosspos);
+            bosspos = new Vector2(250, 50);
         }
 
         /// <summary>
@@ -54,9 +61,7 @@ namespace Masteroids {
         protected override void Update(GameTime gameTime) {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            // TODO: Add your update logic here
-
+            boss.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -65,10 +70,10 @@ namespace Masteroids {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            GraphicsDevice.Clear(Color.Black);
+            boss.Draw(spriteBatch);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
