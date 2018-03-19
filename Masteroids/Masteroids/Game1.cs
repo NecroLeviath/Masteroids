@@ -2,8 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Masteroids {
-    public class Game1 : Game {
+namespace Masteroids
+{
+    public class Game1 : Game
+    {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player1;
@@ -13,19 +15,27 @@ namespace Masteroids {
         int screenWidth = 1920, screenHeight = 1080;
         SpriteFont font;
 
-
-        public Game1() {
+        public Game1()
+        {
+            GraphicsDeviceManager graphics;
             graphics = new GraphicsDeviceManager(this);
+            graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferHeight = screenHeight;
+            graphics.PreferredBackBufferWidth = screenWidth;
+            graphics.ApplyChanges();
+            IsMouseVisible = true;
+
         }
 
-
-        protected override void Initialize() {
+        protected override void Initialize()
+        {
 
             base.Initialize();
         }
 
-        protected override void LoadContent() {
+        protected override void LoadContent()
+        {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Texture2D playerShip = Content.Load<Texture2D>("shipTex");
 
@@ -36,12 +46,18 @@ namespace Masteroids {
 
             font = Content.Load<SpriteFont>("font");
 
+
+
         }
 
-        protected override void UnloadContent() {
+        protected override void UnloadContent()
+        {
         }
 
-        protected override void Update(GameTime gameTime) {
+        protected override void Update(GameTime gameTime)
+        {
+            KeyboardState state = Keyboard.GetState();
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -65,12 +81,13 @@ namespace Masteroids {
             {
                 player2.Update(gameTime);
             }
+
             base.Update(gameTime);
         }
 
-        protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
 
             player1.Draw(spriteBatch);
@@ -85,7 +102,6 @@ namespace Masteroids {
             }
 
             spriteBatch.End();
-
             base.Draw(gameTime);
         }
     }
