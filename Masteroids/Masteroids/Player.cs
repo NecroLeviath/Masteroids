@@ -7,17 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Masteroids
+namespace Masteroid
 {
-    public class Player
+    public class Player : GameObject
     {
         Texture2D texture;
-        public Vector2 position, velocity, acceleration, rotationCenter, direction, startPosition;
         public Vector2 origin;
         float rotation = 0.1f;
         SpriteEffects entityFx;
         public PlayerIndex playerValue;
         float scale = 0.5f;
+        public Rectangle playerRec;
+        public bool Dead;
+        public Color[] textureData;
         //velocity += forward* acceleration_amount * delta_time;
 
         public float linearVelocity = 0.04f; //Frammåt
@@ -29,11 +31,14 @@ namespace Masteroids
             this.texture = texture;
             this.position = position;
             startPosition = new Vector2(200, 200);
+            Dead = false;
+            playerRec = new Rectangle(0, 0, texture.Width, texture.Height);
+            textureData = new Color[texture.Width * texture.Height];
+            texture.GetData(textureData);
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-
             var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
             position += velocity;
 
@@ -76,15 +81,18 @@ namespace Masteroids
 
             //Frammåt och Bakåt med tangentbord
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
-                position += direction * linearVelocity;
+                velocity += direction * linearVelocity;
 
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
-                position -= direction * linearVelocity / 3;
+                velocity -= direction * linearVelocity / 3;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Vector2(position.X, position.Y), null, Color.White, rotation, new Vector2(texture.Width / 2, texture.Height - 20), scale, entityFx, 0);
+            if (!Dead)
+            {
+                spriteBatch.Draw(texture, new Vector2(position.X, position.Y), playerRec, Color.White, rotation, new Vector2(texture.Width / 2, texture.Height - 20), scale, entityFx, 0);
+            }
         }
     }
 }

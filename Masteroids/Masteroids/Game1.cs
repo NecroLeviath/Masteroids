@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Masteroids
 {
@@ -8,6 +9,11 @@ namespace Masteroids
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D bosstex, skottTex;
+        Vector2 bosspos;
+        EntityManager entityMgr;
+        Boss boss;
+        Bullet bullet;
         Player player1;
         Player player2;
         Vector2 playerPos, position;
@@ -15,19 +21,17 @@ namespace Masteroids
         int screenWidth = 1920, screenHeight = 1080;
         SpriteFont font;
 
+
         public Game1()
         {
-            GraphicsDeviceManager graphics;
             graphics = new GraphicsDeviceManager(this);
             graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
+            //graphics.ToggleFullScreen();
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.PreferredBackBufferWidth = screenWidth;
             graphics.ApplyChanges();
-            IsMouseVisible = true;
-
         }
-
         protected override void Initialize()
         {
 
@@ -36,7 +40,13 @@ namespace Masteroids
 
         protected override void LoadContent()
         {
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            entityMgr = new EntityManager();
+            Art.Initialize(Content);
+            bosstex = Content.Load<Texture2D>("boss");
+            skottTex = Content.Load<Texture2D>("laser");
+            boss = new Boss(bosspos, entityMgr);
             Texture2D playerShip = Content.Load<Texture2D>("shipTex");
 
             //Player 1, Kontroll och Tangentbord
@@ -46,23 +56,24 @@ namespace Masteroids
 
             font = Content.Load<SpriteFont>("font");
 
-
-
+            bosspos = new Vector2(250, 50);
         }
 
         protected override void UnloadContent()
         {
+
         }
 
         protected override void Update(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
-
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            //PixelCollision();
+            boss.Update(gameTime);
             GamePadCapabilities capabilities =
-                GamePad.GetCapabilities(PlayerIndex.Two);
+    GamePad.GetCapabilities(PlayerIndex.Two);
             //GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
 
             if (capabilities.IsConnected)
@@ -82,15 +93,18 @@ namespace Masteroids
                 player2.Update(gameTime);
             }
 
+            entityMgr.Update(gameTime);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-
+            GraphicsDevice.Clear(Color.Black);
+            boss.Draw(spriteBatch);
             player1.Draw(spriteBatch);
+            entityMgr.Draw(spriteBatch);
 
             if (enteredGame)
             {
@@ -100,9 +114,36 @@ namespace Masteroids
             {
                 spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
             }
-
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+        static bool PixelCollision(Rectangle rect1, Color[] data1,
+                                   Rectangle rect2, Color[] data2)
+        {
+            int top = Math.Max(rect1.Top, rect2.Top);
+            int bottom = Math.Min(rect1.Bottom, rect2.Bottom);
+            int left = Math.Max(rect1.Left, rect2.Left);
+            int right = Math.Min(rect1.Right, rect2.Right);
+            for (int y = top; y < bottom; y++)
+                for (int x = left; x < right; x++)
+                {
+                    Color colorA = data1[(x - rect1.Left) + (y - rect1.Top) * rect1.Width];
+                    Color colorB = data2[(x - rect2.Left) + (y - rect2.Top) * rect2.Width];
+
+                    if (colorA.A > 250 && colorB.A > 0)
+                        return true;
+                }
+            return false;
+        }
+        public void PixelCollision()
+        {
+            if (player1.playerRec.Intersects(bullet.bulletRec))
+            {
+                if (PixelCollision(player1.playerRec, player1.textureData, bullet.bulletRec, bullet.textureData))
+                {
+                    player1.Dead = true;
+                }
+            }
         }
     }
 }
