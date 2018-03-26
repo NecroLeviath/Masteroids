@@ -6,26 +6,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Masteroids
+namespace Masteroid
 {
     class Boss
     {
         Texture2D bosstex, bulletTex;
         Vector2 velocity, pos, bulletpos;
         public Rectangle hitBox;
-        int stopX = 600;
+        int stopX = 1780;
         float bulletTimer, bulletIntervall = 0.5f;
         List<Bullet> bulletList = new List<Bullet>();
+        public Color[] textureData;
+        EntityManager entityMgr;
 
 
-        public Boss(Texture2D bosstex, Texture2D bulletTex, Vector2 velocity)
+        public Boss(Vector2 velocity, EntityManager entityMgr)
         {
-            this.bosstex = bosstex;
+            bosstex = Art.BossTex;
             this.velocity = velocity;
-            this.bulletTex = bulletTex;
+            this.entityMgr = entityMgr;
             velocity = new Vector2(0, 0);
             pos = new Vector2(250, 50);
             Left();
+            textureData = new Color[bosstex.Width * bosstex.Height];
+            bosstex.GetData(textureData);
 
         }
         public void Update(GameTime gameTime)
@@ -46,33 +50,30 @@ namespace Masteroids
 
             if (bulletTimer >= bulletIntervall)
             {
-                Bullet bullet = new Bullet(bulletTex, bulletpos, 10f, 10);
+                entityMgr.CreateBullet(bulletpos, 10f, 10);
                 bulletTimer = 0;
-                bulletList.Add(bullet);
             }
 
-            for (int i = 0; i < bulletList.Count; i++)
-            {
-                Bullet bullet = bulletList[i];
-                bullet.Update(gameTime);
+            //for (int i = 0; i < bulletList.Count; i++)
+            //{
+            //    Bullet bullet = bulletList[i];
+            //    bullet.Update(gameTime);
 
-                if (bullet.IsDead())
-                {
-                    bulletList.Remove(bullet);
-                    i--;
-                }
-            }
-
-
+            //    if (bullet.IsDead())
+            //    {
+            //        bulletList.Remove(bullet);
+            //        i--;
+            //    }
+            //}          
 
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(bosstex, pos, Color.White);
-            foreach (Bullet b in bulletList)
-            {
-                b.Draw(spriteBatch);
-            }
+            //foreach (Bullet b in bulletList)
+            //{
+            //    b.Draw(spriteBatch);
+            //}
         }
         public bool Left()
         {

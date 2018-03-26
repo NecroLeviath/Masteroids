@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Masteroids
+namespace Masteroid
 {
-    class Bullet
+    class Bullet : GameObject
     {
         private int damage, age;
         Texture2D texture;
@@ -17,6 +17,8 @@ namespace Masteroids
         protected Vector2 center;
         protected Vector2 origin;
         List<Bullet> bulletList = new List<Bullet>();
+        public Rectangle bulletRec;
+        public Color[] textureData;
 
         public int Damage
         {
@@ -28,13 +30,15 @@ namespace Masteroids
             return age > 100;
         }
 
-        public Bullet(Texture2D texture, Vector2 pos, float speed, int damage)
+        public Bullet(Vector2 pos, float speed, int damage)
         {
-            this.texture = texture;
+            this.texture = Art.BulletTex;
             this.damage = damage;
             this.speed = speed;
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
             center = new Vector2(pos.X + texture.Width / 2, pos.Y + texture.Height / 2);
+            textureData = new Color[texture.Width * texture.Height];
+            texture.GetData(textureData);
         }
 
         public void Kill()
@@ -42,8 +46,9 @@ namespace Masteroids
             this.age = 200;
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
+            bulletRec = new Rectangle((int)pos.X, (int)pos.Y, 5, 5);
             bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             age++;
             center.Y += speed;
@@ -55,10 +60,11 @@ namespace Masteroids
 
 
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, center, null, Color.White, 0,
+            spriteBatch.Draw(texture, center, bulletRec, Color.White, 0,
                  origin, 1.0f, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, pos, Color.Red);
         }
 
     }

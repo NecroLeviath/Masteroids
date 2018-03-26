@@ -61,6 +61,8 @@
   <ItemGroup>
     <Content Include="Content\boss.png" />
     <Content Include="Content\laser.png" />
+    <Content Include="Content\playerShip.png" />
+    <Content Include="Content\shipTex.png" />
     <Content Include="Content\skott.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
