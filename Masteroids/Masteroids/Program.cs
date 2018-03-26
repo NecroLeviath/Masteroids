@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Masteroid {
+namespace Masteroids {
 #if WINDOWS || LINUX
     /// <summary>
     /// The main class.
