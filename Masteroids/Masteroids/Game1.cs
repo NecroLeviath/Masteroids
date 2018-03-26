@@ -25,7 +25,6 @@ namespace Masteroids
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
             //graphics.ToggleFullScreen();
             graphics.PreferredBackBufferHeight = screenHeight;
