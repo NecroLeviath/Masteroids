@@ -14,28 +14,30 @@ namespace Masteroids
         protected Vector2 position, velocity, acceleration, rotationCenter, direction, startPosition, wrapOffset;
         protected Rectangle sourceRectangle;
         protected Rectangle hitbox;
+        public Rectangle GetHitbox() { return hitbox; }
         Viewport viewport;
         protected bool shouldWrap;
         public bool IsAlive { get; protected set; }
 
-        public Rectangle GetHitbox()
+        public GameObject(Vector2 position, Viewport viewport)
         {
-            return hitbox;
+            this.position = position;
+            this.viewport = viewport;
         }
 
         public abstract void Update(GameTime gameTime);
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 drawPos = position - new Vector2(sourceRectangle.Width / 2, sourceRectangle.Height / 2);
-            spriteBatch.Draw(texture, drawPos, sourceRectangle, Color.White);
             if (shouldWrap)
             {
-                spriteBatch.Draw(texture, drawPos + wrapOffset, sourceRectangle, Color.White);
+                WrapDraw(spriteBatch);
             }
         }
 
-        protected void ScreenWrap()
+        protected virtual void WrapDraw(SpriteBatch spriteBatch) { }
+
+        protected void ScreenWrap()//bool shouldWarp, Vector2 position, Viewport viewport)
         {
             if (shouldWrap)
             {

@@ -20,6 +20,7 @@ namespace Masteroids
         bool enteredGame = false;
         int screenWidth = 1920, screenHeight = 1080;
         SpriteFont font;
+        Viewport defaultView;
 
 
         public Game1()
@@ -30,6 +31,7 @@ namespace Masteroids
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.PreferredBackBufferWidth = screenWidth;
             graphics.ApplyChanges();
+            Window.IsBorderless = true;
         }
         protected override void Initialize()
         {
@@ -39,9 +41,10 @@ namespace Masteroids
 
         protected override void LoadContent()
         {
-
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            entityMgr = new EntityManager();
+
+            defaultView = GraphicsDevice.Viewport;
+            entityMgr = new EntityManager(defaultView);
             Art.Initialize(Content);
             bosstex = Content.Load<Texture2D>("boss");
             skottTex = Content.Load<Texture2D>("laser");
@@ -49,9 +52,9 @@ namespace Masteroids
             Texture2D playerShip = Content.Load<Texture2D>("shipTex");
 
             //Player 1, Kontroll och Tangentbord
-            player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One);
+            player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One, defaultView);
 
-            player2 = new Player(playerShip, new Vector2(200, 200), PlayerIndex.Two);
+            player2 = new Player(playerShip, new Vector2(200, 200), PlayerIndex.Two, defaultView);
 
             font = Content.Load<SpriteFont>("font");
 

@@ -11,8 +11,6 @@ namespace Masteroids
     class Bullet : GameObject
     {
         private int damage, age;
-        Texture2D texture;
-        Vector2 pos;
         float bulletTimer, speed;
         protected Vector2 center;
         protected Vector2 origin;
@@ -30,13 +28,14 @@ namespace Masteroids
             return age > 100;
         }
 
-        public Bullet(Vector2 pos, float speed, int damage)
+        public Bullet(Vector2 position, float speed, int damage, Viewport viewport)
+            : base(position, viewport)
         {
             this.texture = Art.BulletTex;
             this.damage = damage;
             this.speed = speed;
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
-            center = new Vector2(pos.X + texture.Width / 2, pos.Y + texture.Height / 2);
+            center = new Vector2(this.position.X + texture.Width / 2, this.position.Y + texture.Height / 2);
             textureData = new Color[texture.Width * texture.Height];
             texture.GetData(textureData);
         }
@@ -48,12 +47,12 @@ namespace Masteroids
 
         public override void Update(GameTime gameTime)
         {
-            bulletRec = new Rectangle((int)pos.X, (int)pos.Y, 5, 5);
+            bulletRec = new Rectangle((int)position.X, (int)position.Y, 5, 5);
             bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             age++;
             center.Y += speed;
 
-            if (pos.Y >= 200)
+            if (position.Y >= 200)
             {
                 Kill();
             }
@@ -64,7 +63,7 @@ namespace Masteroids
         {
             spriteBatch.Draw(texture, center, bulletRec, Color.White, 0,
                  origin, 1.0f, SpriteEffects.None, 0);
-            spriteBatch.Draw(texture, pos, Color.Red);
+            spriteBatch.Draw(texture, position, Color.Red);
         }
 
     }

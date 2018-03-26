@@ -11,7 +11,6 @@ namespace Masteroids
 {
     public class Player : GameObject
     {
-        Texture2D texture;
         public Vector2 origin;
         float rotation = 0.1f;
         SpriteEffects entityFx;
@@ -25,16 +24,18 @@ namespace Masteroids
         public float linearVelocity = 0.04f; //Frammåt
         public float rotationVelocity = 3f; //Hastighet den roterar
 
-        public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue)
+        public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue, Viewport viewport)
+            : base(position, viewport)
         {
             this.playerValue = playerValue; ////Avgör spelare. -> återfinns på loadcontent Game1
             this.texture = texture;
-            this.position = position;
+            sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             startPosition = new Vector2(200, 200);
             Dead = false;
             playerRec = new Rectangle(0, 0, texture.Width, texture.Height);
             textureData = new Color[texture.Width * texture.Height];
             texture.GetData(textureData);
+            shouldWrap = true;
         }
 
         public override void Update(GameTime gameTime)
@@ -85,14 +86,22 @@ namespace Masteroids
 
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
                 velocity -= direction * linearVelocity / 3;
+
+            ScreenWrap();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!Dead)
             {
-                spriteBatch.Draw(texture, new Vector2(position.X, position.Y), playerRec, Color.White, rotation, new Vector2(texture.Width / 2, texture.Height - 20), scale, entityFx, 0);
+                spriteBatch.Draw(texture, position, playerRec, Color.White, rotation, new Vector2(texture.Width / 2, texture.Height - 20), scale, entityFx, 0);
+                base.Draw(spriteBatch);
             }
+        }
+
+        protected override void WrapDraw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position + wrapOffset, playerRec, Color.White, rotation, new Vector2(texture.Width / 2, texture.Height - 20), scale, entityFx, 0);
         }
     }
 }

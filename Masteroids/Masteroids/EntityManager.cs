@@ -10,11 +10,13 @@ namespace Masteroids
 {
     class EntityManager
     {
+        Viewport viewport;
         List<GameObject> entities = new List<GameObject>();
         List<GameObject> bullets = new List<GameObject>();
 
-        public EntityManager()
+        public EntityManager(Viewport viewport)
         {
+            this.viewport = viewport;
         }
 
         public void Update(GameTime gameTime)
@@ -37,7 +39,7 @@ namespace Masteroids
 
         public void CreateBullet(Vector2 pos, float speed, int damage)
         {
-            GameObject o = new Bullet(pos, speed, damage);
+            GameObject o = new Bullet(pos, speed, damage, viewport);
             entities.Add(o);
             bullets.Add(o);
         }
