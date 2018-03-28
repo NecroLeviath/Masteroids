@@ -12,7 +12,7 @@ namespace Masteroids
     {
         List<GameObject> entities = new List<GameObject>();
         List<GameObject> bullets = new List<GameObject>();
-        List<GameObject> asteroids = new List<GameObject>();
+        public List<GameObject> Asteroids = new List<GameObject>();
 
         public EntityManager()
         {
@@ -47,7 +47,7 @@ namespace Masteroids
         {
             GameObject o = new Asteroid(Art.AsteroidTex, speed, pos);
             entities.Add(o);
-            asteroids.Add(o);
+            Asteroids.Add(o);
         }
     }
 }

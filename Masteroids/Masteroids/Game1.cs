@@ -13,6 +13,7 @@ namespace Masteroids
         Vector2 bosspos;
         EntityManager entityMgr;
         Boss boss;
+        AsteroidSpawner asteroidSpawner;
         Bullet bullet;
         Player player1;
         Player player2;
@@ -43,6 +44,7 @@ namespace Masteroids
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             entityMgr = new EntityManager();
+            asteroidSpawner = new AsteroidSpawner(entityMgr, GraphicsDevice.Viewport);
             Art.Initialize(Content);
             bosstex = Content.Load<Texture2D>("boss");
             skottTex = Content.Load<Texture2D>("laser");
@@ -69,6 +71,8 @@ namespace Masteroids
             KeyboardState state = Keyboard.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            asteroidSpawner.Update(gameTime);
 
             //PixelCollision();
             boss.Update(gameTime);
