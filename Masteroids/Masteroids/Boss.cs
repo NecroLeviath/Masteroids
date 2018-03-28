@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿    using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -50,7 +50,7 @@ namespace Masteroids
 
             if (bulletTimer >= bulletIntervall)
             {
-                entityMgr.CreateBullet(bulletpos, 10f, 10);
+                entityMgr.CreateBullet(bulletpos, 10f, 10, new Vector2(0,1));
                 bulletTimer = 0;
             }
 
@@ -75,11 +75,13 @@ namespace Masteroids
             //    b.Draw(spriteBatch);
             //}
         }
+
         public bool Left()
         {
             velocity.X = -2;
             return true;
         }
+
         public bool Right()
         {
             velocity.X = 4;

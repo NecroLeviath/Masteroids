@@ -19,6 +19,7 @@ namespace Masteroids
         List<Bullet> bulletList = new List<Bullet>();
         public Rectangle bulletRec;
         public Color[] textureData;
+        public Vector2 Direction;
 
         public int Damage
         {
@@ -30,8 +31,9 @@ namespace Masteroids
             return age > 100;
         }
 
-        public Bullet(Vector2 pos, float speed, int damage)
+        public Bullet(Vector2 pos, float speed, int damage, Vector2 direction)
         {
+            this.pos = pos;
             this.texture = Art.BulletTex;
             this.damage = damage;
             this.speed = speed;
@@ -39,6 +41,8 @@ namespace Masteroids
             center = new Vector2(pos.X + texture.Width / 2, pos.Y + texture.Height / 2);
             textureData = new Color[texture.Width * texture.Height];
             texture.GetData(textureData);
+
+            Direction = direction;
         }
 
         public void Kill()
@@ -51,7 +55,10 @@ namespace Masteroids
             bulletRec = new Rectangle((int)pos.X, (int)pos.Y, 5, 5);
             bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             age++;
-            center.Y += speed;
+            //center.Y += speed;
+
+
+            pos += Direction * speed;
 
             if (pos.Y >= 200)
             {
@@ -62,7 +69,7 @@ namespace Masteroids
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, center, bulletRec, Color.White, 0,
+            spriteBatch.Draw(texture, pos, bulletRec, Color.White, 0,
                  origin, 1.0f, SpriteEffects.None, 0);
             spriteBatch.Draw(texture, pos, Color.Red);
         }

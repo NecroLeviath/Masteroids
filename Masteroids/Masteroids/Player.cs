@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    public class Player : GameObject
+    class Player : GameObject
     {
         Texture2D texture;
         public Vector2 origin;
@@ -20,12 +20,18 @@ namespace Masteroids
         public Rectangle playerRec;
         public bool Dead;
         public Color[] textureData;
+
+        List<Bullet> bulletList = new List<Bullet>();
+        EntityManager entityMgr;
+        Vector2 bulletPos;
+        KeyboardState keyboardState, pastKeyboardState;
+
         //velocity += forward* acceleration_amount * delta_time;
 
         public float linearVelocity = 0.04f; //Frammåt
         public float rotationVelocity = 3f; //Hastighet den roterar
 
-        public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue)
+        public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue, EntityManager entityMgr)
         {
             this.playerValue = playerValue; ////Avgör spelare. -> återfinns på loadcontent Game1
             this.texture = texture;
@@ -35,12 +41,17 @@ namespace Masteroids
             playerRec = new Rectangle(0, 0, texture.Width, texture.Height);
             textureData = new Color[texture.Width * texture.Height];
             texture.GetData(textureData);
+
+            this.entityMgr = entityMgr;
         }
 
         public override void Update(GameTime gameTime)
         {
             var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
             position += velocity;
+
+            pastKeyboardState = keyboardState;
+            keyboardState = Keyboard.GetState();
 
             GamePadCapabilities capabilities =
                 GamePad.GetCapabilities(playerValue);
@@ -71,20 +82,24 @@ namespace Masteroids
                 }
             }
 
+            bulletPos = new Vector2(position.X, position.Y);
 
             //Rotera med tangentbord
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            if (keyboardState.IsKeyDown(Keys.Left))
                 rotation -= MathHelper.ToRadians(rotationVelocity);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            if (keyboardState.IsKeyDown(Keys.Right))
                 rotation += MathHelper.ToRadians(rotationVelocity);
 
             //Frammåt och Bakåt med tangentbord
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            if (keyboardState.IsKeyDown(Keys.Up))
                 velocity += direction * linearVelocity;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            if (keyboardState.IsKeyDown(Keys.Down))
                 velocity -= direction * linearVelocity / 3;
+
+            if (keyboardState.IsKeyDown(Keys.Space) && pastKeyboardState.IsKeyUp(Keys.Space))
+                entityMgr.CreateBullet(new Vector2(position.X, position.Y), 10f, 10, direction);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

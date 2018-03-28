@@ -25,12 +25,12 @@ namespace Masteroids
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
             //graphics.ToggleFullScreen();
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.PreferredBackBufferWidth = screenWidth;
             graphics.ApplyChanges();
+            Window.IsBorderless = true;
         }
         protected override void Initialize()
         {
@@ -50,9 +50,9 @@ namespace Masteroids
             Texture2D playerShip = Content.Load<Texture2D>("shipTex");
 
             //Player 1, Kontroll och Tangentbord
-            player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One);
+            player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One, entityMgr);
 
-            player2 = new Player(playerShip, new Vector2(200, 200), PlayerIndex.Two);
+            player2 = new Player(playerShip, new Vector2(200, 200), PlayerIndex.Two, entityMgr);
 
             font = Content.Load<SpriteFont>("font");
 
