@@ -12,6 +12,7 @@ namespace Masteroids
     {
         List<GameObject> entities = new List<GameObject>();
         List<GameObject> bullets = new List<GameObject>();
+        List<GameObject> asteroids = new List<GameObject>();
 
         public EntityManager()
         {
@@ -40,6 +41,13 @@ namespace Masteroids
             GameObject o = new Bullet(pos, speed, damage);
             entities.Add(o);
             bullets.Add(o);
+        }
+
+        public void CreateAsteroid(Vector2 pos, Vector2 speed)
+        {
+            GameObject o = new Asteroid(Art.AsteroidTex, speed, pos);
+            entities.Add(o);
+            asteroids.Add(o);
         }
     }
 }

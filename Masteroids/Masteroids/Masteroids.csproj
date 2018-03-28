@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Asteroid.cs" />
     <Compile Include="Boss.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Game1.cs" />
@@ -59,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\asteroid3.png" />
     <Content Include="Content\boss.png" />
     <Content Include="Content\laser.png" />
     <Content Include="Content\playerShip.png" />
