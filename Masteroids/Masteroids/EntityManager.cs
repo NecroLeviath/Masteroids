@@ -47,7 +47,7 @@ namespace Masteroids
 
         public void CreateAsteroid(Vector2 pos, Vector2 speed)
         {
-            GameObject o = new Asteroid(Art.AsteroidTex, speed, pos);
+            GameObject o = new Asteroid(Art.AsteroidTex, speed, pos, viewport);
             entities.Add(o);
             Asteroids.Add(o);
         }

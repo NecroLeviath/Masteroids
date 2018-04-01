@@ -12,10 +12,11 @@ namespace Masteroids
     {
         Texture2D tex;
 
-        public Asteroid(Texture2D tex, Vector2 speed, Vector2 pos) : base()
+        public Asteroid(Texture2D tex, Vector2 speed, Vector2 position, Viewport viewport)
+            : base(position, viewport)
         {
             this.tex = tex;
-            position = pos;
+            this.position = position;
             velocity = speed;
         }
 

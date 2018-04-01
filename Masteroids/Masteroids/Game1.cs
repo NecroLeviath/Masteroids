@@ -46,6 +46,7 @@ namespace Masteroids
 
             defaultView = GraphicsDevice.Viewport;
             entityMgr = new EntityManager(defaultView);
+            asteroidSpawner = new AsteroidSpawner(entityMgr, defaultView);
             Art.Initialize(Content);
             bosstex = Content.Load<Texture2D>("boss");
             skottTex = Content.Load<Texture2D>("laser");
