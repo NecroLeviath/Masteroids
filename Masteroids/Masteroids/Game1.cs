@@ -13,6 +13,7 @@ namespace Masteroids
         Vector2 bosspos;
         EntityManager entityMgr;
         Boss boss;
+        AsteroidSpawner asteroidSpawner;
         Bullet bullet;
         Player player1;
         Player player2;
@@ -71,6 +72,8 @@ namespace Masteroids
             KeyboardState state = Keyboard.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            asteroidSpawner.Update(gameTime);
 
             //PixelCollision();
             boss.Update(gameTime);

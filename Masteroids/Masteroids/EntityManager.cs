@@ -13,6 +13,7 @@ namespace Masteroids
         Viewport viewport;
         List<GameObject> entities = new List<GameObject>();
         List<GameObject> bullets = new List<GameObject>();
+        public List<GameObject> Asteroids = new List<GameObject>();
 
         public EntityManager(Viewport viewport)
         {
@@ -42,6 +43,13 @@ namespace Masteroids
             GameObject o = new Bullet(pos, speed, damage, viewport);
             entities.Add(o);
             bullets.Add(o);
+        }
+
+        public void CreateAsteroid(Vector2 pos, Vector2 speed)
+        {
+            GameObject o = new Asteroid(Art.AsteroidTex, speed, pos);
+            entities.Add(o);
+            Asteroids.Add(o);
         }
     }
 }
