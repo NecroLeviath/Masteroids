@@ -40,8 +40,7 @@ namespace Masteroids
 
         public void CreateBullet(Vector2 pos, float speed, int damage, Vector2 direction)
         {
-            GameObject o = new Bullet(pos, speed, damage, direction);
-            GameObject o = new Bullet(pos, speed, damage, viewport);
+            GameObject o = new Bullet(pos, speed, damage, direction, viewport);
             entities.Add(o);
             bullets.Add(o);
         }
