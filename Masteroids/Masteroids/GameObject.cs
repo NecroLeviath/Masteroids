@@ -37,7 +37,7 @@ namespace Masteroids
 
         protected virtual void WrapDraw(SpriteBatch spriteBatch) { }
 
-        protected void ScreenWrap()//bool shouldWarp, Vector2 position, Viewport viewport)
+        protected void ScreenWrap()
         {
             if (shouldWrap)
             {
