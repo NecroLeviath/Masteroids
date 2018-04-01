@@ -29,9 +29,8 @@ namespace Masteroids
 
         public float linearVelocity = 0.04f; //Frammåt
         public float rotationVelocity = 3f; //Hastighet den roterar
-
-        public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue, EntityManager entityMgr)
-        public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue, Viewport viewport)
+        
+        public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue, EntityManager entityMgr, Viewport viewport)
             : base(position, viewport)
         {
             this.playerValue = playerValue; ////Avgör spelare. -> återfinns på loadcontent Game1
