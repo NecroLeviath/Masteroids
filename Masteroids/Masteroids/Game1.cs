@@ -53,8 +53,10 @@ namespace Masteroids
             Texture2D playerShip = Content.Load<Texture2D>("shipTex");
 
             //Player 1, Kontroll och Tangentbord
+            player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One, entityMgr);
             player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One, defaultView);
 
+            player2 = new Player(playerShip, new Vector2(200, 200), PlayerIndex.Two, entityMgr);
             player2 = new Player(playerShip, new Vector2(200, 200), PlayerIndex.Two, defaultView);
 
             font = Content.Load<SpriteFont>("font");
