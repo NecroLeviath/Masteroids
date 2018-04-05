@@ -30,7 +30,7 @@ namespace Masteroids
             isUpdating = false;
 
             foreach (GameObject e in addedEntities)
-                entities.Add(e);
+                AddEntity(e);
             addedEntities.Clear();
 
             // Removes dead entities
@@ -42,9 +42,24 @@ namespace Masteroids
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (GameObject o in entities)
-            {
                 o.Draw(spriteBatch);
-            }
+        }
+
+        public void Add(GameObject entity) // This will replace CreateBullet and CreateAsteroid in other classes
+        {
+            if (!isUpdating)
+                AddEntity(entity);
+            else
+                addedEntities.Add(entity);
+        }
+
+        private void AddEntity(GameObject entity)
+        {
+            entities.Add(entity);
+            if (entity is Bullet)
+                bullets.Add(entity as Bullet);
+            else if (entity is Asteroid)
+                Asteroids.Add(entity as Asteroid);
         }
 
         public void CreateBullet(Vector2 pos, float speed, int damage, Vector2 direction)
