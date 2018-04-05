@@ -11,7 +11,9 @@ namespace Masteroids
     class EntityManager
     {
         Viewport viewport;
+        bool isUpdating;
         List<GameObject> entities = new List<GameObject>();
+        List<GameObject> addedEntities = new List<GameObject>();
         List<GameObject> bullets = new List<GameObject>();
         public List<GameObject> Asteroids = new List<GameObject>();
 
@@ -22,12 +24,19 @@ namespace Masteroids
 
         public void Update(GameTime gameTime)
         {
+            isUpdating = true;
             foreach (GameObject o in entities)
-            {
                 o.Update(gameTime);
-            }
+            isUpdating = false;
 
+            foreach (GameObject e in addedEntities)
+                entities.Add(e);
+            addedEntities.Clear();
+
+            // Removes dead entities
             entities = entities.Where(x => !x.IsAlive).ToList();
+            bullets = bullets.Where(x => !x.IsAlive).ToList();
+            Asteroids = Asteroids.Where(x => !x.IsAlive).ToList();
         }
 
         public void Draw(SpriteBatch spriteBatch)
