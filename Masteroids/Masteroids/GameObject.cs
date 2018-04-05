@@ -37,6 +37,8 @@ namespace Masteroids
             }
         }
 
+        public virtual void HandleCollision(GameObject other) { } // This will probably be an abstract method
+
         protected virtual void WrapDraw(SpriteBatch spriteBatch) { }
 
         protected void ScreenWrap()
