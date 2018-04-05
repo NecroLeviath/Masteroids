@@ -11,6 +11,7 @@ namespace Masteroids
     public abstract class GameObject
     {
         protected Texture2D texture;
+        public Vector2 Position { get { return position; } }
         protected Vector2 position, velocity, acceleration, rotationCenter, direction, startPosition, wrapOffset;
         protected Rectangle sourceRectangle;
         protected Rectangle hitbox;
@@ -18,6 +19,7 @@ namespace Masteroids
         Viewport viewport;
         protected bool shouldWrap;
         public bool IsAlive { get; protected set; }
+        public float Radius;
 
         public GameObject(Vector2 position, Viewport viewport)
         {

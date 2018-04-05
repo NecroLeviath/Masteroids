@@ -51,5 +51,12 @@ namespace Masteroids
             entities.Add(o);
             Asteroids.Add(o);
         }
+
+        private bool IsColliding(GameObject entityA, GameObject entityB)
+        {
+            var radius = entityA.Radius + entityB.Radius;
+            return entityA.IsAlive && entityB.IsAlive &&
+                Vector2.DistanceSquared(entityA.Position, entityB.Position) < radius * radius;
+        }
     }
 }
