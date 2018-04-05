@@ -85,6 +85,15 @@ namespace Masteroids
 
         private void HandleCollisions()
         {
+            for (int i = 0; i < Asteroids.Count; i++)
+                for (int j = 0; j < bullets.Count; j++)
+                {
+                    if (IsColliding(Asteroids[i], bullets[j]))// && bullets[j].Shooter is Player)
+                    {
+                        Asteroids[i].HandleCollision(bullets[j]);
+                        bullets[j].HandleCollision(Asteroids[i]);
+                    }
+                }
         }
     }
 }
