@@ -82,5 +82,9 @@ namespace Masteroids
             return entityA.IsAlive && entityB.IsAlive &&
                 Vector2.DistanceSquared(entityA.Position, entityB.Position) < radius * radius;
         }
+
+        private void HandleCollisions()
+        {
+        }
     }
 }
