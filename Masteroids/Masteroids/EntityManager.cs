@@ -35,9 +35,9 @@ namespace Masteroids
             addedEntities.Clear();
 
             // Removes dead entities
-            entities = entities.Where(x => !x.IsAlive).ToList();
-            bullets = bullets.Where(x => !x.IsAlive).ToList();
-            Asteroids = Asteroids.Where(x => !x.IsAlive).ToList();
+            entities = entities.Where(x => x.IsAlive).ToList();
+            bullets = bullets.Where(x => x.IsAlive).ToList();
+            Asteroids = Asteroids.Where(x => x.IsAlive).ToList();
         }
 
         public void Draw(SpriteBatch spriteBatch)

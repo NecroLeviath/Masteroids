@@ -25,6 +25,7 @@ namespace Masteroids
         {
             this.position = position;
             this.viewport = viewport;
+            IsAlive = true;
         }
 
         public abstract void Update(GameTime gameTime);
