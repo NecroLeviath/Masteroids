@@ -27,6 +27,7 @@ namespace Masteroids
             isUpdating = true;
             foreach (GameObject o in entities)
                 o.Update(gameTime);
+            HandleCollisions();
             isUpdating = false;
 
             foreach (GameObject e in addedEntities)
