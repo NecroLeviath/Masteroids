@@ -15,23 +15,35 @@ namespace Masteroids
         float movementTimer, pauseTimer, bulletTimer;
         float movementInterval = 1, pauseInterval = 2, bulletInterval = 1;
 
-        public Shooter(Texture2D texture, Vector2 position, EntityManager entityManager, Viewport viewport)
-            : base(texture, position, viewport)
+        public Shooter(Texture2D texture, Vector2 position, float speed, EntityManager entityManager, Viewport viewport)
+            : base(texture, position, speed, viewport)
         {
             this.texture = texture; // DEV: This should be moved to GameObject
+            this.speed = speed; // DEV: This should be moved to GameObject
             entityMgr = entityManager;
         }
 
         public override void Update(GameTime gameTime)
         {
             float delta = gameTime.ElapsedGameTime.Seconds;
-            movementTimer += delta;
-            pauseTimer += delta;
-            bulletTimer += delta;
 
             ChooseTarget();
             if (target != null)
             {
+                pauseTimer += delta;
+                if (pauseTimer >= pauseInterval)
+                {
+                    position += GetPlayerDirection() * speed;
+
+                    movementTimer += delta;
+                    if (movementTimer >= movementInterval)
+                    {
+                        pauseTimer = 0;
+                        movementTimer = 0;
+                    }
+                }
+
+                bulletTimer += delta;
                 if (bulletTimer >= bulletInterval)
                 {
                     Bullet bullet = new Bullet(position, 1, 1, GetPlayerDirection(), viewport);
