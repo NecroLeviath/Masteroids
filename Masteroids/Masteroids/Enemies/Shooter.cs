@@ -76,6 +76,11 @@ namespace Masteroids
             base.Draw(spriteBatch);
         }
 
+        protected override void WrapDraw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position + wrapOffset, sourceRectangle, Color.White, rotation, rotationCenter, 1, SpriteEffects.None, 0);
+        }
+
         private void ChooseTarget()
         {
             if (entityMgr.Players.Count > 0 && (target == null || !target.IsAlive))
