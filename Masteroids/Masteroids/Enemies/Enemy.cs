@@ -11,10 +11,7 @@ namespace Masteroids
     class Enemy : GameObject
     {
         public Enemy(Vector2 position, Viewport viewport)
-            : base(position, viewport)
-        {
-            this.position = position;
-        }
+            : base(position, viewport) { }
 
         public override void Update(GameTime gameTime) { }
     }
