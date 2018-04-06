@@ -15,7 +15,7 @@ namespace Masteroids
         List<GameObject> entities = new List<GameObject>();
         List<GameObject> addedEntities = new List<GameObject>();
         List<GameObject> bullets = new List<GameObject>();
-        public List<GameObject> Players = new List<GameObject>();
+        public List<Player> Players = new List<Player>();
         public List<GameObject> Asteroids = new List<GameObject>();
 
         public EntityManager(Viewport viewport)
