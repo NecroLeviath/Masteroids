@@ -62,6 +62,8 @@ namespace Masteroids
                 bullets.Add(entity as Bullet);
             else if (entity is Asteroid)
                 Asteroids.Add(entity as Asteroid);
+            else if (entity is Player)
+                Players.Add(entity as Player);
         }
 
         public void CreateBullet(Vector2 pos, float speed, int damage, Vector2 direction)

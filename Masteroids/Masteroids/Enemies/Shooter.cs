@@ -20,12 +20,13 @@ namespace Masteroids
         {
             this.texture = texture; // DEV: This should be moved to GameObject
             this.speed = speed; // DEV: This should be moved to GameObject
+            sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             entityMgr = entityManager;
         }
 
         public override void Update(GameTime gameTime)
         {
-            float delta = gameTime.ElapsedGameTime.Seconds;
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             ChooseTarget();
             if (target != null)
@@ -33,7 +34,9 @@ namespace Masteroids
                 pauseTimer += delta;
                 if (pauseTimer >= pauseInterval)
                 {
-                    position += GetPlayerDirection() * speed;
+                    Vector2 playerDir = GetPlayerDirection();
+                    position += playerDir * speed;
+                    rotation = (float)Math.Atan2(playerDir.Y, playerDir.X) + (float)Math.PI / 2;
 
                     movementTimer += delta;
                     if (movementTimer >= movementInterval)
@@ -46,13 +49,19 @@ namespace Masteroids
                 bulletTimer += delta;
                 if (bulletTimer >= bulletInterval)
                 {
-                    Bullet bullet = new Bullet(position, 1, 1, GetPlayerDirection(), viewport);
+                    Bullet bullet = new Bullet(position, 5, 1, GetPlayerDirection(), viewport);
                     entityMgr.Add(bullet);
                     bulletTimer = 0;
                 }
             }
         }
-        
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position, sourceRectangle, Color.White, rotation, rotationCenter, 1, SpriteEffects.None, 0);
+            base.Draw(spriteBatch);
+        }
+
         private void ChooseTarget()
         {
             if (entityMgr.Players.Count > 0 && (target == null || !target.IsAlive))
