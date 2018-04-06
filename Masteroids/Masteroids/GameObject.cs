@@ -12,8 +12,8 @@ namespace Masteroids
     {
         protected Texture2D texture;
         public Vector2 Position { get { return position; } }
-        protected Vector2 position, velocity, acceleration, rotationCenter, direction, startPosition, wrapOffset;
-        protected float speed, rotation;
+        protected Vector2 position, velocity, rotationCenter, direction, startPosition, wrapOffset;
+        protected float speed, rotation, acceleration, deacceleration;
         protected Rectangle sourceRectangle;
         protected Rectangle hitbox;
         public Rectangle GetHitbox() { return hitbox; }

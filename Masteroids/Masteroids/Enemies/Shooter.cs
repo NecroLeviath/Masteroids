@@ -20,7 +20,11 @@ namespace Masteroids
         {
             this.texture = texture; // DEV: This should be moved to GameObject
             this.speed = speed; // DEV: This should be moved to GameObject
+            acceleration = 10f;
+            deacceleration = 0.9f;
             sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
+            rotationCenter = new Vector2(texture.Width / 2, texture.Height / 2);
+            shouldWrap = true;
             entityMgr = entityManager;
         }
 
@@ -31,12 +35,14 @@ namespace Masteroids
             ChooseTarget();
             if (target != null)
             {
+                Vector2 playerDir = GetPlayerDirection();
+                if (velocity != Vector2.Zero)
+                    rotation = (float)Math.Atan2(velocity.Y, velocity.X) + (float)Math.PI / 2;
+
                 pauseTimer += delta;
                 if (pauseTimer >= pauseInterval)
                 {
-                    Vector2 playerDir = GetPlayerDirection();
-                    position += playerDir * speed;
-                    rotation = (float)Math.Atan2(playerDir.Y, playerDir.X) + (float)Math.PI / 2;
+                    velocity += playerDir * acceleration * delta;
 
                     movementTimer += delta;
                     if (movementTimer >= movementInterval)
@@ -45,15 +51,23 @@ namespace Masteroids
                         movementTimer = 0;
                     }
                 }
+                else
+                {
+                    if (velocity.LengthSquared() >= speed)
+                        velocity *= deacceleration;
+                }
 
                 bulletTimer += delta;
                 if (bulletTimer >= bulletInterval)
                 {
-                    Bullet bullet = new Bullet(position, 5, 1, GetPlayerDirection(), viewport);
+                    Bullet bullet = new Bullet(position, 5, 1, playerDir, viewport);
                     entityMgr.Add(bullet);
                     bulletTimer = 0;
                 }
             }
+            position += velocity;
+
+            ScreenWrap();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
