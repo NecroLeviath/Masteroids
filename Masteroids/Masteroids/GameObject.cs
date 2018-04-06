@@ -16,7 +16,7 @@ namespace Masteroids
         protected Rectangle sourceRectangle;
         protected Rectangle hitbox;
         public Rectangle GetHitbox() { return hitbox; }
-        Viewport viewport;
+        protected Viewport viewport;
         protected bool shouldWrap;
         public bool IsAlive { get; protected set; }
         public float Radius;

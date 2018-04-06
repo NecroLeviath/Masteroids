@@ -10,7 +10,7 @@ namespace Masteroids
 {
     class Enemy : GameObject
     {
-        public Enemy(Vector2 position, Viewport viewport)
+        public Enemy(Texture2D texture, Vector2 position, Viewport viewport)
             : base(position, viewport) { }
 
         public override void Update(GameTime gameTime) { }
