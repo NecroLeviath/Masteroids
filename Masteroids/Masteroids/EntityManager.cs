@@ -14,9 +14,10 @@ namespace Masteroids
         bool isUpdating;
         List<GameObject> entities = new List<GameObject>();
         List<GameObject> addedEntities = new List<GameObject>();
-        List<GameObject> bullets = new List<GameObject>();
+        List<Bullet> bullets = new List<Bullet>();
+        List<Enemy> enemies = new List<Enemy>();
         public List<Player> Players = new List<Player>();
-        public List<GameObject> Asteroids = new List<GameObject>();
+        public List<Asteroid> Asteroids = new List<Asteroid>();
 
         public EntityManager(Viewport viewport)
         {
@@ -38,6 +39,8 @@ namespace Masteroids
             // Removes dead entities
             entities = entities.Where(x => x.IsAlive).ToList();
             bullets = bullets.Where(x => x.IsAlive).ToList();
+            enemies = enemies.Where(x => x.IsAlive).ToList();
+            Players = Players.Where(x => x.IsAlive).ToList();
             Asteroids = Asteroids.Where(x => x.IsAlive).ToList();
         }
 
@@ -62,6 +65,8 @@ namespace Masteroids
                 bullets.Add(entity as Bullet);
             else if (entity is Asteroid)
                 Asteroids.Add(entity as Asteroid);
+            else if (entity is Enemy)
+                enemies.Add(entity as Enemy);
             else if (entity is Player)
                 Players.Add(entity as Player);
         }
@@ -70,14 +75,14 @@ namespace Masteroids
         {
             GameObject o = new Bullet(pos, speed, damage, direction, viewport);
             entities.Add(o);
-            bullets.Add(o);
+            bullets.Add(o as Bullet);
         }
 
         public void CreateAsteroid(Vector2 pos, Vector2 speed)
         {
             GameObject o = new Asteroid(Art.AsteroidTex, speed, pos, viewport);
             entities.Add(o);
-            Asteroids.Add(o);
+            Asteroids.Add(o as Asteroid);
         }
 
         private bool IsColliding(GameObject entityA, GameObject entityB)
