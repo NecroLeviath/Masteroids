@@ -20,7 +20,7 @@ namespace Masteroids
         Vector2 playerPos, position;
         bool enteredGame = false;
         int screenWidth = 1920, screenHeight = 1080;
-        SpriteFont font;
+        //SpriteFont font;
         Viewport defaultView;
 
 
@@ -33,6 +33,7 @@ namespace Masteroids
             graphics.PreferredBackBufferWidth = screenWidth;
             graphics.ApplyChanges();
             Window.IsBorderless = true;
+            IsMouseVisible = true;
         }
         protected override void Initialize()
         {
@@ -58,7 +59,7 @@ namespace Masteroids
             
             player2 = new Player(playerShip, new Vector2(200, 200), PlayerIndex.Two, entityMgr, defaultView);
 
-            font = Content.Load<SpriteFont>("font");
+            //font = Content.Load<SpriteFont>("font");
 
             bosspos = new Vector2(250, 50);
         }
@@ -76,10 +77,11 @@ namespace Masteroids
 
             asteroidSpawner.Update(gameTime);
 
+
             //PixelCollision();
             boss.Update(gameTime);
             GamePadCapabilities capabilities =
-    GamePad.GetCapabilities(PlayerIndex.Two);
+                GamePad.GetCapabilities(PlayerIndex.Two);
             //GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
 
             if (capabilities.IsConnected)
@@ -118,7 +120,7 @@ namespace Masteroids
             }
             else
             {
-                spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
+                //spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
             }
             spriteBatch.End();
             base.Draw(gameTime);
