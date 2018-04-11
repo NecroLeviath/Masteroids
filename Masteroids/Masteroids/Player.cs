@@ -66,8 +66,8 @@ namespace Masteroids
                 }
             }
 
-            //MInput();
-            AInput();
+            MInput();
+            //AInput();
 
             ScreenWrap();
         }
