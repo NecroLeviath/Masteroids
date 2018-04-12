@@ -33,26 +33,26 @@ namespace Masteroids
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            if (shouldWrap)
+            if (shouldWrap && wrapOffset != Vector2.Zero)
             {
                 WrapDraw(spriteBatch);
             }
         }
 
-        public virtual void HandleCollision(GameObject other) { } // This will probably be an abstract method
+        public virtual void HandleCollision(GameObject other) { } // DEV: This will probably be an abstract method
 
         protected virtual void WrapDraw(SpriteBatch spriteBatch) { }
 
-        protected void ScreenWrap()
+        protected void ScreenWrap() // Simon
         {
             if (shouldWrap)
             {
                 wrapOffset = Vector2.Zero;
 
-                if (position.X < viewport.X)
-                    position.X += viewport.Width;
-                else if (position.X - (sourceRectangle.Width / 2) < viewport.X)
-                    wrapOffset.X += viewport.Width;
+                if (position.X < viewport.X) // Checks if the entitys position is off the screen...
+                    position.X += viewport.Width; // ... if it is, moves the entity to the other side of the screen
+                else if (position.X - (sourceRectangle.Width / 2) < viewport.X) // Otherwise, if the entity is only a bit off the screen...
+                    wrapOffset.X += viewport.Width; // ... set an offset so that the entity can appear on the other side of the screen
 
                 if (position.X > viewport.X + viewport.Width)
                     position.X -= viewport.Width;

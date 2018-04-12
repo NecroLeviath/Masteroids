@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Masteroids
+namespace Masteroids // Simon
 {
     class EntityManager
     {
@@ -50,7 +50,7 @@ namespace Masteroids
                 o.Draw(spriteBatch);
         }
 
-        public void Add(GameObject entity) // This will replace CreateBullet and CreateAsteroid in other classes
+        public void Add(GameObject entity) // DEV: This will replace CreateBullet and CreateAsteroid in other classes
         {
             if (!isUpdating)
                 AddEntity(entity);

@@ -35,7 +35,6 @@ namespace Masteroids
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            //graphics.ToggleFullScreen();
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.PreferredBackBufferWidth = screenWidth;
             graphics.ApplyChanges();
@@ -44,7 +43,6 @@ namespace Masteroids
         }
         protected override void Initialize()
         {
-
             base.Initialize();
         }
 
@@ -70,8 +68,6 @@ namespace Masteroids
 
             bosspos = new Vector2(250, 50);
             _currentstate = new MenuState(this, graphics.GraphicsDevice, Content);
-
-
         }
 
         protected override void UnloadContent()
