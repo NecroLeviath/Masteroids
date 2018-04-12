@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Masteroids.States;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -13,36 +14,45 @@ namespace Masteroids
         Vector2 bosspos;
         EntityManager entityMgr;
         Boss boss;
+        AsteroidSpawner asteroidSpawner;
         Bullet bullet;
         Player player1;
         Player player2;
         Vector2 playerPos, position;
         bool enteredGame = false;
         int screenWidth = 1920, screenHeight = 1080;
-        SpriteFont font;
+        //SpriteFont font;
+        Viewport defaultView;
+        Texture2D MasteroidMenu;
+        private State _currentstate;
+        private State _nextState;
+        public void ChangeState(State state) {
+            _nextState = state;
+        }
 
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
-            //graphics.ToggleFullScreen();
             graphics.PreferredBackBufferHeight = screenHeight;
             graphics.PreferredBackBufferWidth = screenWidth;
             graphics.ApplyChanges();
+            Window.IsBorderless = true;
+            IsMouseVisible = true;
         }
         protected override void Initialize()
         {
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            entityMgr = new EntityManager();
+
+            defaultView = GraphicsDevice.Viewport;
+            entityMgr = new EntityManager(defaultView);
+            asteroidSpawner = new AsteroidSpawner(entityMgr, defaultView);
             Art.Initialize(Content);
             bosstex = Content.Load<Texture2D>("boss");
             skottTex = Content.Load<Texture2D>("laser");
@@ -50,13 +60,14 @@ namespace Masteroids
             Texture2D playerShip = Content.Load<Texture2D>("shipTex");
 
             //Player 1, Kontroll och Tangentbord
-            player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One);
+            player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One, entityMgr, defaultView);
+            
+            player2 = new Player(playerShip, new Vector2(200, 200), PlayerIndex.Two, entityMgr, defaultView);
 
-            player2 = new Player(playerShip, new Vector2(200, 200), PlayerIndex.Two);
-
-            font = Content.Load<SpriteFont>("font");
+            //font = Content.Load<SpriteFont>("font");
 
             bosspos = new Vector2(250, 50);
+            _currentstate = new MenuState(this, graphics.GraphicsDevice, Content);
         }
 
         protected override void UnloadContent()
@@ -70,10 +81,13 @@ namespace Masteroids
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            asteroidSpawner.Update(gameTime);
+
+
             //PixelCollision();
             boss.Update(gameTime);
             GamePadCapabilities capabilities =
-    GamePad.GetCapabilities(PlayerIndex.Two);
+                GamePad.GetCapabilities(PlayerIndex.Two);
             //GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
 
             if (capabilities.IsConnected)
@@ -94,14 +108,21 @@ namespace Masteroids
             }
 
             entityMgr.Update(gameTime);
+            if (_nextState != null) {
+                _currentstate = _nextState;
+                _nextState = null;
+            }
+            _currentstate.Update(gameTime);
+            _currentstate.PostUpdate(gameTime);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin();
             GraphicsDevice.Clear(Color.Black);
+            _currentstate.Draw(gameTime, spriteBatch);
+            spriteBatch.Begin();
             boss.Draw(spriteBatch);
             player1.Draw(spriteBatch);
             entityMgr.Draw(spriteBatch);
@@ -112,7 +133,7 @@ namespace Masteroids
             }
             else
             {
-                spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
+                //spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
             }
             spriteBatch.End();
             base.Draw(gameTime);

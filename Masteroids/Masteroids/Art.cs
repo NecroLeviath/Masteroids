@@ -6,17 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Masteroids
+namespace Masteroids // Simon
 {
     static class Art
     {
         public static Texture2D BossTex;
         public static Texture2D BulletTex;
+        public static Texture2D AsteroidTex;
 
         public static void Initialize(ContentManager content)
         {
             BossTex = content.Load<Texture2D>("boss");
             BulletTex = content.Load<Texture2D>("laser");
+            AsteroidTex = content.Load<Texture2D>("asteroid3");
         }
     }
 }
