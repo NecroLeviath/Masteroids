@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Masteroids.States;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -22,6 +23,12 @@ namespace Masteroids
         int screenWidth = 1920, screenHeight = 1080;
         //SpriteFont font;
         Viewport defaultView;
+        Texture2D MasteroidMenu;
+        private State _currentstate;
+        private State _nextState;
+        public void ChangeState(State state) {
+            _nextState = state;
+        }
 
 
         public Game1()
@@ -62,6 +69,9 @@ namespace Masteroids
             //font = Content.Load<SpriteFont>("font");
 
             bosspos = new Vector2(250, 50);
+            _currentstate = new MenuState(this, graphics.GraphicsDevice, Content);
+
+
         }
 
         protected override void UnloadContent()
@@ -102,10 +112,21 @@ namespace Masteroids
             }
 
             entityMgr.Update(gameTime);
+            if (_nextState != null) {
+                _currentstate = _nextState;
+                _nextState = null;
+            }
+            _currentstate.Update(gameTime);
+            _currentstate.PostUpdate(gameTime);
 
             base.Update(gameTime);
         }
 
+
+        protected override void Draw(GameTime gameTime) {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            _currentstate.Draw(gameTime, spriteBatch);
         protected override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();

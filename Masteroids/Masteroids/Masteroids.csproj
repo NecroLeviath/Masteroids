@@ -46,6 +46,8 @@
     <Compile Include="Boss.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Enemies\Enemy.cs" />
+    <Compile Include="Component.cs" />
+    <Compile Include="Controls\Button.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
@@ -54,6 +56,9 @@
     <Compile Include="Art.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Enemies\Shooter.cs" />
+    <Compile Include="States\GameState.cs" />
+    <Compile Include="States\MenuState.cs" />
+    <Compile Include="States\State.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
