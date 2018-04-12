@@ -122,15 +122,11 @@ namespace Masteroids
             base.Update(gameTime);
         }
 
-
-        protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            _currentstate.Draw(gameTime, spriteBatch);
         protected override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin();
             GraphicsDevice.Clear(Color.Black);
+            _currentstate.Draw(gameTime, spriteBatch);
+            spriteBatch.Begin();
             boss.Draw(spriteBatch);
             player1.Draw(spriteBatch);
             entityMgr.Draw(spriteBatch);
