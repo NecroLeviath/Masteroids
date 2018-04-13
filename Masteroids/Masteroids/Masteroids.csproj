@@ -64,6 +64,7 @@
     <Content Include="Content\asteroid2.png" />
     <Content Include="Content\asteroid3.png" />
     <Content Include="Content\boss.png" />
+    <Content Include="Content\deadboss.png" />
     <Content Include="Content\laser.png" />
     <Content Include="Content\playerShip.png" />
     <Content Include="Content\shipTex.png" />

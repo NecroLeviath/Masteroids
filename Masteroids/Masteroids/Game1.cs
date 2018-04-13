@@ -23,7 +23,6 @@ namespace Masteroids
         //SpriteFont font;
         Viewport defaultView;
 
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -37,7 +36,6 @@ namespace Masteroids
         }
         protected override void Initialize()
         {
-
             base.Initialize();
         }
 
@@ -55,20 +53,14 @@ namespace Masteroids
             Texture2D playerShip = Content.Load<Texture2D>("shipTex");
 
             //Player 1, Kontroll och Tangentbord
-            player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One, entityMgr, defaultView);
-            
+            player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One, entityMgr, defaultView);            
             player2 = new Player(playerShip, new Vector2(200, 200), PlayerIndex.Two, entityMgr, defaultView);
-
-            //font = Content.Load<SpriteFont>("font");
-
             bosspos = new Vector2(250, 50);
         }
 
         protected override void UnloadContent()
         {
-
         }
-
         protected override void Update(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
@@ -76,7 +68,6 @@ namespace Masteroids
                 Exit();
 
             asteroidSpawner.Update(gameTime);
-
 
             //PixelCollision();
             boss.Update(gameTime);
@@ -94,18 +85,14 @@ namespace Masteroids
                     enteredGame = true;
                 }
             }
-
             player1.Update(gameTime);
             if (enteredGame)
             {
                 player2.Update(gameTime);
             }
-
             entityMgr.Update(gameTime);
-
             base.Update(gameTime);
         }
-
         protected override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();

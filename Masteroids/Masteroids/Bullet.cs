@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    class Bullet : GameObject
+    public class Bullet : GameObject
     {
         private int damage, age;
         float bulletTimer, speed;
