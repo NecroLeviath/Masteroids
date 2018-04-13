@@ -18,7 +18,7 @@ namespace Masteroids
         {
             BossTex = content.Load<Texture2D>("boss");
             BulletTex = content.Load<Texture2D>("laser");
-            AsteroidTex = content.Load<Texture2D>("asteroid3");
+            AsteroidTex = content.Load<Texture2D>("asteroid2");
         }
     }
 }

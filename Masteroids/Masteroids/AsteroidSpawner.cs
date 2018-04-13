@@ -27,11 +27,11 @@ namespace Masteroids
             {
                 int positionX = rnd.Next(0, viewport.Width - Art.AsteroidTex.Width);
                 int positionY = rnd.Next(0, viewport.Height + Art.AsteroidTex.Height);
-                int speedX = 2;
-                int speedY = 2;
+                int speedX = rnd.Next(-2, 2);
+                int speedY = rnd.Next(-2, 2);
                 Vector2 position = new Vector2(positionX, positionY);
 
-                // if removed, asteroids moves in the same path. Cant get this too work
+                //if removed, asteroids moves in the same path.Cant get this too work
                 //if (position.X <= 0)
                 //{
                 //    speedX = 2;

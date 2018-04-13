@@ -18,6 +18,7 @@ namespace Masteroids
         List<Bullet> bulletList = new List<Bullet>();
         public Color[] textureData;
         EntityManager entityMgr;
+        int life;
 
 
         public Boss(Vector2 velocity, EntityManager entityMgr)
@@ -30,7 +31,7 @@ namespace Masteroids
             Left();
             textureData = new Color[bosstex.Width * bosstex.Height];
             bosstex.GetData(textureData);
-
+            life = 100;
         }
         public void Update(GameTime gameTime)
         {
