@@ -17,10 +17,10 @@ namespace Masteroids
         Bullet bullet;
         Player player1;
         Player player2;
-        Vector2 playerPos, position;
+        Vector2 playerPos, position, bossFontPos;
         bool enteredGame = false;
         int screenWidth = 1920, screenHeight = 1080;
-        //SpriteFont font;
+        SpriteFont bossFont;
         Viewport defaultView;
 
         public Game1()
@@ -47,7 +47,9 @@ namespace Masteroids
             entityMgr = new EntityManager(defaultView);
             asteroidSpawner = new AsteroidSpawner(entityMgr, defaultView);
             Art.Initialize(Content);
+            bossFont = Content.Load<SpriteFont>("BossLife");
             bosstex = Content.Load<Texture2D>("boss");
+            bossFontPos = new Vector2(1000, 20);
             skottTex = Content.Load<Texture2D>("laser");
             boss = new Boss(bosspos, entityMgr);
             Texture2D playerShip = Content.Load<Texture2D>("shipTex");
@@ -109,6 +111,7 @@ namespace Masteroids
             {
                 //spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
             }
+            spriteBatch.DrawString(bossFont, "Life: ", bossFontPos, Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
         }

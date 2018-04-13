@@ -109,3 +109,10 @@
 /processorParam:TextureFormat=Color
 /build:deadboss.png
 
+#begin BossLife.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:BossLife.spritefont
+
