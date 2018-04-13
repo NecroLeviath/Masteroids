@@ -70,7 +70,7 @@ namespace Masteroids
         {
             spriteBatch.Draw(texture, position, bulletRec, Color.White, 0,
                  origin, 1.0f, SpriteEffects.None, 0);
-            spriteBatch.Draw(texture, position, Color.Red);
+            spriteBatch.Draw(texture, position, Color.White);
         }
 
     }

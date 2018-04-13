@@ -50,7 +50,6 @@ namespace Masteroids
             bossFont = Content.Load<SpriteFont>("BossLife");
             bosstex = Content.Load<Texture2D>("boss");
             bossFontPos = new Vector2(1000, 20);
-            skottTex = Content.Load<Texture2D>("laser");
             boss = new Boss(bosspos, entityMgr);
             Texture2D playerShip = Content.Load<Texture2D>("shipTex");
 
