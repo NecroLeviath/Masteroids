@@ -75,6 +75,7 @@
     <Content Include="Content\playerShip.png" />
     <Content Include="Content\shipTex.png" />
     <Content Include="Content\skott.png" />
+    <Content Include="Content\Sound\Castle Crashers  - Jumper.mp3" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

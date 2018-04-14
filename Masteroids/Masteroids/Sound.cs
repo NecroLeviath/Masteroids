@@ -14,7 +14,7 @@ namespace Masteroids
 
         public static void Load(ContentManager content)
         {
-            Music = content.Load<Song>("");
+            Music = content.Load<Song>("Sound/Castle Crashers - Jumper");
         }
     }
 }
