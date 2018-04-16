@@ -18,7 +18,7 @@ namespace Masteroids.States {
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content) {
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
-            SpriteFont buttonFont = _content.Load<SpriteFont>("Fonts/Font");
+            SpriteFont buttonFont = _content.Load<SpriteFont>(@"Fonts/Font");
             int x = graphicsDevice.Viewport.Width;
             int y = graphicsDevice.Viewport.Height;
 

@@ -9,20 +9,22 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    class Player : GameObject
+    class Player : GameObject //Andreas
     {
         private float rotation = 0.1f, speed = 0.3f, scale = 0.5f;
         private Vector2 distance, bulletPos;
         private MouseState mouseStateCurrent, mouseStatePrevious;
         private KeyboardState keyboardState, pastKeyboardState;
         private GamePadState gamePadStateCurrent, gamePadStatePrevious;
+        private float bulletTimer, bulletInterval;
         private SpriteEffects entityFx;
         public PlayerIndex playerValue;
         public Rectangle playerRec;
         public Color[] textureData;
-        public bool Dead;
         public float linearVelocity = 0.02f; //Frammåt
         public float rotationVelocity = 3f; //Hastighet den roterar
+        public bool Dead;
+        public bool AMode; //Asteroid playmode
 
         List<Bullet> bulletList = new List<Bullet>();
         EntityManager entityMgr;
@@ -32,27 +34,28 @@ namespace Masteroids
         {
             this.playerValue = playerValue; ////Avgör spelare. -> återfinns på loadcontent Game1
             this.texture = texture;
+            this.entityMgr = entityMgr;
             sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
-            startPosition = new Vector2(200, 200);
-            Dead = false;
             playerRec = new Rectangle(0, 0, texture.Width, texture.Height);
+            startPosition = new Vector2(200, 200);
             textureData = new Color[texture.Width * texture.Height];
             texture.GetData(textureData);
-            this.entityMgr = entityMgr;
+            Dead = false;
             shouldWrap = true;
         }
 
         public override void Update(GameTime gameTime)
         {
+            bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             pastKeyboardState = keyboardState;
             keyboardState = Keyboard.GetState();
             mouseStatePrevious = mouseStateCurrent;
             mouseStateCurrent = Mouse.GetState();
             gamePadStatePrevious = gamePadStateCurrent;
             gamePadStateCurrent = GamePad.GetState(playerValue);
-
             position += velocity;
             bulletPos = new Vector2(position.X, position.Y);
+            AMode = false;
 
             GamePadCapabilities capabilities =              
                 GamePad.GetCapabilities(playerValue);
@@ -61,24 +64,44 @@ namespace Masteroids
                 GamePadState gamePadState = GamePad.GetState(playerValue);
                 if (capabilities.HasLeftXThumbStick)
                 {
-                    //AInputGamePad();        //Kontroller för Asteroid
+                    if(AMode == true)
+                    {
+                        AInputGamePad();        //Kontroller för Asteroid
+                    }
                     MInputGamePad();      //Kontroller för Masteroid
+
+                    //if (AMode == false)
+                    {
+                    }
                 }
             }
 
-            MInput();
-            //AInput();
+            if (AMode == false)
+            {
+                AInput();
+            }
+
+            //if (AMode == false)
+            //{
+            //    MInput();
+            //}
 
             ScreenWrap();
         }
 
-        private void CreateBullet()
+        private void CreateBullet() //Skapar och skjuter skott i rätt riktning
         {
             var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
-            entityMgr.CreateBullet(new Vector2(position.X, position.Y), 10f, 10, direction);
+            bulletInterval = 0.2f;
+
+            if (bulletTimer >= bulletInterval)
+            {
+                entityMgr.CreateBullet(new Vector2(position.X, position.Y), 10f, 10, direction);
+                bulletTimer = 0;
+            }
         }
 
-        private void MInput()
+        private void MInput()   //Masteroids kontroller för Keyboard och Mus
         {
             distance.X = mouseStateCurrent.X - position.X;
             distance.Y = mouseStateCurrent.Y - position.Y;
@@ -101,7 +124,7 @@ namespace Masteroids
             }
         }
 
-        private void MInputGamePad()
+        private void MInputGamePad() //Masteroids kontroller för Gamepad
         {
             velocity.X += gamePadStateCurrent.ThumbSticks.Left.X * speed;
             velocity.Y -= gamePadStateCurrent.ThumbSticks.Left.Y * speed;
@@ -117,9 +140,11 @@ namespace Masteroids
             }
         }
 
-        private void AInput()
+        private void AInput()   //Asteroids kontroller för keyboard
         {
-            var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
+            var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - 
+                rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
+            linearVelocity = 0.04f;
 
             if (keyboardState.IsKeyDown(Keys.A))            //Rotera med tangentbord Asteroids
                 rotation -= MathHelper.ToRadians(rotationVelocity);
@@ -128,14 +153,14 @@ namespace Masteroids
             
             if (keyboardState.IsKeyDown(Keys.W))            //Frammåt och Bakåt med tangentbord Asteroids
                 velocity += direction * linearVelocity;
-            if (keyboardState.IsKeyDown(Keys.S))
-                velocity -= direction * linearVelocity / 3;
+            //if (keyboardState.IsKeyDown(Keys.S))
+            //    velocity -= direction * linearVelocity / 3;
 
             if (keyboardState.IsKeyDown(Keys.Space) && pastKeyboardState.IsKeyUp(Keys.Space))   //Skjuta
                 CreateBullet();
         }
 
-        private void AInputGamePad()
+        private void AInputGamePad() //Asteroids kontroller för Gamepad
         {
             var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
             position += velocity;
@@ -147,8 +172,6 @@ namespace Masteroids
             
             if (gamePadStateCurrent.Buttons.A == ButtonState.Pressed)  //Frammåt och Bakåt med Knappar
                 velocity += direction * linearVelocity;
-            if (gamePadStateCurrent.Buttons.B == ButtonState.Pressed)  //Bakåt men är inte cannon så placerad inom //
-                velocity -= direction * linearVelocity;
 
             if (gamePadStateCurrent.Buttons.RightShoulder == ButtonState.Pressed && gamePadStatePrevious.Buttons.RightShoulder == ButtonState.Released)
             {

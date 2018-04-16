@@ -11,7 +11,7 @@ namespace Masteroids
     class Bullet : GameObject
     {
         private int damage, age;
-        float bulletTimer, speed;
+        float bulletTimer;
         protected Vector2 center;
         protected Vector2 origin;
         List<Bullet> bulletList = new List<Bullet>();
