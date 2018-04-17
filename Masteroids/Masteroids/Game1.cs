@@ -10,26 +10,23 @@ namespace Masteroids
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D bosstex, skottTex;
-        Vector2 bosspos;
+        Texture2D bosstex, skottTex, MasteroidMenu;
+        Vector2 bosspos, playerPos, position;
+        SpriteFont font;
+        Viewport defaultView;
+        bool enteredGame = false;
+        int screenWidth = 1920, screenHeight = 1080;
+        private State _currentstate;
+        private State _nextState;
+
         EntityManager entityMgr;
         Boss boss;
         AsteroidSpawner asteroidSpawner;
         Bullet bullet;
-        Player player1;
-        Player player2;
-        Vector2 playerPos, position;
-        bool enteredGame = false;
-        int screenWidth = 1920, screenHeight = 1080;
-        SpriteFont font;
-        Viewport defaultView;
-        Texture2D MasteroidMenu;
-        private State _currentstate;
-        private State _nextState;
+        Player player1, player2;
         public void ChangeState(State state) {
             _nextState = state;
         }
-
 
         public Game1()
         {
@@ -82,7 +79,6 @@ namespace Masteroids
                 Exit();
 
             asteroidSpawner.Update(gameTime);
-
 
             //PixelCollision();
             boss.Update(gameTime);

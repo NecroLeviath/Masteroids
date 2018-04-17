@@ -11,7 +11,7 @@ namespace Masteroids
 {
     class Player : GameObject //Andreas
     {
-        private float rotation = 0.1f, speed = 0.3f, scale = 0.5f;
+        private float rotation = 0.1f, speed = 0.3f, scale = 0.5f, linearVelocity = 0.02f, rotationVelocity = 3f;
         private Vector2 distance, bulletPos;
         private MouseState mouseStateCurrent, mouseStatePrevious;
         private KeyboardState keyboardState, pastKeyboardState;
@@ -21,10 +21,7 @@ namespace Masteroids
         public PlayerIndex playerValue;
         public Rectangle playerRec;
         public Color[] textureData;
-        public float linearVelocity = 0.02f; //Frammåt
-        public float rotationVelocity = 3f; //Hastighet den roterar
-        public bool Dead;
-        public bool AMode; //Asteroid playmode
+        public bool Dead, AMode; //Asteroid playmode yes or no?
 
         List<Bullet> bulletList = new List<Bullet>();
         EntityManager entityMgr;
@@ -64,26 +61,26 @@ namespace Masteroids
                 GamePadState gamePadState = GamePad.GetState(playerValue);
                 if (capabilities.HasLeftXThumbStick)
                 {
-                    if(AMode == true)
-                    {
-                        AInputGamePad();        //Kontroller för Asteroid
-                    }
-                    MInputGamePad();      //Kontroller för Masteroid
+                    //if(AMode == true)
+                    //{
+                    //AInputGamePad();          //GamepadKontroller för Asteroid
+                    //}
 
                     //if (AMode == false)
                     {
+                        MInputGamePad();          //Gamepad kontroller för Masteroid
                     }
                 }
             }
 
-            if (AMode == false)
-            {
-                AInput();
-            }
+            //if (AMode == false)
+            //{
+            AInput(); //Keyboard kontroller till Asteroids
+            //}
 
             //if (AMode == false)
             //{
-            //    MInput();
+            //MInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
             //}
 
             ScreenWrap();
@@ -153,8 +150,6 @@ namespace Masteroids
             
             if (keyboardState.IsKeyDown(Keys.W))            //Frammåt och Bakåt med tangentbord Asteroids
                 velocity += direction * linearVelocity;
-            //if (keyboardState.IsKeyDown(Keys.S))
-            //    velocity -= direction * linearVelocity / 3;
 
             if (keyboardState.IsKeyDown(Keys.Space) && pastKeyboardState.IsKeyUp(Keys.Space))   //Skjuta
                 CreateBullet();
@@ -191,50 +186,6 @@ namespace Masteroids
         protected override void WrapDraw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position + wrapOffset, playerRec, Color.White, rotation, new Vector2(texture.Width / 2, texture.Height - 20), scale, entityFx, 0);
-        }
-
-        private void Scrapped()     //Gammal kod som kan va gött att spara ifall man behöver
-        {
-            //GamePadCapabilities capabilities =
-            //    GamePad.GetCapabilities(playerValue);
-            //if (capabilities.IsConnected)
-            //{
-            //    GamePadState gamePadState = GamePad.GetState(playerValue);
-            //    if (capabilities.HasLeftXThumbStick)
-            //    {
-            //        ////Rotera med styrspak
-            //        //if (gamePadState.ThumbSticks.Left.X < -0.1f) //0.1f står för hur mycket spaken ska luta för att svänga.
-            //        //    rotation -= 0.07f;
-            //        //if (gamePadState.ThumbSticks.Left.X > 0.1f)
-            //        //    rotation += 0.07f;
-
-            //        //Frammåt och Bakåt med Knappar
-            //        if (gamePadState.Buttons.A == ButtonState.Pressed)
-            //            velocity += direction * linearVelocity;
-            //        if (gamePadState.Buttons.B == ButtonState.Pressed) //Bakåt men är inte cannon så placerad inom //
-            //            velocity -= direction * linearVelocity;
-
-            //        velocity.X += gamePadState.ThumbSticks.Left.X * speed;
-            //        velocity.Y -= gamePadState.ThumbSticks.Left.Y * speed;
-
-            //        //rotation = gamePadState.ThumbSticks.Right.Y;
-            //        if (gamePadState.ThumbSticks.Right.X < -0.1)
-            //        {
-            //            rotation = gamePadState.ThumbSticks.Right.X;
-            //        }
-
-            //        ////Frammåt och Bakåt med Styrspak
-            //        //if (gamePadState.ThumbSticks.Left.Y > 0.5f)
-            //        //    position += direction * linearVelocity;
-            //        //if (gamePadState.ThumbSticks.Left.Y < -0.5f)
-            //        //    position -= direction * linearVelocity/3;
-
-            //        if (gamePadState.Buttons.Y == ButtonState.Pressed)
-            //        {
-            //            entityMgr.CreateBullet(new Vector2(position.X, position.Y), 10f, 10, direction);
-            //        }
-            //    }
-            //}
         }
     }
 }
