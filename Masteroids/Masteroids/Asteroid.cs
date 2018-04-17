@@ -31,7 +31,6 @@ namespace Masteroids //Laila
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-
             spriteBatch.Draw(tex, position - texOffset, Color.White);
             base.Draw(spriteBatch);
         }
