@@ -7,8 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Masteroids.States {
-    public abstract class State {
+namespace Masteroids.States
+{
+    public abstract class State
+    {
         protected ContentManager _content;
         protected Game1 _game;
         protected GraphicsDevice _graphicsDevice;
@@ -17,7 +19,8 @@ namespace Masteroids.States {
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
         public abstract void PostUpdate(GameTime gameTime);
 
-        public State(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) {
+        public State(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
+        {
             _game = game;
             _graphicsDevice = graphicsDevice;
             _content = content;

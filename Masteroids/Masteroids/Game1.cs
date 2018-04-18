@@ -7,30 +7,36 @@ namespace Masteroids {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game {
+    public class Game1 : Game
+    {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D MasteroidMenu;
         private State _currentstate;
         private State _nextState;
-        public void ChangeState(State state) {
+
+        public void ChangeState(State state)
+        {
             _nextState = state;
         }
 
-        public Game1() {
+        public Game1()
+        {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
 
-        protected override void Initialize() {
+        protected override void Initialize()
+        {
 
             IsMouseVisible = true;
             base.Initialize();
         }
 
 
-        protected override void LoadContent() {
+        protected override void LoadContent()
+        {
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -40,15 +46,18 @@ namespace Masteroids {
         }
 
 
-        protected override void UnloadContent() {
+        protected override void UnloadContent()
+        {
 
         }
 
 
-        protected override void Update(GameTime gameTime) {
+        protected override void Update(GameTime gameTime)
+        {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            if (_nextState != null) {
+            if (_nextState != null)
+            {
                 _currentstate = _nextState;
                 _nextState = null;
             }
@@ -59,8 +68,9 @@ namespace Masteroids {
         }
 
 
-        protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.Black);
 
             _currentstate.Draw(gameTime, spriteBatch);
 
