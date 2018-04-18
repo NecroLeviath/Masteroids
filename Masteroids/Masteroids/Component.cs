@@ -7,14 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Masteroids 
-    {
+    { // CR: Denna måsvinge bör skjutas bak lite
     public abstract class Component 
     {
-        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);  // CR: Vet inte om gameTime hör hemma i Draw
 
         public abstract void Update(GameTime gameTime);
 
-
+        // CR: Onödiga mellanrum.
 
     }
 }
