@@ -11,8 +11,10 @@ namespace Masteroids
 {
     static class Sound
     {
-        public static Song Music { get; private set; }
-        
+        //public static Song Music { get; private set; }
+        public static SoundEffect Music { get; private set; }
+        public static SoundEffectInstance MusicInstance { get; private set; }
+
         //public static SoundEffect SEffect;
         // DEV: Or for sound effects with variation
         //private static Random rand = new Random();
@@ -21,7 +23,10 @@ namespace Masteroids
 
         public static void Load(ContentManager content)
         {
-            Music = content.Load<Song>("Sound/Castle Crashers - Jumper"); // DEV: This is just a debug song and it should be replaced
+            //Music = content.Load<Song>("Sound/MasteroidsTheme"); // DEV: This is just a debug song and it should be replaced
+            Music = content.Load<SoundEffect>("Sound/MasteroidsTheme"); // DEV: This is just a debug song and it should be replaced
+            MusicInstance = Music.CreateInstance();
+            MusicInstance.IsLooped = true;
             //SEffect = content.Load<SoundEffect>("");
             // DEV: Or for sound effects with variation
             // sEffects = Enumerable.Range(1, #).Select(x => content.Load<SoundEffect>("" + x)).ToArray();

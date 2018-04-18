@@ -213,3 +213,9 @@
 /processorParam:Quality=Best
 /build:Sound/Castle Crashers - Jumper.mp3
 
+#begin Sound/MasteroidsTheme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/MasteroidsTheme.wav
+
