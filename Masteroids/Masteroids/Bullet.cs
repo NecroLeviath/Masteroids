@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    class Bullet : GameObject
+    public class Bullet : GameObject
     {
         private int damage, age;
         float bulletTimer;
@@ -70,7 +70,7 @@ namespace Masteroids
         {
             spriteBatch.Draw(texture, position, bulletRec, Color.White, 0,
                  origin, 1.0f, SpriteEffects.None, 0);
-            spriteBatch.Draw(texture, position, Color.Red);
+            spriteBatch.Draw(texture, position, Color.White);
         }
 
     }

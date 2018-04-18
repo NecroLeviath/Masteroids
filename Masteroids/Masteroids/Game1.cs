@@ -28,6 +28,14 @@ namespace Masteroids
             _nextState = state;
         }
 
+        Player player1;
+        Player player2;
+        Vector2 playerPos, position, bossFontPos;
+        bool enteredGame = false;
+        int screenWidth = 1920, screenHeight = 1080;
+        SpriteFont bossFont;
+        Viewport defaultView;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -51,14 +59,14 @@ namespace Masteroids
             entityMgr = new EntityManager(defaultView);
             asteroidSpawner = new AsteroidSpawner(entityMgr, defaultView);
             Art.Initialize(Content);
+            bossFont = Content.Load<SpriteFont>("BossLife");
             bosstex = Content.Load<Texture2D>("boss");
-            skottTex = Content.Load<Texture2D>("laser");
+            bossFontPos = new Vector2(1000, 20);
             boss = new Boss(bosspos, entityMgr);
             Texture2D playerShip = Content.Load<Texture2D>("shipTex");
 
             //Player 1, Kontroll och Tangentbord
-            player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One, entityMgr, defaultView);
-            
+            player1 = new Player(playerShip, new Vector2(screenWidth / 2, screenHeight / 2), PlayerIndex.One, entityMgr, defaultView);            
             player2 = new Player(playerShip, new Vector2(200, 200), PlayerIndex.Two, entityMgr, defaultView);
 
             font = Content.Load<SpriteFont>(@"Fonts/font");
@@ -69,9 +77,7 @@ namespace Masteroids
 
         protected override void UnloadContent()
         {
-
         }
-
         protected override void Update(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
@@ -96,13 +102,11 @@ namespace Masteroids
                     enteredGame = true;
                 }
             }
-
             player1.Update(gameTime);
             if (enteredGame)
             {
                 player2.Update(gameTime);
             }
-
             entityMgr.Update(gameTime);
             if (_nextState != null) {
                 _currentstate = _nextState;
@@ -113,7 +117,6 @@ namespace Masteroids
 
             base.Update(gameTime);
         }
-
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
@@ -131,6 +134,7 @@ namespace Masteroids
             {
                 spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
             }
+            spriteBatch.DrawString(bossFont, "Life: ", bossFontPos, Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
         }

@@ -11,14 +11,15 @@ namespace Masteroids
     class Boss
     {
         Texture2D bosstex, bulletTex;
-        Vector2 velocity, pos, bulletpos;
+        Vector2 velocity, pos, bulletpos, bulletpos1, bulletpos2;
         public Rectangle hitBox;
         int stopX = 1780;
         float bulletTimer, bulletIntervall = 0.5f;
         List<Bullet> bulletList = new List<Bullet>();
         public Color[] textureData;
+        Bullet bullet;
         EntityManager entityMgr;
-
+        public int life;
 
         public Boss(Vector2 velocity, EntityManager entityMgr)
         {
@@ -30,7 +31,7 @@ namespace Masteroids
             Left();
             textureData = new Color[bosstex.Width * bosstex.Height];
             bosstex.GetData(textureData);
-
+            life = 20;
         }
         public void Update(GameTime gameTime)
         {
@@ -45,40 +46,58 @@ namespace Masteroids
             {
                 Left();
             }
-            pos += velocity;
-            bulletpos = new Vector2(pos.X + 90, pos.Y + 90);
-
-            if (bulletTimer >= bulletIntervall)
+            if(life < 1)
             {
-                entityMgr.CreateBullet(bulletpos, 10f, 10, new Vector2(0,1));
+                velocity.X = 0;
+                velocity.Y = 0;
+            }
+            pos += velocity;
+            bulletpos = new Vector2(pos.X + 80, pos.Y + 120);
+            bulletpos1 = new Vector2(pos.X + 20, pos.Y + 65);
+            bulletpos2 = new Vector2(pos.X + 130, pos.Y + 65);
+
+
+            //
+            if (bulletTimer >= bulletIntervall && life > 50)
+            {
+                entityMgr.CreateBullet(bulletpos, 10f, 10, new Vector2(0, 1));
                 bulletTimer = 0;
             }
-
-            //for (int i = 0; i < bulletList.Count; i++)
-            //{
-            //    Bullet bullet = bulletList[i];
-            //    bullet.Update(gameTime);
-
-            //    if (bullet.IsDead())
-            //    {
-            //        bulletList.Remove(bullet);
-            //        i--;
-            //    }
-            //}          
-
+            if (bulletTimer >= bulletIntervall && life <= 50 && life > 20)
+            {
+                bulletIntervall = 0.4f;
+                entityMgr.CreateBullet(bulletpos, 10f, 10, new Vector2(0, 1));
+                entityMgr.CreateBullet(bulletpos1, 10f, 10, new Vector2(1, 1));
+                entityMgr.CreateBullet(bulletpos2, 10f, 10, new Vector2(-1, 1));
+                bulletTimer = 0;
+            }
+            if (bulletTimer >= bulletIntervall && life <= 20 && life > 0)
+            {
+                bulletIntervall = 0.1f;
+                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(0, 1));
+                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(1, 1));
+                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(-1, 1));
+                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(2, 1));
+                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(-2, 1));
+                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(3, 1));
+                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(-3, 1));
+                entityMgr.CreateBullet(bulletpos1, 10f, 10, new Vector2(-1, 0));
+                entityMgr.CreateBullet(bulletpos2, 10f, 10, new Vector2(1, 0));
+                bulletTimer = 0;
+            }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            if(life >= 1)
             spriteBatch.Draw(bosstex, pos, Color.White);
-            //foreach (Bullet b in bulletList)
-            //{
-            //    b.Draw(spriteBatch);
-            //}
+            if (life < 1 )
+            {
+                spriteBatch.Draw(bosstex, pos, Color.Red);
+            }
         }
-
         public bool Left()
         {
-            velocity.X = -2;
+            velocity.X = -4;
             return true;
         }
 
@@ -87,9 +106,5 @@ namespace Masteroids
             velocity.X = 4;
             return true;
         }
-
-
-
-
     }
 }

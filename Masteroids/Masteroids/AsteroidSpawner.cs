@@ -20,34 +20,16 @@ namespace Masteroids
             this.viewport = viewport;
             rnd = new Random();
         }
-
         public void Update(GameTime gameTime)
         {
+            //how many asteroids that spawns and how their movement is.
             if (entityMgr.Asteroids.Count < 10)
             {
                 int positionX = rnd.Next(0, viewport.Width - Art.AsteroidTex.Width);
                 int positionY = rnd.Next(0, viewport.Height + Art.AsteroidTex.Height);
-                int speedX = 2;
-                int speedY = 2;
+                int speedX = rnd.Next(-2, 2);
+                int speedY = rnd.Next(-2, 2);
                 Vector2 position = new Vector2(positionX, positionY);
-
-                // if removed, asteroids moves in the same path. Cant get this too work
-                //if (position.X <= 0)
-                //{
-                //    speedX = 2;
-                //}
-                //if (position.Y <= 0)
-                //{
-                //    speedY = 2;
-                //}
-                //if (position.X >= 800)
-                //{
-                //    speedX = -2;
-                //}
-                //if (position.Y >= 800)
-                //{
-                //    speedY = -2;
-                //}
                 Vector2 speed = new Vector2(speedX, speedY);
                 entityMgr.CreateAsteroid(position, speed);
             }
