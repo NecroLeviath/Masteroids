@@ -11,8 +11,8 @@ namespace Masteroids // Simon
     class Enemy : GameObject
     {
         public Enemy(Texture2D texture, Vector2 position, float speed, Viewport viewport)
-            : base(position, viewport) { }
+            : base(position, viewport) { } //måsvingar
 
-        public override void Update(GameTime gameTime) { }
+        public override void Update(GameTime gameTime) { } //måsvingar
     }
 }
