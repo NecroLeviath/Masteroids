@@ -152,6 +152,18 @@
 /processorParam:TextureFormat=Color
 /build:playerShip.png
 
+#begin ponyBoss.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ponyBoss.png
+
 #begin shipTex.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -176,25 +188,6 @@
 /processorParam:TextureFormat=Color
 /build:skott.png
 
-#begin Fonts/Font.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Font.spritefont
-
-#begin ponyBoss.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:ponyBoss.png
-
 #begin ufoBoss.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -206,6 +199,13 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:ufoBoss.png
+
+#begin Fonts/Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Font.spritefont
 
 #begin Sound/Castle Crashers - Jumper.mp3
 /importer:Mp3Importer

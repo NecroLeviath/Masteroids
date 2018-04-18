@@ -22,7 +22,6 @@ namespace Masteroids.States
         {
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
             SpriteFont buttonFont = _content.Load<SpriteFont>(@"Fonts/Font");
-            SpriteFont buttonFont = _content.Load<SpriteFont>("Fonts/Font");
             Sound.Load(content);
             MediaPlayer.Play(Sound.Music);
             int x = graphicsDevice.Viewport.Width;
