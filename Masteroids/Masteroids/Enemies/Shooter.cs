@@ -18,8 +18,8 @@ namespace Masteroids // Simon
         public Shooter(Texture2D texture, Vector2 position, float speed, EntityManager entityManager, Viewport viewport)
             : base(texture, position, speed, viewport)
         {
-            this.texture = texture; // DEV: This should be moved to GameObject
-            this.speed = speed; // DEV: This should be moved to GameObject
+            this.texture = texture; // DEV: This should be moved to GameObject //
+            this.speed = speed; // DEV: This should be moved to GameObject //
             acceleration = 10f;
             deacceleration = 0.9f;
             sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
