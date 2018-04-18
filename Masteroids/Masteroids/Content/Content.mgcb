@@ -207,3 +207,9 @@
 /processorParam:TextureFormat=Color
 /build:ufoBoss.png
 
+#begin Sound/Castle Crashers - Jumper.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/Castle Crashers - Jumper.mp3
+

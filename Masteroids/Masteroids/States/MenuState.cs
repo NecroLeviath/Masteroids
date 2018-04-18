@@ -7,7 +7,7 @@ using Masteroids.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-
+using Microsoft.Xna.Framework.Media;
 
 namespace Masteroids.States {
     public class MenuState : State {
@@ -19,6 +19,9 @@ namespace Masteroids.States {
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content) {
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
             SpriteFont buttonFont = _content.Load<SpriteFont>(@"Fonts/Font");
+            SpriteFont buttonFont = _content.Load<SpriteFont>("Fonts/Font");
+            Sound.Load(content);
+            MediaPlayer.Play(Sound.Music);
             int x = graphicsDevice.Viewport.Width;
             int y = graphicsDevice.Viewport.Height;
 
