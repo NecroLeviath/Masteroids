@@ -75,12 +75,12 @@ namespace Masteroids
 
             //if (AMode == false)
             //{
-            AInput(); //Keyboard kontroller till Asteroids
-            //}
+            /* AInput();*/ //Keyboard kontroller till Asteroids
+                           //}
 
             //if (AMode == false)
             //{
-            //MInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
+            MInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
             //}
 
             ScreenWrap();

@@ -27,14 +27,9 @@ namespace Masteroids
         public void ChangeState(State state) {
             _nextState = state;
         }
-
-        Player player1;
-        Player player2;
-        Vector2 playerPos, position, bossFontPos;
-        bool enteredGame = false;
-        int screenWidth = 1920, screenHeight = 1080;
+        
+        Vector2 bossFontPos;
         SpriteFont bossFont;
-        Viewport defaultView;
 
         public Game1()
         {
