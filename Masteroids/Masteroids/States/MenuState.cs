@@ -30,19 +30,19 @@ namespace Masteroids.States
 
             Button newGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 200),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 500),
                 Text = "New Game"
             };
 
             Button HighScoreButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 250),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 550),
                 Text = "Highscore"
             };
 
             Button quitGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 300),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 600),
                 Text = "Quit Game"
             };
             newGameButton.Click += NewGameButton_click;

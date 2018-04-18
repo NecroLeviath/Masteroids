@@ -60,9 +60,9 @@ namespace Masteroids
             position += Direction * speed;
 
             if (position.Y >= 200)
-            {
+            
                 Kill();
-            }
+            
 
 
         }
