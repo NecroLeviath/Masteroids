@@ -13,12 +13,14 @@ namespace Masteroids // Simon
         public static Texture2D BossTex;
         public static Texture2D BulletTex;
         public static Texture2D AsteroidTex;
+        public static Texture2D PlayerTex;
 
         public static void Initialize(ContentManager content)
         {
             BossTex = content.Load<Texture2D>("ufoBoss");
             BulletTex = content.Load<Texture2D>("skott");
             AsteroidTex = content.Load<Texture2D>("ast4Tex");
+            PlayerTex = content.Load<Texture2D>("shipTex");
         }
     }
 }

@@ -77,12 +77,12 @@ namespace Masteroids.States
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
+            //spriteBatch.Begin();
 
             foreach (Masteroids.Component component in _components)
                 component.Draw(gameTime, spriteBatch);
 
-            spriteBatch.End();
+            //spriteBatch.End();
         }
 
         public override void PostUpdate(GameTime gameTime)
