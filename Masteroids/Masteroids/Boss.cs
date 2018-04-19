@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    class Boss
+    class Boss //public fields börjar med stor bokstav. tex TextureData.
     {
-        Texture2D bosstex, bulletTex;
-        Vector2 velocity, pos, bulletpos, bulletpos1, bulletpos2;
+        Texture2D bosstex, bulletTex; //Hämta textures från GameObject klassn.
+        Vector2 velocity, pos, bulletpos, bulletpos1, bulletpos2; //bulletPos1-2-3 istället för en bulletPos
         public Rectangle hitBox;
-        int stopX = 1780;
+        int stopX = 1780;   //Lägga in åtkomst och sortera.
         float bulletTimer, bulletIntervall = 0.5f;
         List<Bullet> bulletList = new List<Bullet>();
         public Color[] textureData;
@@ -31,7 +31,7 @@ namespace Masteroids
             Left();
             textureData = new Color[bosstex.Width * bosstex.Height];
             bosstex.GetData(textureData);
-            life = 99;
+            life = 1;
         }
         public void Update(GameTime gameTime)
         {
@@ -52,13 +52,13 @@ namespace Masteroids
                 velocity.Y = 0;
             }
             pos += velocity;
-            bulletpos = new Vector2(pos.X + 80, pos.Y + 120);
+            bulletpos = new Vector2(pos.X + 80, pos.Y + 120); // + texture.Width / 2  .. 
             bulletpos1 = new Vector2(pos.X + 20, pos.Y + 65);
-            bulletpos2 = new Vector2(pos.X + 130, pos.Y + 65);
+            bulletpos2 = new Vector2(pos.X + bosstex.Width, pos.Y + 65);
 
 
             //
-            if (bulletTimer >= bulletIntervall && life > 50)
+            if (bulletTimer >= bulletIntervall && life > 50) //Ha en bullethastighet som är relativt till bossen.
             {
                 entityMgr.CreateBullet(bulletpos, 10f, 10, new Vector2(0, 1));
                 bulletTimer = 0;
@@ -90,7 +90,7 @@ namespace Masteroids
         {
             if(life >= 1)
             spriteBatch.Draw(bosstex, pos, Color.White);
-            if (life < 1 )
+            if (life < 1 ) //Tag Bort måsvingarna LAILA!! :)
             {
                 spriteBatch.Draw(bosstex, pos, Color.Red);
             }
