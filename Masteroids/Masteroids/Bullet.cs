@@ -15,8 +15,8 @@ namespace Masteroids
         protected Vector2 center;
         protected Vector2 origin;
         List<Bullet> bulletList = new List<Bullet>();
-        public Rectangle bulletRec;
-        public Color[] textureData;
+        public Rectangle bulletRec; //PascalCasing
+        public Color[] textureData; //PascalCasing
         public Vector2 Direction;
 
         public int Damage
@@ -62,9 +62,9 @@ namespace Masteroids
             if (position.Y >= 200)
             
                 Kill();
-            
-
-
+            //
+            // Mellanrum
+            //
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -72,6 +72,6 @@ namespace Masteroids
                  origin, 1.0f, SpriteEffects.None, 0);
             spriteBatch.Draw(texture, position, Color.White);
         }
-
+        //mellanRum
     }
 }
