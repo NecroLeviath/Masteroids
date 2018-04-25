@@ -43,7 +43,7 @@ namespace Masteroids.States
             entityMgr.Add(player1);
             Centipede previous = new Centipede(Art.CentipedeTex, new Vector2(200), 4, viewport, entityMgr);
             entityMgr.Add(previous);
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Centipede next = new Centipede(Art.CentipedeTex, new Vector2(200), 4, viewport, previous, entityMgr);
                 entityMgr.Add(next);

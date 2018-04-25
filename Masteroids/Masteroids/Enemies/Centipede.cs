@@ -48,12 +48,14 @@ namespace Masteroids
 
             beaconTimer += delta;
             if (beaconTimer >= beaconInterval)
+            {
                 Beacons.Add(position);
+                beaconTimer = 0;
+            }
 
             if (isHead)
             {
-                direction = Vector2.Normalize(new Vector2(1)); // DEV: TEMP
-                direction = Vector2.Normalize(entityMgr.Players[0].Position - position);
+                direction = Vector2.Normalize(entityMgr.Players[0].Position - position);    // DEV: TEMP
                 velocity = direction * speed;
             }
             else if (!isHead && parent.Beacons.Count > 0)
@@ -65,11 +67,6 @@ namespace Masteroids
                     direction = parent.Beacons.Count > 0 ? Vector2.Normalize(parent.Beacons[0] - position) : direction;
                     velocity = direction * speed;
                 }
-                //else if (distanceToBeacon.LengthSquared() < speed * speed) // LengthSquared and speed^2 for optimization
-                //{
-                //    velocity = distanceToBeacon;
-                //    parent.RemoveFirstBeacon();
-                //}
                 else
                 {
                     direction = Vector2.Normalize(distanceToBeacon);
