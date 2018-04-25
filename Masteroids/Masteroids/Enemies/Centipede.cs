@@ -29,5 +29,25 @@ namespace Masteroids
             this.parent = parent;
             isHead = false;
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (!isHead && !parent.IsAlive)
+                isHead = true;
+
+            if (isHead)
+            {
+
+            }
+            else if (!isHead)
+            {
+
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position, Color.White);
+        }
     }
 }
