@@ -45,6 +45,7 @@
     <Compile Include="AsteroidSpawner.cs" />
     <Compile Include="Boss.cs" />
     <Compile Include="Bullet.cs" />
+    <Compile Include="Enemies\Centipede.cs" />
     <Compile Include="Enemies\Enemy.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="Controls\Button.cs" />
