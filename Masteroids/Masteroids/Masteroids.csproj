@@ -75,6 +75,7 @@
     <Content Include="Content\ast4Tex.png" />
     <Content Include="Content\astTex.png" />
     <Content Include="Content\boss.png" />
+    <Content Include="Content\CentipedeTemp.png" />
     <Content Include="Content\laser.png" />
     <Content Include="Content\playerShip.png" />
     <Content Include="Content\ponyBoss.png" />
