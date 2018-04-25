@@ -11,7 +11,7 @@ namespace Masteroids
 {
     class Player : GameObject //Andreas
     {
-        private float scale = 0.5f, rotationVelocity = 3f;
+        private float scale = 0.5f, rotationVelocity = 3f, maxSpeed = 5f;
         private float bulletTimer, bulletInterval;
         private Vector2 distance, bulletPos;
         private MouseState mouseStateCurrent, mouseStatePrevious;
@@ -36,6 +36,7 @@ namespace Masteroids
             startPosition = new Vector2(200, 200);
             Dead = false;
             shouldWrap = true;
+            velocity = Vector2.Zero;
         }
 
         public override void Update(GameTime gameTime)
@@ -53,6 +54,12 @@ namespace Masteroids
             AsteroidMode = false;
 
             bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (velocity.Length() > maxSpeed)
+            {
+                direction = velocity;
+                direction.Normalize();
+                velocity = direction *maxSpeed;
+            }
             position += velocity;
             
             rotation = 0.1f;
@@ -79,7 +86,7 @@ namespace Masteroids
 
         private void CreateBullet() //Skapar och skjuter skott i rätt riktning
         {
-            var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - 
+            direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - 
                 rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
             bulletInterval = 0.2f;
 
