@@ -15,6 +15,9 @@ namespace Masteroids.States
     {
         private List<Component> _components;
 
+        Viewport viewport;
+        EntityManager entityMgr;
+        AsteroidSpawner asteroidSpawner;
 
 
 
@@ -28,21 +31,26 @@ namespace Masteroids.States
             int x = graphicsDevice.Viewport.Width;
             int y = graphicsDevice.Viewport.Height;
 
+
+            viewport = graphicsDevice.Viewport;
+            entityMgr = new EntityManager(viewport);
+            asteroidSpawner = new AsteroidSpawner(entityMgr, viewport);
+
             Button NewGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 200),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 550),
                 Text = "New Game"
             };
 
             Button HighScoreButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 250),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 600),
                 Text = "Highscore"
             };
 
             Button QuitGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 300),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 650),
                 Text = "Quit Game"
             };
             NewGameButton.Click += NewGameButton_click;
@@ -79,9 +87,10 @@ namespace Masteroids.States
         {
             //spriteBatch.Begin();
 
+
+            entityMgr.Draw(spriteBatch);
             foreach (Masteroids.Component component in _components)
                 component.Draw(gameTime, spriteBatch);
-
             //spriteBatch.End();
         }
 
@@ -92,6 +101,9 @@ namespace Masteroids.States
 
         public override void Update(GameTime gameTime)
         {
+
+            asteroidSpawner.Update(gameTime);
+            entityMgr.Update(gameTime);
             foreach (Masteroids.Component component in _components)
                 component.Update(gameTime);
         }
