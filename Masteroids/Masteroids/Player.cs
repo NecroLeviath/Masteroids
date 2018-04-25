@@ -11,7 +11,7 @@ namespace Masteroids
 {
     class Player : GameObject //Andreas
     {
-        private float scale = 0.5f, rotationVelocity = 3f, maxSpeed = 5f;
+        private float scale = 0.5f, rotationVelocity = 5f, maxSpeed = 10f;
         private float bulletTimer, bulletInterval;
         private Vector2 distance, bulletPos;
         private MouseState mouseStateCurrent, mouseStatePrevious;
@@ -58,12 +58,11 @@ namespace Masteroids
             {
                 direction = velocity;
                 direction.Normalize();
-                velocity = direction *maxSpeed;
+                velocity = direction * maxSpeed;
             }
             position += velocity;
             
-            rotation = 0.1f;
-            speed = 0.3f;
+            speed = 0.4f;
 
             GamePadCapabilities capabilities =              
                 GamePad.GetCapabilities(playerValue);
@@ -78,8 +77,8 @@ namespace Masteroids
                 }
             }
 
-            //AInput(); //Keyboard kontroller till Asteroids
-            MInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
+            AInput(); //Keyboard kontroller till Asteroids
+            //MInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
 
             ScreenWrap();
         }
