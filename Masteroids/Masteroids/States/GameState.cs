@@ -39,6 +39,18 @@ namespace Masteroids.States
             player1 = new Player(Art.PlayerTex, new Vector2(viewport.Width / 2, viewport.Height / 2), PlayerIndex.One, entityMgr, viewport);
             player2 = new Player(Art.PlayerTex, new Vector2(200, 200), PlayerIndex.Two, entityMgr, viewport);
 
+            #region Debug
+            entityMgr.Add(player1);
+            Centipede previous = new Centipede(Art.CentipedeTex, new Vector2(200), 4, viewport, entityMgr);
+            entityMgr.Add(previous);
+            for (int i = 0; i < 100; i++)
+            {
+                Centipede next = new Centipede(Art.CentipedeTex, new Vector2(200), 4, viewport, previous, entityMgr);
+                entityMgr.Add(next);
+                previous = next;
+            }
+            #endregion
+
             font = content.Load<SpriteFont>(@"Fonts/font");
         }
 
