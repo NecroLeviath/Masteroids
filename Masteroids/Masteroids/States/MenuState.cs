@@ -28,7 +28,7 @@ namespace Masteroids.States
             int x = graphicsDevice.Viewport.Width;
             int y = graphicsDevice.Viewport.Height;
 
-            Button newGameButton = new Button(buttonTexture, buttonFont)
+            Button NewGameButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2((x - buttonTexture.Width) / 2, 200),
                 Text = "New Game"
@@ -40,19 +40,19 @@ namespace Masteroids.States
                 Text = "Highscore"
             };
 
-            Button quitGameButton = new Button(buttonTexture, buttonFont)
+            Button QuitGameButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2((x - buttonTexture.Width) / 2, 300),
                 Text = "Quit Game"
             };
-            newGameButton.Click += NewGameButton_click;
+            NewGameButton.Click += NewGameButton_click;
             HighScoreButton.Click += HighScoreButton_click;
-            quitGameButton.Click += quitGameButton_click;
+            QuitGameButton.Click += QuitGameButton_click;
             _components = new List<Component>()
             {
-                newGameButton,
+                NewGameButton,
                 HighScoreButton,
-                quitGameButton,
+                QuitGameButton,
             };
 
 
@@ -69,7 +69,7 @@ namespace Masteroids.States
             _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
 
         }
-        private void quitGameButton_click(object sender, EventArgs e)
+        private void QuitGameButton_click(object sender, EventArgs e)
         {
             _game.Exit();
 
