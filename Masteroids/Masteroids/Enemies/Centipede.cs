@@ -14,8 +14,11 @@ namespace Masteroids
         EntityManager entityMgr;
         bool isHead;
         public List<Vector2> Beacons { get; private set; }
-        float beaconTimer, beaconInterval = 0.2f;
-		int hp = 3; // DEV: Should be moved to constuctor
+		float beaconTimer, moveTimer;
+		float beaconInterval = 0.2f, moveInterval = 1f;
+		Random rand = new Random();
+		int hp = 15; // DEV: Should be moved to constuctor
+		Vector2 goal;
 
         public Centipede(Texture2D texture, Vector2 position, float speed, Viewport viewport, EntityManager entityMgr)
             : base(texture, position, speed, viewport)
@@ -49,7 +52,7 @@ namespace Masteroids
 			if (hp < 0)
 				IsAlive = false;
 
-            position += velocity;
+			position += velocity;
 
             beaconTimer += delta;
             if (beaconTimer >= beaconInterval)
@@ -60,13 +63,22 @@ namespace Masteroids
 
             if (isHead)
             {
-                direction = Vector2.Normalize(entityMgr.Players[0].Position - position);    // DEV: TEMP
-                velocity = direction * speed;
+				moveTimer += delta;
+				if (moveTimer >= moveInterval || Vector2.Distance(position, goal) < 10)
+				{
+					float x = rand.Next(viewport.Width);
+					float y = rand.Next(viewport.Height);
+					goal = new Vector2(x, y);
+
+					moveTimer = 0;
+				}
+				direction = Vector2.Normalize(goal - position);
+				velocity = direction * speed;
             }
             else if (!isHead && parent.Beacons.Count > 0)
             {
                 var distanceToBeacon = (parent.Beacons[0] - position);
-                if (distanceToBeacon.LengthSquared() < speed * speed) // 0.1f is a safety distance
+                if (distanceToBeacon.LengthSquared() < speed * speed) // LengthSquared and speed^2 for efficiency
                 {
                     parent.RemoveFirstBeacon();
                     direction = parent.Beacons.Count > 0 ? Vector2.Normalize(parent.Beacons[0] - position) : direction;
