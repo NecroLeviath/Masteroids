@@ -14,6 +14,7 @@ namespace Masteroids // Simon
         public static Texture2D BulletTex;
         public static Texture2D AsteroidTex;
         public static Texture2D PlayerTex;
+        public static Texture2D CentipedeTex;
 
         public static void Initialize(ContentManager content)
         {
@@ -21,6 +22,7 @@ namespace Masteroids // Simon
             BulletTex = content.Load<Texture2D>("skott");
             AsteroidTex = content.Load<Texture2D>("ast4Tex");
             PlayerTex = content.Load<Texture2D>("shipTex");
+            CentipedeTex = content.Load<Texture2D>("CentipedeTemp");
         }
     }
 }

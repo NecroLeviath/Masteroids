@@ -94,15 +94,31 @@ namespace Masteroids // Simon
 
         private void HandleCollisions()
         {
-            for (int i = 0; i < Asteroids.Count; i++)
-                for (int j = 0; j < bullets.Count; j++)
-                {
-                    if (IsColliding(Asteroids[i], bullets[j]))// && bullets[j].Shooter is Player)
-                    {
-                        Asteroids[i].HandleCollision(bullets[j]);
-                        bullets[j].HandleCollision(Asteroids[i]);
-                    }
-                }
+			for (int i = 0; i < bullets.Count; i++)
+			{
+				Bullet b = bullets[i];
+				if (b.IsAlive)
+				{
+					for (int j = 0; j < Asteroids.Count; j++)
+					{
+						Asteroid a = Asteroids[j];
+						if (a.IsAlive && IsColliding(b, a))// && b.Shooter is Player)
+						{
+							b.HandleCollision(a);
+							a.HandleCollision(b);
+						}
+					}
+					for (int j = 0; j < enemies.Count; j++)
+					{
+						Enemy e = enemies[j];
+						if (e.IsAlive && IsColliding(b, e))// && b.Shooter is Player)
+						{
+							e.HandleCollision(b);
+							b.HandleCollision(e);
+						}
+					}
+				}
+			}
         }
     }
 }

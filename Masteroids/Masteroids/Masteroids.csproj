@@ -45,6 +45,7 @@
     <Compile Include="AsteroidSpawner.cs" />
     <Compile Include="Boss.cs" />
     <Compile Include="Bullet.cs" />
+    <Compile Include="Enemies\Centipede.cs" />
     <Compile Include="Enemies\Enemy.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="Controls\Button.cs" />
@@ -74,6 +75,7 @@
     <Content Include="Content\ast4Tex.png" />
     <Content Include="Content\astTex.png" />
     <Content Include="Content\boss.png" />
+    <Content Include="Content\CentipedeTemp.png" />
     <Content Include="Content\laser.png" />
     <Content Include="Content\pacmanSheet.png" />
     <Content Include="Content\playerShip.png" />
