@@ -103,6 +103,15 @@ namespace Masteroids // Simon
                         bullets[j].HandleCollision(Asteroids[i]);
                     }
                 }
+			for (int i = 0; i < enemies.Count; i++)
+				for (int j = 0; j < bullets.Count; j++)
+				{
+					if (IsColliding(enemies[i], bullets[j]))
+					{
+						enemies[i].HandleCollision(bullets[j]);
+						bullets[j].HandleCollision(enemies[i]);
+					}
+				}
         }
     }
 }

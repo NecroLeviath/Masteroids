@@ -15,6 +15,7 @@ namespace Masteroids
         bool isHead;
         public List<Vector2> Beacons { get; private set; }
         float beaconTimer, beaconInterval = 0.2f;
+		int hp = 3; // DEV: Should be moved to constuctor
 
         public Centipede(Texture2D texture, Vector2 position, float speed, Viewport viewport, EntityManager entityMgr)
             : base(texture, position, speed, viewport)
@@ -23,6 +24,7 @@ namespace Masteroids
             this.speed = speed;     // DEV: Should be moved to GameObject
             this.entityMgr = entityMgr;
             isHead = true;
+			Radius = texture.Height / 2;
             Beacons = new List<Vector2>();
         }
 
@@ -34,7 +36,8 @@ namespace Masteroids
             this.parent = parent;
             this.entityMgr = entityMgr;
             isHead = false;
-            Beacons = new List<Vector2>();
+			Radius = texture.Height / 2;
+			Beacons = new List<Vector2>();
         }
 
         public override void Update(GameTime gameTime)
@@ -43,6 +46,8 @@ namespace Masteroids
 
             if (!isHead && !parent.IsAlive)
                 isHead = true;
+			if (hp < 0)
+				IsAlive = false;
 
             position += velocity;
 
@@ -77,12 +82,19 @@ namespace Masteroids
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, Color.White);
+			Vector2 drawPos = position - new Vector2(texture.Width / 2, texture.Height / 2);
+            spriteBatch.Draw(texture, drawPos, Color.White);
         }
 
         public void RemoveFirstBeacon()
         {
             Beacons.RemoveAt(0);
         }
-    }
+
+		public override void HandleCollision(GameObject other)
+		{
+			if (other is Bullet)
+				hp -= (other as Bullet).Damage;
+		}
+	}
 }
