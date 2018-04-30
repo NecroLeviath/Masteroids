@@ -20,7 +20,7 @@ namespace Masteroids
 		Random rand = new Random();
 		Vector2 goal;
 
-        public Centipede(Texture2D texture, Vector2 position, float speed, int hitPoints, Viewport viewport, EntityManager entityMgr)
+        public Centipede(Texture2D texture, Vector2 position, float speed, int hitPoints, int numberOfSegments, Viewport viewport, EntityManager entityMgr)
             : base(texture, position, speed, hitPoints, viewport)
         {
             this.entityMgr = entityMgr;
@@ -28,6 +28,13 @@ namespace Masteroids
 			Radius = texture.Height / 2;
             Beacons = new List<Vector2>();
 			FindGoal(moveInterval);
+			Centipede previous = this;
+			for (int i = 0; i < numberOfSegments; i++)
+			{
+				Centipede next = new Centipede(Art.CentipedeTex, this.position, 4, 3, viewport, previous, entityMgr);
+				entityMgr.Add(next);
+				previous = next;
+			}
         }
 
         public Centipede(Texture2D texture, Vector2 position, float speed, int hitPoints, Viewport viewport, Centipede parent, EntityManager entityMgr)
