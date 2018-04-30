@@ -16,7 +16,7 @@ namespace Masteroids // Simon
         List<GameObject> addedEntities = new List<GameObject>();
         List<Bullet> bullets = new List<Bullet>();
         List<Enemy> enemies = new List<Enemy>();
-		List<BaseBoss> bosses = new List<BaseBoss>();
+		public List<BaseBoss> Bosses = new List<BaseBoss>();
         public List<Player> Players = new List<Player>();
         public List<Asteroid> Asteroids = new List<Asteroid>();
 
@@ -67,7 +67,7 @@ namespace Masteroids // Simon
 			else if (entity is Asteroid)
 				Asteroids.Add(entity as Asteroid);
 			else if (entity is BaseBoss)
-				bosses.Add(entity as BaseBoss);
+				Bosses.Add(entity as BaseBoss);
 			else if (entity is Enemy)
 				enemies.Add(entity as Enemy);
 			else if (entity is Player)

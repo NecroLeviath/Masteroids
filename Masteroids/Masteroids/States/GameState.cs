@@ -106,8 +106,11 @@ namespace Masteroids.States
 			//    spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
 			//}
 			#endregion
-			spriteBatch.DrawString(bossFont, "Life: ", bossFontPos, Color.White);
-        }
 
+			int bossHP = 0;
+			for (int i = 0; i < entityMgr.Bosses.Count; i++)	// Summarizes the HP of the boss.
+				bossHP += entityMgr.Bosses[i].HP;
+			spriteBatch.DrawString(bossFont, "Life: " + bossHP, bossFontPos, Color.White);  // DEV: Might be changed to a health bar instead of a number
+		}
     }
 }
