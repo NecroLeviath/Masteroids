@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    class Centipede : Enemy
+    class Centipede : BaseBoss
     {
         Centipede parent;
         EntityManager entityMgr;
@@ -18,14 +18,11 @@ namespace Masteroids
 		float beaconInterval = 0.2f, moveInterval = 3f;
 		float maxTurnRate = 2f;
 		Random rand = new Random();
-		int hp = 1; // DEV: Should be moved to constuctor
 		Vector2 goal;
 
-        public Centipede(Texture2D texture, Vector2 position, float speed, Viewport viewport, EntityManager entityMgr)
-            : base(texture, position, speed, viewport)
+        public Centipede(Texture2D texture, Vector2 position, float speed, int hitPoints, Viewport viewport, EntityManager entityMgr)
+            : base(texture, position, speed, hitPoints, viewport)
         {
-            this.texture = texture; // DEV: Should be moved to GameObject
-            this.speed = speed;     // DEV: Should be moved to GameObject
             this.entityMgr = entityMgr;
             isHead = true;
 			Radius = texture.Height / 2;
@@ -33,8 +30,8 @@ namespace Masteroids
 			FindGoal(moveInterval);
         }
 
-        public Centipede(Texture2D texture, Vector2 position, float speed, Viewport viewport, Centipede parent, EntityManager entityMgr)
-            : base(texture, position, speed, viewport)
+        public Centipede(Texture2D texture, Vector2 position, float speed, int hitPoints, Viewport viewport, Centipede parent, EntityManager entityMgr)
+            : base(texture, position, speed, hitPoints, viewport)
         {
             this.texture = texture; // DEV: Should be moved to GameObject
             this.speed = speed;     // DEV: Should be moved to GameObject
@@ -54,7 +51,7 @@ namespace Masteroids
 				isHead = true;
 				FindGoal(moveInterval);
 			}
-			if (hp < 0)
+			if (HP < 0)
 				IsAlive = false;
 
 			position += velocity;
@@ -103,7 +100,7 @@ namespace Masteroids
 		public override void HandleCollision(GameObject other)
 		{
 			if (other is Bullet)
-				hp -= (other as Bullet).Damage;
+				HP -= (other as Bullet).Damage;
 		}
 
 		private void FindGoal(float delta)
