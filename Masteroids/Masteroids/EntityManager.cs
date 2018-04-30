@@ -99,25 +99,34 @@ namespace Masteroids // Simon
         {
 			for (int i = 0; i < bullets.Count; i++)
 			{
-				Bullet b = bullets[i];
-				if (b.IsAlive)
+				Bullet bullet = bullets[i];
+				if (bullet.IsAlive)
 				{
 					for (int j = 0; j < Asteroids.Count; j++)
 					{
-						Asteroid a = Asteroids[j];
-						if (a.IsAlive && IsColliding(b, a))// && b.Shooter is Player)
+						Asteroid asteroid = Asteroids[j];
+						if (asteroid.IsAlive && IsColliding(bullet, asteroid))// && b.Shooter is Player)
 						{
-							b.HandleCollision(a);
-							a.HandleCollision(b);
+							bullet.HandleCollision(asteroid);
+							asteroid.HandleCollision(bullet);
 						}
 					}
 					for (int j = 0; j < enemies.Count; j++)
 					{
-						Enemy e = enemies[j];
-						if (e.IsAlive && IsColliding(b, e))// && b.Shooter is Player)
+						Enemy enemy = enemies[j];
+						if (enemy.IsAlive && IsColliding(bullet, enemy))// && b.Shooter is Player)
 						{
-							e.HandleCollision(b);
-							b.HandleCollision(e);
+							enemy.HandleCollision(bullet);
+							bullet.HandleCollision(enemy);
+						}
+					}
+					for (int j = 0; j < Bosses.Count; j++)
+					{
+						BaseBoss boss = Bosses[j];
+						if (boss.IsAlive && IsColliding(bullet, boss))
+						{
+							boss.HandleCollision(bullet);
+							bullet.HandleCollision(boss);
 						}
 					}
 				}
