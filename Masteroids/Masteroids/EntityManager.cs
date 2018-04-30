@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Masteroids // Simon
 {
-    class EntityManager
+    public class EntityManager
     {
         Viewport viewport;
         bool isUpdating;

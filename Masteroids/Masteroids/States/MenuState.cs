@@ -14,8 +14,10 @@ namespace Masteroids.States
     public class MenuState : State
     {
         private List<Component> _components;
+		EntityManager entityMgr;
+		BaseBoss boss;
 
-        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
+        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager)
 			: base(game, graphicsDevice, content)
         {
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
@@ -23,6 +25,7 @@ namespace Masteroids.States
             Sound.Load(content);
             //MediaPlayer.Play(Sound.Music);
             Sound.MusicInstance.Play();
+			entityMgr = entityManager;
             int x = graphicsDevice.Viewport.Width;
             int y = graphicsDevice.Viewport.Height;
 
@@ -57,15 +60,16 @@ namespace Masteroids.States
         }
 
         private void NewGameButton_click(object sender, EventArgs e)
-        {
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+		{
+			boss = new Boss(Art.BossTex, new Vector2(250, 50), 4, 1, _graphicsDevice.Viewport, entityMgr);
+			//boss = new Centipede(Art.CentipedeTex, new Vector2(200), 4, 3, 9, viewport, entityMgr);
+			_game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, boss));
             //här startar spelet
         }
 
         private void HighScoreButton_click(object sender, EventArgs e)
         {
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
-
+            //_game.ChangeState(new GameState(_game, _graphicsDevice, _content));
         }
         private void quitGameButton_click(object sender, EventArgs e)
         {

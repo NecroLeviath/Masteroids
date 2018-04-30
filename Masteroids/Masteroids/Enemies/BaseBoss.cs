@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-	abstract class BaseBoss : Enemy
+	public abstract class BaseBoss : Enemy // Simon
 	{
 		public int HP { get; protected set; }
 

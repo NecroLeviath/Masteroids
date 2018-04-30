@@ -12,7 +12,6 @@ namespace Masteroids.States
 {
     public class GameState : State
     {
-        Vector2 bosspos;
         SpriteFont font;
         Viewport viewport;
 
@@ -22,16 +21,15 @@ namespace Masteroids.States
         Vector2 bossFontPos;
         SpriteFont bossFont;
 
-        public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
+        public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, BaseBoss boss)
 			: base(game, graphicsDevice, content)
         {
             viewport = graphicsDevice.Viewport;
-            entityMgr = new EntityManager(viewport);
+            entityMgr = entityManager;
             asteroidSpawner = new AsteroidSpawner(entityMgr, viewport);
             bossFont = content.Load<SpriteFont>("BossLife");
             bossFontPos = new Vector2(1000, 20);
-            bosspos = new Vector2(250, 50);
-            Boss boss = new Boss(Art.BossTex, bosspos, 4, 1, viewport, entityMgr);
+
 			entityMgr.Add(boss);
 
 			//Player 1, Kontroll och Tangentbord
@@ -48,11 +46,6 @@ namespace Masteroids.States
 				Player player = new Player(Art.PlayerTex, new Vector2(viewport.Width / 2, viewport.Height / 2), players[i], entityMgr, viewport);
 				entityMgr.Add(player);
 			}
-
-            #region Debug
-            Centipede centipede = new Centipede(Art.CentipedeTex, new Vector2(200), 4, 3, 9, viewport, entityMgr);
-            entityMgr.Add(centipede);
-            #endregion
 
             font = content.Load<SpriteFont>(@"Fonts/font");
         }

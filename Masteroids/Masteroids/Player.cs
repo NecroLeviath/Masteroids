@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    class Player : GameObject //Andreas
+    public class Player : GameObject //Andreas
     {
         private float scale = 0.5f, rotationVelocity = 5f, maxSpeed = 10f;
         private float bulletTimer, bulletInterval;
