@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Asteroid.cs" />
     <Compile Include="AsteroidSpawner.cs" />
+    <Compile Include="Enemies\BaseBoss.cs" />
     <Compile Include="Boss.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Enemies\Centipede.cs" />
