@@ -41,9 +41,10 @@ namespace Masteroids // Simon
             entities = entities.Where(x => x.IsAlive).ToList();
             bullets = bullets.Where(x => x.IsAlive).ToList();
             enemies = enemies.Where(x => x.IsAlive).ToList();
-            Players = Players.Where(x => x.IsAlive).ToList();
-            Asteroids = Asteroids.Where(x => x.IsAlive).ToList();
-        }
+			Bosses = Bosses.Where(x => x.IsAlive).ToList();
+			Players = Players.Where(x => x.IsAlive).ToList();
+			Asteroids = Asteroids.Where(x => x.IsAlive).ToList();
+		}
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -105,7 +106,7 @@ namespace Masteroids // Simon
 					for (int j = 0; j < Asteroids.Count; j++)
 					{
 						Asteroid asteroid = Asteroids[j];
-						if (asteroid.IsAlive && IsColliding(bullet, asteroid))// && b.Shooter is Player)
+						if (asteroid.IsAlive && IsColliding(bullet, asteroid))// && bullet.Shooter is Player)
 						{
 							bullet.HandleCollision(asteroid);
 							asteroid.HandleCollision(bullet);
@@ -114,7 +115,7 @@ namespace Masteroids // Simon
 					for (int j = 0; j < enemies.Count; j++)
 					{
 						Enemy enemy = enemies[j];
-						if (enemy.IsAlive && IsColliding(bullet, enemy))// && b.Shooter is Player)
+						if (enemy.IsAlive && IsColliding(bullet, enemy))// && bullet.Shooter is Player)
 						{
 							enemy.HandleCollision(bullet);
 							bullet.HandleCollision(enemy);
@@ -123,7 +124,7 @@ namespace Masteroids // Simon
 					for (int j = 0; j < Bosses.Count; j++)
 					{
 						BaseBoss boss = Bosses[j];
-						if (boss.IsAlive && IsColliding(bullet, boss))
+						if (boss.IsAlive && IsColliding(bullet, boss))// && bullet.Shooter is Player)
 						{
 							boss.HandleCollision(bullet);
 							bullet.HandleCollision(boss);
