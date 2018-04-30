@@ -59,7 +59,10 @@ namespace Masteroids
 				FindGoal(moveInterval);
 			}
 			if (HP < 0)
+			{
+				HP = 0;
 				IsAlive = false;
+			}
 
 			position += velocity;
 
