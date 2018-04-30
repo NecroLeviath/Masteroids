@@ -60,29 +60,29 @@ namespace Masteroids
             //
             if (bulletTimer >= bulletIntervall && life > 50) //Ha en bullethastighet som är relativt till bossen.
             {
-                entityMgr.CreateBullet(bulletpos, 10f, 10, new Vector2(0, 1));
+                CreateBullet(bulletpos, 10f, new Vector2(0, 1));
                 bulletTimer = 0;
             }
             if (bulletTimer >= bulletIntervall && life <= 50 && life > 20)
             {
                 bulletIntervall = 0.4f;
-                entityMgr.CreateBullet(bulletpos, 10f, 10, new Vector2(0, 1));
-                entityMgr.CreateBullet(bulletpos1, 10f, 10, new Vector2(1, 1));
-                entityMgr.CreateBullet(bulletpos2, 10f, 10, new Vector2(-1, 1));
+                CreateBullet(bulletpos, 10f, new Vector2(0, 1));
+                CreateBullet(bulletpos1, 10f, new Vector2(1, 1));
+                CreateBullet(bulletpos2, 10f, new Vector2(-1, 1));
                 bulletTimer = 0;
             }
             if (bulletTimer >= bulletIntervall && life <= 20 && life > 0)
             {
                 bulletIntervall = 0.1f;
-                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(0, 1));
-                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(1, 1));
-                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(-1, 1));
-                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(2, 1));
-                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(-2, 1));
-                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(3, 1));
-                entityMgr.CreateBullet(bulletpos, 5f, 10, new Vector2(-3, 1));
-                entityMgr.CreateBullet(bulletpos1, 10f, 10, new Vector2(-1, 0));
-                entityMgr.CreateBullet(bulletpos2, 10f, 10, new Vector2(1, 0));
+                CreateBullet(bulletpos, 5f, new Vector2(0, 1));
+                CreateBullet(bulletpos, 5f, new Vector2(1, 1));
+                CreateBullet(bulletpos, 5f, new Vector2(-1, 1));
+                CreateBullet(bulletpos, 5f, new Vector2(2, 1));
+                CreateBullet(bulletpos, 5f, new Vector2(-2, 1));
+                CreateBullet(bulletpos, 5f, new Vector2(3, 1));
+                CreateBullet(bulletpos, 5f, new Vector2(-3, 1));
+                CreateBullet(bulletpos1, 10f, new Vector2(-1, 0));
+                CreateBullet(bulletpos2, 10f, new Vector2(1, 0));
                 bulletTimer = 0;
             }
         }
@@ -106,5 +106,11 @@ namespace Masteroids
             velocity.X = 4;
             return true;
         }
+
+		private void CreateBullet(Vector2 position, float speed, Vector2 direction)
+		{
+			Bullet bullet = new Bullet(position, speed, 10, direction, viewport);
+			entityMgr.Add(bullet);
+		}
     }
 }

@@ -17,7 +17,6 @@ namespace Masteroids.States
         Viewport viewport;
 
         EntityManager entityMgr;
-        Boss boss;
         AsteroidSpawner asteroidSpawner;
 
         Vector2 bossFontPos;
@@ -32,7 +31,8 @@ namespace Masteroids.States
             bossFont = content.Load<SpriteFont>("BossLife");
             bossFontPos = new Vector2(1000, 20);
             bosspos = new Vector2(250, 50);
-            boss = new Boss(Art.BossTex, bosspos, 4, 1, viewport, entityMgr);
+            Boss boss = new Boss(Art.BossTex, bosspos, 4, 1, viewport, entityMgr);
+			entityMgr.Add(boss);
 
 			//Player 1, Kontroll och Tangentbord
 			PlayerIndex[] players = new PlayerIndex[]
@@ -66,7 +66,6 @@ namespace Masteroids.States
         public override void Update(GameTime gameTime)
         {
             asteroidSpawner.Update(gameTime);
-            boss.Update(gameTime);
 			#region Out-commented
 			//GamePadCapabilities capabilities =
 			//    GamePad.GetCapabilities(PlayerIndex.Two);
@@ -94,7 +93,6 @@ namespace Masteroids.States
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            boss.Draw(spriteBatch);
             entityMgr.Draw(spriteBatch);
 			#region Out-commented
 			//if (enteredGame)
