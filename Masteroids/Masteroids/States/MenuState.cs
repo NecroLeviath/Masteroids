@@ -15,10 +15,8 @@ namespace Masteroids.States
     {
         private List<Component> _components;
 
-
-
-
-        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
+        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
+			: base(game, graphicsDevice, content)
         {
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
             SpriteFont buttonFont = _content.Load<SpriteFont>(@"Fonts/Font");
@@ -34,7 +32,7 @@ namespace Masteroids.States
                 Text = "New Game"
             };
 
-            Button HighScoreButton = new Button(buttonTexture, buttonFont)
+            Button highScoreButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2((x - buttonTexture.Width) / 2, 250),
                 Text = "Highscore"
@@ -46,12 +44,12 @@ namespace Masteroids.States
                 Text = "Quit Game"
             };
             newGameButton.Click += NewGameButton_click;
-            HighScoreButton.Click += HighScoreButton_click;
+            highScoreButton.Click += HighScoreButton_click;
             quitGameButton.Click += quitGameButton_click;
             _components = new List<Component>()
             {
                 newGameButton,
-                HighScoreButton,
+                highScoreButton,
                 quitGameButton,
             };
 
@@ -79,7 +77,7 @@ namespace Masteroids.States
         {
             //spriteBatch.Begin();
 
-            foreach (Masteroids.Component component in _components)
+            foreach (Component component in _components)
                 component.Draw(gameTime, spriteBatch);
 
             //spriteBatch.End();
@@ -92,7 +90,7 @@ namespace Masteroids.States
 
         public override void Update(GameTime gameTime)
         {
-            foreach (Masteroids.Component component in _components)
+            foreach (Component component in _components)
                 component.Update(gameTime);
         }
     }
