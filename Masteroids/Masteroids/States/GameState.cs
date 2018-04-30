@@ -31,8 +31,8 @@ namespace Masteroids.States
             asteroidSpawner = new AsteroidSpawner(entityMgr, viewport);
             bossFont = content.Load<SpriteFont>("BossLife");
             bossFontPos = new Vector2(1000, 20);
-            //bosspos = new Vector2(250, 50);
-            boss = new Boss(bosspos, entityMgr);
+            bosspos = new Vector2(250, 50);
+            boss = new Boss(Art.BossTex, bosspos, 4, 1, viewport, entityMgr);
 
 			//Player 1, Kontroll och Tangentbord
 			PlayerIndex[] players = new PlayerIndex[]

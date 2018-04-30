@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    class Boss //public fields börjar med stor bokstav. tex TextureData.
+    class Boss : BaseBoss //public fields börjar med stor bokstav. tex TextureData.
     {
         Texture2D bosstex, bulletTex; //Hämta textures från GameObject klassn.
         Vector2 velocity, pos, bulletpos, bulletpos1, bulletpos2; //bulletPos1-2-3 istället för en bulletPos
@@ -21,19 +21,19 @@ namespace Masteroids
         EntityManager entityMgr;
         public int life;
 
-        public Boss(Vector2 velocity, EntityManager entityMgr)
+        public Boss(Texture2D texture, Vector2 position, float speed, int hitPoints, Viewport viewport, EntityManager entityMgr)
+			: base(texture, position, speed, hitPoints, viewport)
         {
-            bosstex = Art.BossTex;
-            this.velocity = velocity;
+            bosstex = texture;
             this.entityMgr = entityMgr;
             velocity = new Vector2(0, 0);
-            pos = new Vector2(250, 50);
+            pos = position;
             Left();
             textureData = new Color[bosstex.Width * bosstex.Height];
             bosstex.GetData(textureData);
-            life = 1;
+            life = hitPoints; // DEV: life should be HP
         }
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             hitBox = new Rectangle((int)pos.X, (int)pos.Y, bosstex.Width, bosstex.Height);
@@ -86,7 +86,7 @@ namespace Masteroids
                 bulletTimer = 0;
             }
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             if(life >= 1)
             spriteBatch.Draw(bosstex, pos, Color.White);
