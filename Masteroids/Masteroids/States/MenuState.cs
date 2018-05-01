@@ -24,7 +24,7 @@ namespace Masteroids.States
             SpriteFont buttonFont = _content.Load<SpriteFont>(@"Fonts/Font");
             Sound.Load(content);
             //MediaPlayer.Play(Sound.Music);
-            Sound.MusicInstance.Play();
+            //Sound.MusicInstance.Play();
 			entityMgr = entityManager;
             int x = graphicsDevice.Viewport.Width;
             int y = graphicsDevice.Viewport.Height;
@@ -61,11 +61,12 @@ namespace Masteroids.States
 
         private void NewGameButton_click(object sender, EventArgs e)
 		{
-			boss = new Boss(Art.BossTex, new Vector2(250, 50), 4, 1, _graphicsDevice.Viewport, entityMgr);
-			//boss = new Centipede(Art.CentipedeTex, new Vector2(200), 4, 3, 9, viewport, entityMgr);
-			_game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, boss));
-            //här startar spelet
-        }
+			//boss = new Boss(Art.BossTex, new Vector2(250, 50), 4, 1, _graphicsDevice.Viewport, entityMgr);
+			boss = new Centipede(Art.CentipedeTex, new Vector2(200), 240, 3, 19, _graphicsDevice.Viewport, entityMgr);
+			//_game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, 1, boss));
+			_game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, 1));
+			//här startar spelet
+		}
 
         private void HighScoreButton_click(object sender, EventArgs e)
         {

@@ -10,29 +10,42 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Masteroids.States
 {
-    public class GameState : State
-    {
-        SpriteFont font;
-        Viewport viewport;
+	public class GameState : State
+	{
+		SpriteFont font;
+		Viewport viewport;
 
-        EntityManager entityMgr;
-        AsteroidSpawner asteroidSpawner;
+		EntityManager entityMgr;
+		AsteroidSpawner asteroidSpawner;
 
-        Vector2 bossFontPos;
-        SpriteFont bossFont;
+		Vector2 bossFontPos;
+		SpriteFont bossFont;
 
-        public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, BaseBoss boss)
+		// Asteroids
+		public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers)
 			: base(game, graphicsDevice, content)
-        {
-            viewport = graphicsDevice.Viewport;
-            entityMgr = entityManager;
-            asteroidSpawner = new AsteroidSpawner(entityMgr, viewport);
-            bossFont = content.Load<SpriteFont>("BossLife");
-            bossFontPos = new Vector2(1000, 20);
+		{
+			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
+		}
 
+		// Masteroids
+		public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers, BaseBoss boss)
+			: base(game, graphicsDevice, content)
+		{
+			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
 			entityMgr.Add(boss);
+			entityMgr.Bosses[0].Start();
+		}
 
-			//Player 1, Kontroll och Tangentbord
+		private void CommonConstructor(GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers)
+		{
+			viewport = graphicsDevice.Viewport;
+			entityMgr = entityManager;
+			asteroidSpawner = new AsteroidSpawner(entityMgr, viewport);
+			bossFont = content.Load<SpriteFont>("BossLife");
+			bossFontPos = new Vector2(1000, 20);
+			font = content.Load<SpriteFont>(@"Fonts/font");
+
 			PlayerIndex[] players = new PlayerIndex[]
 			{
 				PlayerIndex.One,
@@ -40,19 +53,17 @@ namespace Masteroids.States
 				PlayerIndex.Three,
 				PlayerIndex.Four
 			};
-			int numberOfPlayers = 1;
 			for (int i = 0; i < numberOfPlayers; i++)
 			{
 				Player player = new Player(Art.PlayerTex, new Vector2(viewport.Width / 2, viewport.Height / 2), players[i], entityMgr, viewport);
 				entityMgr.Add(player);
 			}
+		}
 
-            font = content.Load<SpriteFont>(@"Fonts/font");
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            asteroidSpawner.Update(gameTime);
+		public override void Update(GameTime gameTime)
+		{
+			asteroidSpawner.Update(gameTime);
+			entityMgr.Update(gameTime);
 			#region Out-commented
 			//GamePadCapabilities capabilities =
 			//    GamePad.GetCapabilities(PlayerIndex.Two);
@@ -73,14 +84,22 @@ namespace Masteroids.States
 			//    player2.Update(gameTime);
 			//}
 			#endregion
-			entityMgr.Update(gameTime);
-        }
+		}
 
-        public override void PostUpdate(GameTime gameTime) { }
+		public override void PostUpdate(GameTime gameTime) { }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            entityMgr.Draw(spriteBatch);
+		public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+		{
+			entityMgr.Draw(spriteBatch);
+
+			if (entityMgr.Bosses.Count > 0)
+			{
+				int bossHP = 0;
+				for (int i = 0; i < entityMgr.Bosses.Count; i++)    // Summarizes the HP of the boss.
+					bossHP += entityMgr.Bosses[i].HP;
+				spriteBatch.DrawString(bossFont, "Life: " + bossHP, bossFontPos, Color.White);  // DEV: Might be changed to a health bar instead of a number
+			}
+
 			#region Out-commented
 			//if (enteredGame)
 			//{
@@ -91,11 +110,6 @@ namespace Masteroids.States
 			//    spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
 			//}
 			#endregion
-
-			int bossHP = 0;
-			for (int i = 0; i < entityMgr.Bosses.Count; i++)	// Summarizes the HP of the boss.
-				bossHP += entityMgr.Bosses[i].HP;
-			spriteBatch.DrawString(bossFont, "Life: " + bossHP, bossFontPos, Color.White);  // DEV: Might be changed to a health bar instead of a number
 		}
-    }
+	}
 }
