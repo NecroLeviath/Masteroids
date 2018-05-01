@@ -34,9 +34,7 @@ namespace Masteroids
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (shouldWrap && wrapOffset != Vector2.Zero)
-            {
                 WrapDraw(spriteBatch);
-            }
         }
 
         public virtual void HandleCollision(GameObject other) { } // DEV: This will probably be an abstract method

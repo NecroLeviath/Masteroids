@@ -42,7 +42,7 @@ namespace Masteroids // Simon
                 pauseTimer += delta;
                 if (pauseTimer >= pauseInterval)
                 {
-                    velocity += playerDir * acceleration * delta;
+                    velocity += playerDir * acceleration;
 
                     movementTimer += delta;
                     if (movementTimer >= movementInterval)
@@ -65,7 +65,7 @@ namespace Masteroids // Simon
                     bulletTimer = 0;
                 }
             }
-            position += velocity;
+            position += velocity * delta;
 
             ScreenWrap();
         }
