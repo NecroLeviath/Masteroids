@@ -8,41 +8,33 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    class Centipede : BaseBoss
+    class Centipede : BaseBoss // Simon
     {
         Centipede parent;
         EntityManager entityMgr;
         bool isHead;
         public List<Vector2> Beacons { get; private set; }
+		int nrSegments;
 		float beaconTimer, moveTimer;
 		float beaconInterval = 0.2f, moveInterval = 3f;
 		float maxTurnRate = 2f;
 		Random rand;
 		Vector2 goal;
 
-        public Centipede(Texture2D texture, Vector2 position, float speed, int hitPoints, int numberOfSegments, Viewport viewport, EntityManager entityMgr)
-            : base(texture, position, speed, hitPoints, viewport)
-        {
-            this.entityMgr = entityMgr;
-            isHead = true;
+		public Centipede(Texture2D texture, Vector2 position, float speed, int hitPoints, int numberOfSegments, Viewport viewport, EntityManager entityMgr)
+			: base(texture, position, speed, hitPoints, viewport)
+		{
+			this.entityMgr = entityMgr;
+			isHead = true;
 			Radius = texture.Height / 2;
-            Beacons = new List<Vector2>();
+			Beacons = new List<Vector2>();
 			rand = new Random();
-			FindGoal(moveInterval);
-			Centipede previous = this;
-			for (int i = 0; i < numberOfSegments; i++)
-			{
-				Centipede next = new Centipede(Art.CentipedeTex, this.position, 4, 3, viewport, previous, entityMgr);
-				entityMgr.Add(next);
-				previous = next;
-			}
-        }
+			nrSegments = numberOfSegments;
+		}
 
         public Centipede(Texture2D texture, Vector2 position, float speed, int hitPoints, Viewport viewport, Centipede parent, EntityManager entityMgr)
             : base(texture, position, speed, hitPoints, viewport)
         {
-            this.texture = texture; // DEV: Should be moved to GameObject
-            this.speed = speed;     // DEV: Should be moved to GameObject
             this.parent = parent;
             this.entityMgr = entityMgr;
             isHead = false;
@@ -50,7 +42,19 @@ namespace Masteroids
 			Beacons = new List<Vector2>();
 		}
 
-        public override void Update(GameTime gameTime)
+		public override void Start()
+		{
+			FindGoal(moveInterval);
+			Centipede previous = this;
+			for (int i = 0; i < nrSegments; i++)
+			{
+				Centipede next = new Centipede(Art.CentipedeTex, this.position, this.speed, 3, viewport, previous, entityMgr);
+				entityMgr.Add(next);
+				previous = next;
+			}
+		}
+
+		public override void Update(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -66,7 +70,7 @@ namespace Masteroids
 				IsAlive = false;
 			}
 
-			position += velocity;
+			position += velocity * delta;
 
             beaconTimer += delta;
             if (beaconTimer >= beaconInterval)
@@ -84,7 +88,7 @@ namespace Masteroids
             else if (!isHead && parent.Beacons.Count > 0)
             {
                 Vector2 distanceToBeacon = (parent.Beacons[0] - position);
-                if (distanceToBeacon.LengthSquared() < speed * speed) // LengthSquared and speed^2 for efficiency
+                if (distanceToBeacon.LengthSquared() < 16) // LengthSquared for efficiency. 16 is a safety value
                 {
                     parent.RemoveFirstBeacon();
                     direction = parent.Beacons.Count > 0 ? Vector2.Normalize(parent.Beacons[0] - position) : direction;

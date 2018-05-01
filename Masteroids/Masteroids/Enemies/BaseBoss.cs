@@ -19,5 +19,7 @@ namespace Masteroids
 			this.speed = speed;     // DEV: Should be moved to GameObject
 			HP = hitPoints;
 		}
+
+		public virtual void Start() { }
 	}
 }
