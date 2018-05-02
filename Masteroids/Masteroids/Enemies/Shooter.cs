@@ -18,14 +18,15 @@ namespace Masteroids // Simon
         public Shooter(Texture2D texture, Vector2 position, float speed, EntityManager entityManager, Viewport viewport)
             : base(texture, position, speed, viewport)
         {
-            this.texture = texture; // DEV: This should be moved to GameObject
-            this.speed = speed; // DEV: This should be moved to GameObject
             acceleration = 10f;
             deacceleration = 0.9f;
             sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
-            rotationCenter = new Vector2(texture.Width / 2, texture.Height / 2);
+            rotationCenter = new Vector2(texture.Width / 8, texture.Height / 4);
             shouldWrap = true;
             entityMgr = entityManager;
+            var rnd = new Random();
+            sourceRectangle = new Rectangle(rnd.Next(4) * texture.Width / 4, rnd.Next(2) * texture.Height / 2, texture.Width / 4, texture.Height / 2);
+            Radius = texture.Height / 4;
         }
 
         public override void Update(GameTime gameTime)
@@ -42,7 +43,7 @@ namespace Masteroids // Simon
                 pauseTimer += delta;
                 if (pauseTimer >= pauseInterval)
                 {
-                    velocity += playerDir * acceleration * delta;
+                    velocity += playerDir * acceleration;
 
                     movementTimer += delta;
                     if (movementTimer >= movementInterval)
@@ -60,40 +61,45 @@ namespace Masteroids // Simon
                 bulletTimer += delta;
                 if (bulletTimer >= bulletInterval)
                 {
-                    Bullet bullet = new Bullet(position, 5, 1, playerDir, viewport);
+                    Bullet bullet = new Bullet(Art.BulletTex, pos, 5, 1, playerDir, viewport, this);
                     entityMgr.Add(bullet);
                     bulletTimer = 0;
                 }
             }
-            position += velocity;
+            pos += velocity * delta;
 
             ScreenWrap();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, sourceRectangle, Color.White, rotation, rotationCenter, 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(tex, pos, sourceRectangle, Color.White, rotation, rotationCenter, 1, SpriteEffects.None, 0);
             base.Draw(spriteBatch);
         }
 
         protected override void WrapDraw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position + wrapOffset, sourceRectangle, Color.White, rotation, rotationCenter, 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(tex, pos + wrapOffset, sourceRectangle, Color.White, rotation, rotationCenter, 1, SpriteEffects.None, 0);
         }
 
         private void ChooseTarget()
         {
             if (entityMgr.Players.Count > 0 && (target == null || !target.IsAlive))
             {
-                var rand = new Random();
-                var i = rand.Next(entityMgr.Players.Count);
+                var rnd = new Random();
+                var i = rnd.Next(entityMgr.Players.Count);
                 target = entityMgr.Players[i];
             }
         }
 
         private Vector2 GetPlayerDirection()
         {
-            return Vector2.Normalize(target.Position - position);
+            return Vector2.Normalize(target.Position - pos);
+        }
+
+        public override void HandleCollision(GameObject other)
+        {
+            IsAlive = false;
         }
     }
 }

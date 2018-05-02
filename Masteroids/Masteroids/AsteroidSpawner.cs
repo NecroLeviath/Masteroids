@@ -29,9 +29,10 @@ namespace Masteroids
                 int positionY = rnd.Next(0, viewport.Height + Art.AsteroidTex.Height);
                 int speedX = rnd.Next(-2, 2);   //Asteroider kan spawna utan att kunna röra sig.
                 int speedY = rnd.Next(-2, 2);
-                Vector2 position = new Vector2(positionX, positionY);
+                Vector2 pos = new Vector2(positionX, positionY);
                 Vector2 speed = new Vector2(speedX, speedY);
-                entityMgr.CreateAsteroid(position, speed);
+				Asteroid asteroid = new Asteroid(Art.AsteroidTex, speed, pos, viewport);
+				entityMgr.Add(asteroid);
             }
         }
     }

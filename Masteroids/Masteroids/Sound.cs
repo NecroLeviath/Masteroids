@@ -17,9 +17,9 @@ namespace Masteroids
 
         //public static SoundEffect SEffect;
         // DEV: Or for sound effects with variation
-        //private static Random rand = new Random();
+        //private static Random rnd = new Random();
         //private static SoundEffect[] sEffects;
-        //public static SoundEffect SEffect { get { return sEffects[rand.Next(sEffects.Length)]; } }
+        //public static SoundEffect SEffect { get { return sEffects[rnd.Next(sEffects.Length)]; } }
 
         public static void Load(ContentManager content)
         {

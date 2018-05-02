@@ -10,95 +10,108 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Masteroids.States
 {
-    public class GameState : State
-    {
-        Vector2 bosspos;
-        SpriteFont font;
-        Viewport viewport;
-        bool enteredGame = false;
+	public class GameState : State
+	{
+		SpriteFont font;
+		Viewport viewport;
 
-        EntityManager entityMgr;
-        Boss boss;
-        AsteroidSpawner asteroidSpawner;
-        Player player1, player2;
+		EntityManager entityMgr;
+		AsteroidSpawner asteroidSpawner;
 
-        Vector2 bossFontPos;
-        SpriteFont bossFont;
+		Vector2 bossFontPos;
+		SpriteFont bossFont;
 
-        public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
-        {
-            viewport = graphicsDevice.Viewport;
-            entityMgr = new EntityManager(viewport);
-            asteroidSpawner = new AsteroidSpawner(entityMgr, viewport);
-            bossFont = content.Load<SpriteFont>("BossLife");
-            bossFontPos = new Vector2(1000, 20);
-            //bosspos = new Vector2(250, 50);
-            boss = new Boss(bosspos, entityMgr);
+		// Asteroids
+		public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers)
+			: base(game, graphicsDevice, content)
+		{
+			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
+		}
 
-            //Player 1, Kontroll och Tangentbord
-            player1 = new Player(Art.PlayerTex, new Vector2(viewport.Width / 2, viewport.Height / 2), PlayerIndex.One, entityMgr, viewport);
-            player2 = new Player(Art.PlayerTex, new Vector2(200, 200), PlayerIndex.Two, entityMgr, viewport);
+		// Masteroids
+		public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers, BaseBoss boss)
+			: base(game, graphicsDevice, content)
+		{
+			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
+            Shooter shooter = new Shooter(Art.EnemySheet, new Vector2(20), 100, entityMgr, viewport);
+            entityMgr.Add(shooter);
+			entityMgr.Add(boss);
+			entityMgr.Bosses[0].Start();
+		}
 
-            #region Debug
-            entityMgr.Add(player1);
-            Centipede previous = new Centipede(Art.CentipedeTex, new Vector2(200), 4, viewport, entityMgr);
-            entityMgr.Add(previous);
-            for (int i = 0; i < 10; i++)
-            {
-                Centipede next = new Centipede(Art.CentipedeTex, new Vector2(200), 4, viewport, previous, entityMgr);
-                entityMgr.Add(next);
-                previous = next;
-            }
-            #endregion
+		private void CommonConstructor(GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers)
+		{
+			viewport = graphicsDevice.Viewport;
+			entityMgr = entityManager;
+			asteroidSpawner = new AsteroidSpawner(entityMgr, viewport);
+			bossFont = content.Load<SpriteFont>("BossLife");
+			bossFontPos = new Vector2(1000, 20);
+			font = content.Load<SpriteFont>(@"Fonts/font");
 
-            font = content.Load<SpriteFont>(@"Fonts/font");
-        }
+			PlayerIndex[] players = new PlayerIndex[]
+			{
+				PlayerIndex.One,
+				PlayerIndex.Two,
+				PlayerIndex.Three,
+				PlayerIndex.Four
+			};
+			for (int i = 0; i < numberOfPlayers; i++)
+			{
+				Player player = new Player(Art.PlayerTex, new Vector2(viewport.Width / 2, viewport.Height / 2), players[i], entityMgr, viewport);
+				entityMgr.Add(player);
+			}
+		}
 
-        public override void Update(GameTime gameTime)
-        {
-            asteroidSpawner.Update(gameTime);
-            boss.Update(gameTime);
+		public override void Update(GameTime gameTime)
+		{
+			asteroidSpawner.Update(gameTime);
+			entityMgr.Update(gameTime);
+			#region Out-commented
+			//GamePadCapabilities capabilities =
+			//    GamePad.GetCapabilities(PlayerIndex.Two);
+			//GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
+			//if (capabilities.IsConnected)
+			//{
+			//    GamePadState gamePadState = GamePad.GetState(PlayerIndex.Two);
+			//    //if (capabilities.HasLeftXThumbStick)
+			//    //Player 2, Tangentboard endast
+			//    if (gamePadState.Buttons.Start == ButtonState.Pressed)
+			//    {
+			//        enteredGame = true;
+			//    }
+			//}
 
-            GamePadCapabilities capabilities =
-                GamePad.GetCapabilities(PlayerIndex.Two);
-            //GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
-            if (capabilities.IsConnected)
-            {
-                GamePadState gamePadState = GamePad.GetState(PlayerIndex.Two);
-                //if (capabilities.HasLeftXThumbStick)
-                //Player 2, Tangentboard endast
-                if (gamePadState.Buttons.Start == ButtonState.Pressed)
-                {
-                    enteredGame = true;
-                }
-            }
+			//if (enteredGame)
+			//{
+			//    player2.Update(gameTime);
+			//}
+			#endregion
+		}
 
-            player1.Update(gameTime);
-            if (enteredGame)
-            {
-                player2.Update(gameTime);
-            }
-            entityMgr.Update(gameTime);
-        }
+		public override void PostUpdate(GameTime gameTime) { }
 
-        public override void PostUpdate(GameTime gameTime) { }
+		public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+		{
+			entityMgr.Draw(spriteBatch);
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            boss.Draw(spriteBatch);
-            player1.Draw(spriteBatch);
-            entityMgr.Draw(spriteBatch);
+			if (entityMgr.Bosses.Count > 0)
+			{
+				int bossHP = 0;
+				for (int i = 0; i < entityMgr.Bosses.Count; i++)    // Summarizes the HP of the boss.
+					bossHP += entityMgr.Bosses[i].HP;
+				spriteBatch.DrawString(bossFont, "Life: " + bossHP, bossFontPos, Color.White);  // DEV: Might be changed to a health bar instead of a number
+			}
 
-            if (enteredGame)
-            {
-                player2.Draw(spriteBatch);
-            }
-            else
-            {
-                spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
-            }
-            spriteBatch.DrawString(bossFont, "Life: ", bossFontPos, Color.White);
-        }
-
-    }
+			#region Out-commented
+			//if (enteredGame)
+			//{
+			//    player2.Draw(spriteBatch);
+			//}
+			//else
+			//{
+			//    spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
+			//}
+			#endregion
+		}
+	}
 }

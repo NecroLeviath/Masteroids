@@ -15,6 +15,8 @@ namespace Masteroids // Simon
         public static Texture2D AsteroidTex;
         public static Texture2D PlayerTex;
         public static Texture2D CentipedeTex;
+        public static Texture2D CentipedeSheet;
+        public static Texture2D EnemySheet;
 
         public static void Initialize(ContentManager content)
         {
@@ -23,6 +25,8 @@ namespace Masteroids // Simon
             AsteroidTex = content.Load<Texture2D>("ast4Tex");
             PlayerTex = content.Load<Texture2D>("shipTex");
             CentipedeTex = content.Load<Texture2D>("CentipedeTemp");
+            CentipedeSheet = content.Load<Texture2D>("pacmanSheetMod");
+            EnemySheet = content.Load<Texture2D>("ufoSheet");
         }
     }
 }

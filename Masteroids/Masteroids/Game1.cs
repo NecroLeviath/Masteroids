@@ -42,7 +42,8 @@ namespace Masteroids
 
             defaultView = GraphicsDevice.Viewport;
             Art.Initialize(Content);
-            _currentstate = new MenuState(this, graphics.GraphicsDevice, Content);
+			EntityManager entityMgr = new EntityManager(defaultView);
+            _currentstate = new MenuState(this, graphics.GraphicsDevice, Content, entityMgr);
         }
 
         protected override void UnloadContent()
