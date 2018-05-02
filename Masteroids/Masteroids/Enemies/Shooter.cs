@@ -26,7 +26,7 @@ namespace Masteroids // Simon
             entityMgr = entityManager;
             var rnd = new Random();
             sourceRectangle = new Rectangle(rnd.Next(4) * texture.Width / 4, rnd.Next(2) * texture.Height / 2, texture.Width / 4, texture.Height / 2);
-            Radius = texture.Width / 2;
+            Radius = texture.Height / 4;
         }
 
         public override void Update(GameTime gameTime)

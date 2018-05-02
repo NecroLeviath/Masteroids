@@ -44,6 +44,7 @@ namespace Masteroids
             tex.GetData(textureData);
 
             Direction = direction;
+			Radius = tex.Width / 2;
         }
 
         public void Kill()
@@ -75,5 +76,9 @@ namespace Masteroids
             spriteBatch.Draw(tex, pos, Color.White);
         }
 
-    }
+		public override void HandleCollision(GameObject other)
+		{
+			IsAlive = false;
+		}
+	}
 }

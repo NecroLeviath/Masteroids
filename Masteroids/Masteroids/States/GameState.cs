@@ -33,7 +33,7 @@ namespace Masteroids.States
 			: base(game, graphicsDevice, content)
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
-            Shooter shooter = new Shooter(Art.PlayerTex, new Vector2(20), 100, entityMgr, viewport);
+            Shooter shooter = new Shooter(Art.EnemySheet, new Vector2(20), 100, entityMgr, viewport);
             entityMgr.Add(shooter);
 			entityMgr.Add(boss);
 			entityMgr.Bosses[0].Start();

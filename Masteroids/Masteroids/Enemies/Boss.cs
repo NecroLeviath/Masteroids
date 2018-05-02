@@ -32,6 +32,7 @@ namespace Masteroids
             textureData = new Color[bosstex.Width * bosstex.Height];
             bosstex.GetData(textureData);
             life = hitPoints; // DEV: life should be HP
+			Radius = tex.Width / 2;
         }
         public override void Update(GameTime gameTime)
         {
@@ -112,5 +113,11 @@ namespace Masteroids
 			Bullet bullet = new Bullet(Art.BulletTex, position, speed, 10, direction, viewport, this);
 			entityMgr.Add(bullet);
 		}
-    }
+
+		public override void HandleCollision(GameObject other)
+		{
+			if (other is Bullet)
+				HP -= (other as Bullet).Damage;
+		}
+	}
 }

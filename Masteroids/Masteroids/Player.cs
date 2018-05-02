@@ -37,6 +37,7 @@ namespace Masteroids
             Dead = false;
             shouldWrap = true;
             velocity = Vector2.Zero;
+			Radius = tex.Height / 2;
         }
 
         public override void Update(GameTime gameTime)
@@ -186,5 +187,9 @@ namespace Masteroids
             spriteBatch.Draw(tex, pos + wrapOffset, sourceRect, Color.White, 
                 rotation, new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
         }
-    }
+
+		public override void HandleCollision(GameObject other)
+		{
+		}
+	}
 }

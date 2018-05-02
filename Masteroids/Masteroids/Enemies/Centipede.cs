@@ -114,9 +114,9 @@ namespace Masteroids
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            var rotation = (float)Math.Atan2(direction.Y, direction.X);
-            var origin = new Vector2(sourceRectangle.Width / 2f, sourceRectangle.Height / 2f);
-            spriteBatch.Draw(tex, pos, sourceRectangle, Color.White, rotation, origin, 60f/33f, SpriteEffects.None, 0);
+            rotation = (float)Math.Atan2(direction.Y, direction.X);
+			rotationCenter = new Vector2(sourceRectangle.Width / 2f, sourceRectangle.Height / 2f);
+            spriteBatch.Draw(tex, pos, sourceRectangle, Color.White, rotation, rotationCenter, 60f/33f, SpriteEffects.None, 0);
         }
 
         public void RemoveFirstBeacon()

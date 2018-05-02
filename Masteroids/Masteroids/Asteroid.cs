@@ -10,7 +10,6 @@ namespace Masteroids //Laila
 {
     public class Asteroid : GameObject
     {
-        Texture2D tex;
         Vector2 texOffset;
 
         public Asteroid(Texture2D texture, Vector2 speed, Vector2 position, Viewport viewport)
@@ -22,6 +21,7 @@ namespace Masteroids //Laila
             shouldWrap = true;
             texOffset = new Vector2(tex.Width / 2, tex.Height / 2);
             sourceRectangle = new Rectangle(0, 0, tex.Width, tex.Height);
+			Radius = tex.Width / 2;
         }
 
         public override void Update(GameTime gameTime)
@@ -39,5 +39,9 @@ namespace Masteroids //Laila
         {
             spriteBatch.Draw(tex, pos - texOffset + wrapOffset, Color.White);
         }
-    }
+
+		public override void HandleCollision(GameObject other)
+		{
+		}
+	}
 }
