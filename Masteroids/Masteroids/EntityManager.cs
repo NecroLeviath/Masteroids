@@ -74,13 +74,7 @@ namespace Masteroids // Simon
 			else if (entity is Player)
 				Players.Add(entity as Player);
         }
-
-        public void CreateBullet(Vector2 pos, float speed, int damage, Vector2 direction)
-        {
-            GameObject o = new Bullet(pos, speed, damage, direction, viewport);
-            entities.Add(o);
-            bullets.Add(o as Bullet);
-        }
+        
 
         public void CreateAsteroid(Vector2 pos, Vector2 speed)
         {
@@ -106,7 +100,7 @@ namespace Masteroids // Simon
 					for (int j = 0; j < Asteroids.Count; j++)
 					{
 						Asteroid asteroid = Asteroids[j];
-						if (asteroid.IsAlive && IsColliding(bullet, asteroid))// && bullet.Shooter is Player)
+						if (asteroid.IsAlive && IsColliding(bullet, asteroid) && bullet.Owner is Player)
 						{
 							bullet.HandleCollision(asteroid);
 							asteroid.HandleCollision(bullet);
@@ -115,7 +109,7 @@ namespace Masteroids // Simon
 					for (int j = 0; j < enemies.Count; j++)
 					{
 						Enemy enemy = enemies[j];
-						if (enemy.IsAlive && IsColliding(bullet, enemy))// && bullet.Shooter is Player)
+						if (enemy.IsAlive && IsColliding(bullet, enemy) && bullet.Owner is Player)
 						{
 							enemy.HandleCollision(bullet);
 							bullet.HandleCollision(enemy);
@@ -124,7 +118,7 @@ namespace Masteroids // Simon
 					for (int j = 0; j < Bosses.Count; j++)
 					{
 						BaseBoss boss = Bosses[j];
-						if (boss.IsAlive && IsColliding(bullet, boss))// && bullet.Shooter is Player)
+						if (boss.IsAlive && IsColliding(bullet, boss) && bullet.Owner is Player)
 						{
 							boss.HandleCollision(bullet);
 							bullet.HandleCollision(boss);

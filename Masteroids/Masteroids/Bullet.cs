@@ -18,6 +18,7 @@ namespace Masteroids
         public Rectangle bulletRec;
         public Color[] textureData;
         public Vector2 Direction;
+        public GameObject Owner { get; private set; }
 
         public int Damage
         {
@@ -29,13 +30,14 @@ namespace Masteroids
             return age > 100;
         }
         
-        public Bullet(Vector2 position, float speed, int damage, Vector2 direction, Viewport viewport)
+        public Bullet(Vector2 position, float speed, int damage, Vector2 direction, Viewport viewport, GameObject owner)
             : base(position, viewport)
         {
             this.position = position;
             this.texture = Art.BulletTex;
             this.damage = damage;
             this.speed = speed;
+            Owner = owner;
             origin = new Vector2(texture.Width / 2, texture.Height / 2);
             center = new Vector2(this.position.X + texture.Width / 2, this.position.Y + texture.Height / 2);
             textureData = new Color[texture.Width * texture.Height];

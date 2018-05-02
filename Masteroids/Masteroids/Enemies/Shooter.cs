@@ -26,6 +26,7 @@ namespace Masteroids // Simon
             rotationCenter = new Vector2(texture.Width / 2, texture.Height / 2);
             shouldWrap = true;
             entityMgr = entityManager;
+            Radius = texture.Width / 2;
         }
 
         public override void Update(GameTime gameTime)
@@ -60,7 +61,7 @@ namespace Masteroids // Simon
                 bulletTimer += delta;
                 if (bulletTimer >= bulletInterval)
                 {
-                    Bullet bullet = new Bullet(position, 5, 1, playerDir, viewport);
+                    Bullet bullet = new Bullet(position, 5, 1, playerDir, viewport, this);
                     entityMgr.Add(bullet);
                     bulletTimer = 0;
                 }
@@ -94,6 +95,11 @@ namespace Masteroids // Simon
         private Vector2 GetPlayerDirection()
         {
             return Vector2.Normalize(target.Position - position);
+        }
+
+        public override void HandleCollision(GameObject other)
+        {
+            IsAlive = false;
         }
     }
 }

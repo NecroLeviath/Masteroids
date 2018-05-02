@@ -91,7 +91,7 @@ namespace Masteroids
 
             if (bulletTimer >= bulletInterval)
             {
-				Bullet bullet = new Bullet(position, 10f, 10, direction, viewport);
+				Bullet bullet = new Bullet(position, 10f, 10, direction, viewport, this);
 				entityMgr.Add(bullet);
                 //entityMgr.CreateBullet(new Vector2(position.X, position.Y), 10f, 10, direction);
                 bulletTimer = 0;
