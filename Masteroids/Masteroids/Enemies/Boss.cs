@@ -92,13 +92,13 @@ namespace Masteroids
         }
         public bool Left()
         {
-            //velocity.X = -4;
+            velocity.X = -4;
             return true;
         }
 
         public bool Right()
         {
-            //velocity.X = 4;
+            velocity.X = 4;
             return true;
         }
 
