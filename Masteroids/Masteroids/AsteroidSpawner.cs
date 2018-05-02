@@ -10,7 +10,7 @@ namespace Masteroids
 {
     class AsteroidSpawner
     {
-        Viewport viewport;
+        private Viewport viewport;
         EntityManager entityMgr;
         private Random rnd;
 
