@@ -26,7 +26,7 @@ namespace Masteroids // Simon
             PlayerTex = content.Load<Texture2D>("shipTex");
             CentipedeTex = content.Load<Texture2D>("CentipedeTemp");
             CentipedeSheet = content.Load<Texture2D>("pacmanSheetMod");
-            EnemySheet = content.Load<Texture2D>("ufoSheet");
+            EnemySheet = content.Load<Texture2D>("shooterSheet");
         }
     }
 }
