@@ -18,9 +18,9 @@ namespace Masteroids
         private KeyboardState keyboardState, pastKeyboardState;
         private GamePadState gamePadStateCurrent, gamePadStatePrevious;
         private SpriteEffects entityFx;
-        public PlayerIndex playerValue;
-        public Rectangle sourceRect;
-        public bool Dead, AsteroidMode; //Asteroid playmode yes or no?
+        public PlayerIndex PlayerValue;
+        public bool AsteroidMode; //Asteroid playmode yes or no?
+        public int HP;
 
         List<Bullet> bulletList = new List<Bullet>();
         EntityManager entityMgr;
@@ -28,17 +28,17 @@ namespace Masteroids
         public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue, EntityManager entityMgr, Viewport viewport)
             : base(texture, position, viewport)
         {
-            this.playerValue = playerValue; ////Avgör spelare. -> återfinns på loadcontent Game1
+            PlayerValue = playerValue; ////Avgör spelare. -> återfinns på loadcontent Game1
             tex = texture;
             this.entityMgr = entityMgr;
             sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
-            sourceRect = new Rectangle(0, 0, texture.Width, texture.Height);
             startPosition = new Vector2(200, 200);
-            Dead = false;
+            IsAlive = true;
             shouldWrap = true;
             velocity = Vector2.Zero;
 			Radius = tex.Height / 2;
             AsteroidMode = false;
+            HP = 1;
         }
 
         public override void Update(GameTime gameTime)
@@ -50,7 +50,7 @@ namespace Masteroids
             mouseStateCurrent = Mouse.GetState();
 
             gamePadStatePrevious = gamePadStateCurrent;
-            gamePadStateCurrent = GamePad.GetState(playerValue);
+            gamePadStateCurrent = GamePad.GetState(PlayerValue);
 
             distance.X = mouseStateCurrent.X - pos.X;
             distance.Y = mouseStateCurrent.Y - pos.Y;
@@ -65,13 +65,18 @@ namespace Masteroids
                 velocity = direction * maxSpeed;
             }
             pos += velocity;
-            
+
+            if (HP <= 0)
+            {
+                HP = 0;
+                IsAlive = false;
+            }
 
             GamePadCapabilities capabilities =              
-                GamePad.GetCapabilities(playerValue);
+                GamePad.GetCapabilities(PlayerValue);
             if (capabilities.IsConnected)
             {
-                GamePadState gamePadState = GamePad.GetState(playerValue);
+                GamePadState gamePadState = GamePad.GetState(PlayerValue);
                 if (capabilities.HasLeftXThumbStick)
                 {
                     //MInputGamePad();          //Gamepad kontroller för Masteroid
@@ -82,6 +87,7 @@ namespace Masteroids
 
             //AInput(); //Keyboard kontroller till Asteroids
             MasterInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
+            
 
             ScreenWrap();
         }
@@ -184,9 +190,9 @@ namespace Masteroids
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!Dead)
+            if (IsAlive)
             {
-                spriteBatch.Draw(tex, pos, sourceRect, Color.White, rotation, 
+                spriteBatch.Draw(tex, pos, sourceRectangle, Color.White, rotation, 
                     new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
                 base.Draw(spriteBatch);
             }
@@ -194,12 +200,14 @@ namespace Masteroids
 
         protected override void WrapDraw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos + wrapOffset, sourceRect, Color.White, 
+            spriteBatch.Draw(tex, pos + wrapOffset, sourceRectangle, Color.White, 
                 rotation, new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
         }
 
 		public override void HandleCollision(GameObject other)
 		{
-		}
+            if (other is Bullet)
+                HP -= (other as Bullet).Damage;
+        }
 	}
 }
