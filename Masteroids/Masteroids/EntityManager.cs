@@ -89,31 +89,71 @@ namespace Masteroids // Simon
 				Bullet bullet = bullets[i];
 				if (bullet.IsAlive)
 				{
-					for (int j = 0; j < Asteroids.Count; j++)
+					if (bullet.Owner is Player)
 					{
-						Asteroid asteroid = Asteroids[j];
-						if (asteroid.IsAlive && IsColliding(bullet, asteroid) && bullet.Owner is Player)
+						for (int j = 0; j < Asteroids.Count; j++)
 						{
-							bullet.HandleCollision(asteroid);
-							asteroid.HandleCollision(bullet);
+							Asteroid asteroid = Asteroids[j];
+							if (asteroid.IsAlive && IsColliding(bullet, asteroid))
+							{
+								bullet.HandleCollision(asteroid);
+								asteroid.HandleCollision(bullet);
+							}
+						}
+						for (int j = 0; j < enemies.Count; j++)
+						{
+							Enemy enemy = enemies[j];
+							if (enemy.IsAlive && IsColliding(bullet, enemy))
+							{
+								bullet.HandleCollision(enemy);
+								enemy.HandleCollision(bullet);
+							}
+						}
+						for (int j = 0; j < Bosses.Count; j++)
+						{
+							BaseBoss boss = Bosses[j];
+							if (boss.IsAlive && IsColliding(bullet, boss))
+							{
+								bullet.HandleCollision(boss);
+								boss.HandleCollision(bullet);
+							}
 						}
 					}
+					else
+					{
+						for (int j = 0; j < Players.Count; j++)
+						{
+							Player player = Players[j];
+							if (player.IsAlive && IsColliding(bullet, player))
+							{
+								bullet.HandleCollision(player);
+								player.HandleCollision(bullet);
+							}
+						}
+					}
+				}
+			}
+			for (int i = 0; i < Players.Count; i++)
+			{
+				Player player = Players[i];
+				if (player.IsAlive)
+				{
 					for (int j = 0; j < enemies.Count; j++)
 					{
 						Enemy enemy = enemies[j];
-						if (enemy.IsAlive && IsColliding(bullet, enemy) && bullet.Owner is Player)
+						if (enemy.IsAlive && IsColliding(player, enemy))
 						{
-							enemy.HandleCollision(bullet);
-							bullet.HandleCollision(enemy);
+							player.HandleCollision(enemy);
+							enemy.HandleCollision(player);
 						}
 					}
 					for (int j = 0; j < Bosses.Count; j++)
 					{
 						BaseBoss boss = Bosses[j];
-						if (boss.IsAlive && IsColliding(bullet, boss) && bullet.Owner is Player)
+						if (boss.IsAlive && IsColliding(player, boss))
 						{
-							boss.HandleCollision(bullet);
-							bullet.HandleCollision(boss);
+							player.HandleCollision(boss);
+							boss.HandleCollision(player);
 						}
 					}
 				}
