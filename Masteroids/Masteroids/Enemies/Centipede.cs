@@ -15,8 +15,9 @@ namespace Masteroids
         bool isHead;
         public List<Vector2> Beacons { get; private set; }
 		int nrSegments;
-		float beaconTimer, moveTimer;
-		float beaconInterval = 0.2f, moveInterval = 3f;
+        int animationFrame = 1;
+        float beaconTimer, moveTimer, animationTimer;
+		float beaconInterval = 0.2f, moveInterval = 3f, animationInterval = 0.1f;
 		float maxTurnRate = 2f;
 		Random rand;
 		Vector2 goal;
@@ -26,9 +27,10 @@ namespace Masteroids
 		{
 			this.entityMgr = entityMgr;
 			isHead = true;
-			Radius = texture.Height / 2;
+			Radius = 30;
 			Beacons = new List<Vector2>();
-			rand = new Random();
+            sourceRectangle = new Rectangle(texture.Width / 5, 0, texture.Width / 5, texture.Height);
+            rand = new Random();
 			nrSegments = numberOfSegments;
 		}
 
@@ -38,9 +40,10 @@ namespace Masteroids
             this.parent = parent;
             this.entityMgr = entityMgr;
             isHead = false;
-			Radius = texture.Height / 2;
+			Radius = 30;
 			Beacons = new List<Vector2>();
-		}
+            sourceRectangle = new Rectangle(texture.Width / 5, 0, texture.Width / 5, texture.Height);
+        }
 
 		public override void Start()
 		{
@@ -48,7 +51,7 @@ namespace Masteroids
 			Centipede previous = this;
 			for (int i = 0; i < nrSegments; i++)
 			{
-				Centipede next = new Centipede(Art.CentipedeTex, this.position, this.speed, 3, viewport, previous, entityMgr);
+				Centipede next = new Centipede(Art.CentipedeSheet, position, speed, 3, viewport, previous, entityMgr);
 				entityMgr.Add(next);
 				previous = next;
 			}
@@ -84,6 +87,13 @@ namespace Masteroids
 				FindGoal(delta);
 				ClampAngle(delta);
 				velocity = direction * speed;
+                animationTimer += delta;
+                if (animationTimer >= animationInterval)
+                {
+                    animationFrame = ((animationFrame) % 4) + 1;
+                    sourceRectangle.X = animationFrame * texture.Width / 5;
+                    animationTimer = 0;
+                }
             }
             else if (!isHead && parent.Beacons.Count > 0)
             {
@@ -104,8 +114,9 @@ namespace Masteroids
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-			var drawPos = position - new Vector2(texture.Width / 2, texture.Height / 2);
-            spriteBatch.Draw(texture, drawPos, Color.White);
+            var rotation = (float)Math.Atan2(direction.Y, direction.X);
+            var origin = new Vector2(sourceRectangle.Width / 2f, sourceRectangle.Height / 2f);
+            spriteBatch.Draw(texture, position, sourceRectangle, Color.White, rotation, origin, 60f/33f, SpriteEffects.None, 0);
         }
 
         public void RemoveFirstBeacon()
