@@ -23,9 +23,11 @@ namespace Masteroids // Simon
             acceleration = 10f;
             deacceleration = 0.9f;
             sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
-            rotationCenter = new Vector2(texture.Width / 2, texture.Height / 2);
+            rotationCenter = new Vector2(texture.Width / 8, texture.Height / 4);
             shouldWrap = true;
             entityMgr = entityManager;
+            var rnd = new Random();
+            sourceRectangle = new Rectangle(rnd.Next(4) * texture.Width / 4, rnd.Next(2) * texture.Height / 2, texture.Width / 4, texture.Height / 2);
             Radius = texture.Width / 2;
         }
 
