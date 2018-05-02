@@ -31,7 +31,7 @@ namespace Masteroids
             Left();
             textureData = new Color[bosstex.Width * bosstex.Height];
             bosstex.GetData(textureData);
-            life = 1;
+            life = 100;
         }
         public void Update(GameTime gameTime)
         {

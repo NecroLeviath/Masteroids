@@ -74,6 +74,7 @@
     <Content Include="Content\ast3Tex.png" />
     <Content Include="Content\ast4Tex.png" />
     <Content Include="Content\astTex.png" />
+    <Content Include="Content\ballBoss.png" />
     <Content Include="Content\boss.png" />
     <Content Include="Content\CentipedeTemp.png" />
     <Content Include="Content\laser.png" />
@@ -82,6 +83,7 @@
     <Content Include="Content\ponyBoss.png" />
     <Content Include="Content\shipTex.png" />
     <Content Include="Content\skott.png" />
+    <Content Include="Content\Sound\ChillnDestroy.wav" />
     <Content Include="Content\Sound\MasteroidsTheme.wav" />
     <Content Include="Content\ufoBoss.png" />
     <Content Include="Content\Sound\Castle Crashers - Jumper.mp3" />

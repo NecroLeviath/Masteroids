@@ -24,7 +24,7 @@ namespace Masteroids
         public static void Load(ContentManager content)
         {
             //Music = content.Load<Song>("Sound/MasteroidsTheme"); // DEV: This is just a debug song and it should be replaced
-            Music = content.Load<SoundEffect>("Sound/MasteroidsTheme"); // DEV: This is just a debug song and it should be replaced
+            Music = content.Load<SoundEffect>("Sound/ChillnDestroy"); // DEV: This is just a debug song and it should be replaced
             MusicInstance = Music.CreateInstance();
             MusicInstance.IsLooped = true;
             //SEffect = content.Load<SoundEffect>("");

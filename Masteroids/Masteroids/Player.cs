@@ -11,7 +11,7 @@ namespace Masteroids
 {
     class Player : GameObject //Andreas
     {
-        private float scale = 0.5f, rotationVelocity = 5f, maxSpeed = 10f;
+        private float scale = 0.5f, rotationVelocity, maxSpeed = 6f;
         private float bulletTimer, bulletInterval;
         private Vector2 distance, bulletPos;
         private MouseState mouseStateCurrent, mouseStatePrevious;
@@ -62,7 +62,7 @@ namespace Masteroids
             }
             position += velocity;
             
-            speed = 0.4f;
+            speed = 0.04f;
 
             GamePadCapabilities capabilities =              
                 GamePad.GetCapabilities(playerValue);
@@ -135,6 +135,7 @@ namespace Masteroids
         {
             var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - 
                 rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
+            rotationVelocity = 2.3f;
 
             if (keyboardState.IsKeyDown(Keys.A))            //Rotera med tangentbord Asteroids
                 rotation -= MathHelper.ToRadians(rotationVelocity);
@@ -142,7 +143,7 @@ namespace Masteroids
                 rotation += MathHelper.ToRadians(rotationVelocity);
             
             if (keyboardState.IsKeyDown(Keys.W))            //Frammåt och Bakåt med tangentbord Asteroids
-                velocity += direction * speed;
+                velocity += direction * speed/2;
 
             if (keyboardState.IsKeyDown(Keys.Space) && 
                 pastKeyboardState.IsKeyUp(Keys.Space))   //Skjuta
@@ -151,7 +152,7 @@ namespace Masteroids
 
         private void AInputGamePad() //Asteroids kontroller för Gamepad
         {
-            rotationVelocity = 0.08f;
+            rotationVelocity = 0.04f;
 
             var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - 
                 rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
@@ -162,10 +163,16 @@ namespace Masteroids
                 rotation += rotationVelocity;
             
             if (gamePadStateCurrent.Buttons.A == ButtonState.Pressed)  //Frammåt och Bakåt med Knappar
-                velocity += direction * speed;
+                velocity += direction * speed/2;
+            if (gamePadStateCurrent.Buttons.B == ButtonState.Pressed)  //Frammåt och Bakåt med Knappar
+                velocity -= direction * speed/3;
 
-            if (gamePadStateCurrent.Buttons.RightShoulder == ButtonState.Pressed && 
-                gamePadStatePrevious.Buttons.RightShoulder == ButtonState.Released)
+            //if (gamePadStateCurrent.Buttons.RightShoulder == ButtonState.Pressed && 
+            //    gamePadStatePrevious.Buttons.RightShoulder == ButtonState.Released)
+            //    CreateBullet();
+
+            if (gamePadStateCurrent.Buttons.X == ButtonState.Pressed &&
+                gamePadStatePrevious.Buttons.X == ButtonState.Released)
                 CreateBullet();
         }
 
