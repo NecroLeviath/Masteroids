@@ -24,7 +24,7 @@ namespace Masteroids.States
             SpriteFont buttonFont = _content.Load<SpriteFont>(@"Fonts/Font");
             Sound.Load(content);
             //MediaPlayer.Play(Sound.Music);
-            //Sound.MusicInstance.Play();
+            Sound.MusicInstance.Play();
 			entityMgr = entityManager;
             int x = graphicsDevice.Viewport.Width;
             int y = graphicsDevice.Viewport.Height;
