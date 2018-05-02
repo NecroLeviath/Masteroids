@@ -84,12 +84,12 @@
     <Content Include="Content\playerShip.png" />
     <Content Include="Content\ponyBoss.png" />
     <Content Include="Content\shipTex.png" />
+    <Content Include="Content\shooterSheet.png" />
     <Content Include="Content\skott.png" />
     <Content Include="Content\Sound\ChillnDestroy.wav" />
     <Content Include="Content\Sound\MasteroidsTheme.wav" />
     <Content Include="Content\ufoBoss.png" />
     <Content Include="Content\Sound\Castle Crashers - Jumper.mp3" />
-    <Content Include="Content\ufoSheet.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
