@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    class Boss : BaseBoss //public fields börjar med stor bokstav. tex TextureData.
+    class Boss : BaseBoss 
     {
-        Vector2 bulletpos, bulletpos1, bulletpos2; //bulletPos1-2-3 istället för en bulletPos
+        Vector2 bulletpos, bulletpos1, bulletpos2; 
         public Rectangle hitBox;
-        int stopX = 1780;   //Lägga in åtkomst och sortera.
+        public int stopX = 1780;   
         float bulletTimer, bulletIntervall = 0.5f;
         EntityManager entityMgr;
 
@@ -24,9 +24,13 @@ namespace Masteroids
             velocity = new Vector2(0, 0);
             pos = position;
             Left();
-            HP = hitPoints; // DEV: life should be HP
+            HP = hitPoints; 
 			Radius = tex.Width / 2;
+            HP = 100;
+            if (HP < 0)
+                HP = 0;
         }
+
         public override void Update(GameTime gameTime)
         {
             bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -46,12 +50,11 @@ namespace Masteroids
                 velocity.Y = 0;
             }
             pos += velocity;
-            bulletpos = new Vector2(pos.X, pos.Y + 80); // + texture.Width / 2  .. 
+            bulletpos = new Vector2(pos.X, pos.Y + 80);
             bulletpos1 = new Vector2(pos.X - tex.Width / 2 + 20, pos.Y + 60);
             bulletpos2 = new Vector2(pos.X + tex.Width / 2 - 20, pos.Y + 60);
 
 
-            //
             if (bulletTimer >= bulletIntervall && HP > 50) //Ha en bullethastighet som är relativt till bossen.
             {
                 CreateBullet(bulletpos, 10f, new Vector2(0, 1));
@@ -83,22 +86,23 @@ namespace Masteroids
         public override void Draw(SpriteBatch spriteBatch)
         {
 			var drawPos = pos - new Vector2(tex.Width / 2, tex.Height / 2);
-            if(HP >= 1)
+            if(HP >= 30)
 				spriteBatch.Draw(tex, drawPos, Color.White);
-            if (HP < 1 ) //Tag Bort måsvingarna LAILA!! :)
+            if (HP < 30 && HP >= 1)
             {
                 spriteBatch.Draw(tex, drawPos, Color.Red);
             }
+
         }
         public bool Left()
         {
-            //velocity.X = -4;
+            velocity.X = -4;
             return true;
         }
 
         public bool Right()
         {
-            //velocity.X = 4;
+            velocity.X = 4;
             return true;
         }
 
@@ -110,8 +114,8 @@ namespace Masteroids
 
 		public override void HandleCollision(GameObject other)
 		{
-			if (other is Bullet)
-				HP -= (other as Bullet).Damage;
+            if (other is Bullet && HP >= 1)
+                HP -=5;
 		}
-	}
+    }
 }

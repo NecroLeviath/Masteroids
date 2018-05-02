@@ -11,6 +11,8 @@ namespace Masteroids //Laila
     public class Asteroid : GameObject
     {
         Vector2 texOffset;
+        EntityManager entityMgr;
+        float HP;
 
         public Asteroid(Texture2D texture, Vector2 speed, Vector2 position, Viewport viewport)
 			: base(texture, position, viewport)
@@ -22,6 +24,8 @@ namespace Masteroids //Laila
             texOffset = new Vector2(tex.Width / 2, tex.Height / 2);
             sourceRectangle = new Rectangle(0, 0, tex.Width, tex.Height);
 			Radius = tex.Width / 2;
+            HP = 1;
+        
         }
 
         public override void Update(GameTime gameTime)
@@ -29,19 +33,26 @@ namespace Masteroids //Laila
             pos = pos + velocity;
             ScreenWrap();
         }
-
+        public override void HandleCollision(GameObject other)
+        {
+            if (other is Bullet)
+            {
+                HP -= (other as Bullet).Damage;
+                //entityMgr.Asteroids.Count -= 1;
+            }
+        }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos - texOffset, Color.White);
-            base.Draw(spriteBatch);
+            if (HP == 1)
+            {
+                spriteBatch.Draw(tex, pos - texOffset, Color.White);
+                base.Draw(spriteBatch);
+            }
         }
         protected override void WrapDraw(SpriteBatch spriteBatch)
         {
+            if(HP == 1)
             spriteBatch.Draw(tex, pos - texOffset + wrapOffset, Color.White);
         }
-
-		public override void HandleCollision(GameObject other)
-		{
-		}
 	}
 }
