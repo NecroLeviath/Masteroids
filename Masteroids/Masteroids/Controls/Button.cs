@@ -59,8 +59,11 @@ namespace Masteroids.Controls
                 var x = (Rectangle.X + (Rectangle.Width / 2)) - (_font.MeasureString(Text).X / 2);
                 var y = (Rectangle.Y + (Rectangle.Height / 2)) - (_font.MeasureString(Text).Y / 2);
                 spriteBatch.DrawString(_font, Text, new Vector2(x, y), PenColour);
+                spriteBatch.Draw(Art.MenuTitleTex, new Vector2(x-490,200), Color.White);
             }
+
         }
+        
         public override void Update(GameTime gameTime)
         {
             _previousMouse = _currentMouse;

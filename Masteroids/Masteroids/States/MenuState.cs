@@ -19,8 +19,6 @@ namespace Masteroids.States
         EntityManager entityMgr;
         AsteroidSpawner asteroidSpawner;
 
-
-
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
@@ -89,8 +87,10 @@ namespace Masteroids.States
 
 
             entityMgr.Draw(spriteBatch);
+
             foreach (Masteroids.Component component in _components)
                 component.Draw(gameTime, spriteBatch);
+            
             //spriteBatch.End();
         }
 

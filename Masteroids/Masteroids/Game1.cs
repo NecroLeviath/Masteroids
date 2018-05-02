@@ -43,6 +43,7 @@ namespace Masteroids
             defaultView = GraphicsDevice.Viewport;
             Art.Initialize(Content);
             _currentstate = new MenuState(this, graphics.GraphicsDevice, Content);
+
         }
 
         protected override void UnloadContent()
@@ -70,6 +71,7 @@ namespace Masteroids
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
+
             _currentstate.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 
