@@ -26,10 +26,10 @@ namespace Masteroids
         EntityManager entityMgr;
 
         public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue, EntityManager entityMgr, Viewport viewport)
-            : base(position, viewport)
+            : base(texture, position, viewport)
         {
             this.playerValue = playerValue; ////Avgör spelare. -> återfinns på loadcontent Game1
-            this.texture = texture;
+            tex = texture;
             this.entityMgr = entityMgr;
             sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             sourceRect = new Rectangle(0, 0, texture.Width, texture.Height);
@@ -50,7 +50,7 @@ namespace Masteroids
             gamePadStatePrevious = gamePadStateCurrent;
             gamePadStateCurrent = GamePad.GetState(playerValue);
 
-            bulletPos = new Vector2(position.X, position.Y);
+            bulletPos = new Vector2(pos.X, pos.Y);
             AsteroidMode = false;
 
             bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -60,7 +60,7 @@ namespace Masteroids
                 direction.Normalize();
                 velocity = direction * maxSpeed;
             }
-            position += velocity;
+            pos += velocity;
             
             speed = 0.4f;
 
@@ -91,7 +91,7 @@ namespace Masteroids
 
             if (bulletTimer >= bulletInterval)
             {
-				Bullet bullet = new Bullet(position, 10f, 10, direction, viewport, this);
+				Bullet bullet = new Bullet(Art.BulletTex, pos, 10f, 10, direction, viewport, this);
 				entityMgr.Add(bullet);
                 //entityMgr.CreateBullet(new Vector2(position.X, position.Y), 10f, 10, direction);
                 bulletTimer = 0;
@@ -100,8 +100,8 @@ namespace Masteroids
 
         private void MInput()   //Masteroids kontroller för Keyboard och Mus
         {
-            distance.X = mouseStateCurrent.X - position.X;
-            distance.Y = mouseStateCurrent.Y - position.Y;
+            distance.X = mouseStateCurrent.X - pos.X;
+            distance.Y = mouseStateCurrent.Y - pos.Y;
             rotation = (float)Math.Atan2(distance.Y, distance.X) + (float)Math.PI / 2;
 
             if (keyboardState.IsKeyDown(Keys.A))
@@ -175,16 +175,16 @@ namespace Masteroids
         {
             if (!Dead)
             {
-                spriteBatch.Draw(texture, position, sourceRect, Color.White, rotation, 
-                    new Vector2(texture.Width / 2, texture.Height - 20), scale, entityFx, 0);
+                spriteBatch.Draw(tex, pos, sourceRect, Color.White, rotation, 
+                    new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
                 base.Draw(spriteBatch);
             }
         }
 
         protected override void WrapDraw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position + wrapOffset, sourceRect, Color.White, 
-                rotation, new Vector2(texture.Width / 2, texture.Height - 20), scale, entityFx, 0);
+            spriteBatch.Draw(tex, pos + wrapOffset, sourceRect, Color.White, 
+                rotation, new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
         }
     }
 }

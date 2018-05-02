@@ -13,10 +13,11 @@ namespace Masteroids //Laila
         Texture2D tex;
         Vector2 texOffset;
 
-        public Asteroid(Texture2D tex, Vector2 speed, Vector2 position, Viewport viewport) : base(position, viewport)
+        public Asteroid(Texture2D texture, Vector2 speed, Vector2 position, Viewport viewport)
+			: base(texture, position, viewport)
         {
-            this.tex = tex;
-            this.position = position;
+            tex = texture;
+            pos = position;
             velocity = speed;
             shouldWrap = true;
             texOffset = new Vector2(tex.Width / 2, tex.Height / 2);
@@ -25,18 +26,18 @@ namespace Masteroids //Laila
 
         public override void Update(GameTime gameTime)
         {
-            position = position + velocity;
+            pos = pos + velocity;
             ScreenWrap();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, position - texOffset, Color.White);
+            spriteBatch.Draw(tex, pos - texOffset, Color.White);
             base.Draw(spriteBatch);
         }
         protected override void WrapDraw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, position - texOffset + wrapOffset, Color.White);
+            spriteBatch.Draw(tex, pos - texOffset + wrapOffset, Color.White);
         }
     }
 }

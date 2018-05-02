@@ -109,7 +109,7 @@ namespace Masteroids
 
 		private void CreateBullet(Vector2 position, float speed, Vector2 direction)
 		{
-			Bullet bullet = new Bullet(position, speed, 10, direction, viewport, this);
+			Bullet bullet = new Bullet(Art.BulletTex, position, speed, 10, direction, viewport, this);
 			entityMgr.Add(bullet);
 		}
     }

@@ -30,18 +30,18 @@ namespace Masteroids
             return age > 100;
         }
         
-        public Bullet(Vector2 position, float speed, int damage, Vector2 direction, Viewport viewport, GameObject owner)
-            : base(position, viewport)
+        public Bullet(Texture2D texture, Vector2 position, float speed, int damage, Vector2 direction, Viewport viewport, GameObject owner)
+            : base(texture, position, viewport)
         {
-            this.position = position;
-            this.texture = Art.BulletTex;
+            pos = position;
+            tex = texture;
             this.damage = damage;
             this.speed = speed;
             Owner = owner;
-            origin = new Vector2(texture.Width / 2, texture.Height / 2);
-            center = new Vector2(this.position.X + texture.Width / 2, this.position.Y + texture.Height / 2);
-            textureData = new Color[texture.Width * texture.Height];
-            texture.GetData(textureData);
+            origin = new Vector2(tex.Width / 2, tex.Height / 2);
+            center = new Vector2(this.pos.X + tex.Width / 2, this.pos.Y + tex.Height / 2);
+            textureData = new Color[tex.Width * tex.Height];
+            tex.GetData(textureData);
 
             Direction = direction;
         }
@@ -53,15 +53,15 @@ namespace Masteroids
 
         public override void Update(GameTime gameTime)
         {
-            bulletRec = new Rectangle((int)position.X, (int)position.Y, 5, 5);
+            bulletRec = new Rectangle((int)pos.X, (int)pos.Y, 5, 5);
             bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             age++;
             //center.Y += speed;
 
 
-            position += Direction * speed;
+            pos += Direction * speed;
 
-            if (position.Y >= 200)
+            if (pos.Y >= 200)
             {
                 Kill();
             }
@@ -70,9 +70,9 @@ namespace Masteroids
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, bulletRec, Color.White, 0,
+            spriteBatch.Draw(tex, pos, bulletRec, Color.White, 0,
                  origin, 1.0f, SpriteEffects.None, 0);
-            spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.Draw(tex, pos, Color.White);
         }
 
     }

@@ -15,8 +15,6 @@ namespace Masteroids
 		public BaseBoss(Texture2D texture, Vector2 position, float speed, int hitPoints, Viewport viewport)
 			: base(texture, position, speed, viewport)
 		{
-			this.texture = texture; // DEV: Should be moved to GameObject
-			this.speed = speed;     // DEV: Should be moved to GameObject
 			HP = hitPoints;
 		}
 

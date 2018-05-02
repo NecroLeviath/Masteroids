@@ -11,7 +11,10 @@ namespace Masteroids // Simon
     public abstract class Enemy : GameObject
     {
         public Enemy(Texture2D texture, Vector2 position, float speed, Viewport viewport)
-            : base(position, viewport) { }
+            : base(texture, position, viewport)
+		{
+			this.speed = speed;
+		}
 
         public override void Update(GameTime gameTime) { }
     }

@@ -10,9 +10,9 @@ namespace Masteroids
 {
     public abstract class GameObject
     {
-        protected Texture2D texture;
-        public Vector2 Position { get { return position; } }
-        protected Vector2 position, velocity, rotationCenter, direction, startPosition, wrapOffset;
+        protected Texture2D tex;
+        public Vector2 Position { get { return pos; } }
+        protected Vector2 pos, velocity, rotationCenter, direction, startPosition, wrapOffset;
         protected float speed, rotation, acceleration, deacceleration;
         protected Rectangle sourceRectangle;
         protected Rectangle hitbox;
@@ -22,9 +22,10 @@ namespace Masteroids
         public bool IsAlive { get; protected set; }
         public float Radius;
 
-        public GameObject(Vector2 position, Viewport viewport)
+        public GameObject(Texture2D texture, Vector2 position, Viewport viewport)
         {
-            this.position = position;
+			tex = texture;
+            pos = position;
             this.viewport = viewport;
             IsAlive = true;
         }
@@ -47,24 +48,24 @@ namespace Masteroids
             {
                 wrapOffset = Vector2.Zero;
 
-                if (position.X < viewport.X) // Checks if the entitys position is off the screen...
-                    position.X += viewport.Width; // ... if it is, moves the entity to the other side of the screen
-                else if (position.X - (sourceRectangle.Width / 2) < viewport.X) // Otherwise, if the entity is only a bit off the screen...
+                if (pos.X < viewport.X) // Checks if the entitys position is off the screen...
+                    pos.X += viewport.Width; // ... if it is, moves the entity to the other side of the screen
+                else if (pos.X - (sourceRectangle.Width / 2) < viewport.X) // Otherwise, if the entity is only a bit off the screen...
                     wrapOffset.X += viewport.Width; // ... set an offset so that the entity can appear on the other side of the screen
 
-                if (position.X > viewport.X + viewport.Width)
-                    position.X -= viewport.Width;
-                else if (position.X + (sourceRectangle.Width / 2) > viewport.X + viewport.Width)
+                if (pos.X > viewport.X + viewport.Width)
+                    pos.X -= viewport.Width;
+                else if (pos.X + (sourceRectangle.Width / 2) > viewport.X + viewport.Width)
                     wrapOffset.X -= viewport.Width;
 
-                if (position.Y < viewport.Y)
-                    position.Y += viewport.Height;
-                else if (position.Y - (sourceRectangle.Height / 2) < viewport.Y)
+                if (pos.Y < viewport.Y)
+                    pos.Y += viewport.Height;
+                else if (pos.Y - (sourceRectangle.Height / 2) < viewport.Y)
                     wrapOffset.Y += viewport.Height;
 
-                if (position.Y > viewport.Y + viewport.Height)
-                    position.Y -= viewport.Height;
-                else if (position.Y + (sourceRectangle.Height / 2) > viewport.Y + viewport.Height)
+                if (pos.Y > viewport.Y + viewport.Height)
+                    pos.Y -= viewport.Height;
+                else if (pos.Y + (sourceRectangle.Height / 2) > viewport.Y + viewport.Height)
                     wrapOffset.Y -= viewport.Height;
             }
         }
