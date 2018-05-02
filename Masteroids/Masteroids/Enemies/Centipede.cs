@@ -19,7 +19,7 @@ namespace Masteroids
         float beaconTimer, moveTimer, animationTimer;
 		float beaconInterval = 0.2f, moveInterval = 3f, animationInterval = 0.1f;
 		float maxTurnRate = 2f;
-		Random rand;
+		Random rnd;
 		Vector2 goal;
 
 		public Centipede(Texture2D texture, Vector2 position, float speed, int hitPoints, int numberOfSegments, Viewport viewport, EntityManager entityMgr)
@@ -30,7 +30,7 @@ namespace Masteroids
 			Radius = 30;
 			Beacons = new List<Vector2>();
             sourceRectangle = new Rectangle(texture.Width / 5, 0, texture.Width / 5, texture.Height);
-            rand = new Random();
+            rnd = new Random();
 			nrSegments = numberOfSegments;
 		}
 
@@ -64,7 +64,7 @@ namespace Masteroids
             if (!isHead && !parent.IsAlive)
 			{
 				isHead = true;
-				rand = new Random();
+				rnd = new Random();
 				FindGoal(moveInterval);
 			}
 			if (HP < 0)
@@ -135,8 +135,8 @@ namespace Masteroids
 			moveTimer += delta;
 			if (moveTimer >= moveInterval || Vector2.Distance(pos, goal) < 10)
 			{
-				float x = rand.Next(200, viewport.Width - 200);
-				float y = rand.Next(200, viewport.Height - 200);
+				float x = rnd.Next(200, viewport.Width - 200);
+				float y = rnd.Next(200, viewport.Height - 200);
 				goal = new Vector2(x, y);
 
 				moveTimer = 0;

@@ -86,8 +86,8 @@ namespace Masteroids // Simon
         {
             if (entityMgr.Players.Count > 0 && (target == null || !target.IsAlive))
             {
-                var rand = new Random();
-                var i = rand.Next(entityMgr.Players.Count);
+                var rnd = new Random();
+                var i = rnd.Next(entityMgr.Players.Count);
                 target = entityMgr.Players[i];
             }
         }

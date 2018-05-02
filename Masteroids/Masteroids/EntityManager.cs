@@ -74,14 +74,6 @@ namespace Masteroids // Simon
 			else if (entity is Player)
 				Players.Add(entity as Player);
         }
-        
-
-        public void CreateAsteroid(Vector2 pos, Vector2 speed)
-        {
-            GameObject o = new Asteroid(Art.AsteroidTex, speed, pos, viewport);
-            entities.Add(o);
-            Asteroids.Add(o as Asteroid);
-        }
 
         private bool IsColliding(GameObject entityA, GameObject entityB)
         {
