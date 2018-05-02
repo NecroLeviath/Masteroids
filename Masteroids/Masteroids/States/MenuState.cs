@@ -22,13 +22,13 @@ namespace Masteroids.States
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
-            SpriteFont buttonFont = _content.Load<SpriteFont>(@"Fonts/Font");
+            SpriteFont buttonFont = _content.Load<SpriteFont>("Fonts/MenuFont");
             Sound.Load(content);
-            //MediaPlayer.Play(Sound.Music);
             Sound.MusicInstance.Play();
+            //MediaPlayer.Play(Sound.Music);
+
             int x = graphicsDevice.Viewport.Width;
             int y = graphicsDevice.Viewport.Height;
-
 
             viewport = graphicsDevice.Viewport;
             entityMgr = new EntityManager(viewport);
@@ -36,19 +36,19 @@ namespace Masteroids.States
 
             Button NewGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 550),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 625),
                 Text = "New Game"
             };
 
             Button HighScoreButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 600),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 675),
                 Text = "Highscore"
             };
 
             Button QuitGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 650),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 750),
                 Text = "Quit Game"
             };
             NewGameButton.Click += NewGameButton_click;
@@ -60,8 +60,6 @@ namespace Masteroids.States
                 HighScoreButton,
                 QuitGameButton,
             };
-
-
         }
 
         private void NewGameButton_click(object sender, EventArgs e)
@@ -73,24 +71,18 @@ namespace Masteroids.States
         private void HighScoreButton_click(object sender, EventArgs e)
         {
             _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
-
         }
         private void QuitGameButton_click(object sender, EventArgs e)
         {
             _game.Exit();
-
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             //spriteBatch.Begin();
-
-
             entityMgr.Draw(spriteBatch);
-
             foreach (Masteroids.Component component in _components)
                 component.Draw(gameTime, spriteBatch);
-            
             //spriteBatch.End();
         }
 
@@ -101,7 +93,6 @@ namespace Masteroids.States
 
         public override void Update(GameTime gameTime)
         {
-
             asteroidSpawner.Update(gameTime);
             entityMgr.Update(gameTime);
             foreach (Masteroids.Component component in _components)

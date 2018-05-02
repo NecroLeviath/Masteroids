@@ -11,6 +11,7 @@ namespace Masteroids.Controls
 {
     public class Button : Component
     {
+        #region
         private MouseState _currentMouse;
 
         private SpriteFont _font;
@@ -46,12 +47,13 @@ namespace Masteroids.Controls
             PenColour = Color.Black;
 
         }
+        #endregion
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             var colour = Color.White;
             if (_isHovering)
-                colour = Color.Gray;
+                colour = Color.SlateGray;
 
             spriteBatch.Draw(_texture, Rectangle, colour);
             if (!string.IsNullOrEmpty(Text))
@@ -61,7 +63,6 @@ namespace Masteroids.Controls
                 spriteBatch.DrawString(_font, Text, new Vector2(x, y), PenColour);
                 spriteBatch.Draw(Art.MenuTitleTex, new Vector2(x-490,200), Color.White);
             }
-
         }
         
         public override void Update(GameTime gameTime)
