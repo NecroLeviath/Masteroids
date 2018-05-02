@@ -156,6 +156,15 @@ namespace Masteroids // Simon
 							boss.HandleCollision(player);
 						}
 					}
+					for (int j = 0; j < Asteroids.Count; j++)
+					{
+						Asteroid asteroid = Asteroids[j];
+						if (asteroid.IsAlive && IsColliding(player, asteroid))
+						{
+							player.HandleCollision(asteroid);
+							asteroid.HandleCollision(player);
+						}
+					}
 				}
 			}
         }
