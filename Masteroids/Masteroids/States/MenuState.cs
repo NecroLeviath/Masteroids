@@ -48,7 +48,7 @@ namespace Masteroids.States
 
             Button QuitGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 750),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 800),
                 Text = "Quit Game"
             };
             NewGameButton.Click += NewGameButton_click;
