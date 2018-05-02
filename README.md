@@ -1,3 +1,3 @@
 # Masteroids
 
-To run the project, download the master branch, find and open Masteroids.sln and then start if from Visual Studio.
+To run the project, download the Development branch, find and open Masteroids.sln and then start it from Visual Studio.
