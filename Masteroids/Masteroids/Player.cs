@@ -78,8 +78,8 @@ namespace Masteroids
                 }
             }
 
-            AInput(); //Keyboard kontroller till Asteroids
-            //MInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
+            //AInput(); //Keyboard kontroller till Asteroids
+            MInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
 
             ScreenWrap();
         }

@@ -10,69 +10,62 @@ namespace Masteroids
 {
     class Boss : BaseBoss //public fields börjar med stor bokstav. tex TextureData.
     {
-        Texture2D bosstex, bulletTex; //Hämta textures från GameObject klassn.
-        Vector2 velocity, pos, bulletpos, bulletpos1, bulletpos2; //bulletPos1-2-3 istället för en bulletPos
+        Vector2 bulletpos, bulletpos1, bulletpos2; //bulletPos1-2-3 istället för en bulletPos
         public Rectangle hitBox;
         int stopX = 1780;   //Lägga in åtkomst och sortera.
         float bulletTimer, bulletIntervall = 0.5f;
-        List<Bullet> bulletList = new List<Bullet>();
-        public Color[] textureData;
-        Bullet bullet;
         EntityManager entityMgr;
-        public int life;
 
         public Boss(Texture2D texture, Vector2 position, float speed, int hitPoints, Viewport viewport, EntityManager entityMgr)
 			: base(texture, position, speed, hitPoints, viewport)
         {
-            bosstex = texture;
+            tex = texture;
             this.entityMgr = entityMgr;
             velocity = new Vector2(0, 0);
             pos = position;
             Left();
-            textureData = new Color[bosstex.Width * bosstex.Height];
-            bosstex.GetData(textureData);
-            life = hitPoints; // DEV: life should be HP
+            HP = hitPoints; // DEV: life should be HP
 			Radius = tex.Width / 2;
         }
         public override void Update(GameTime gameTime)
         {
             bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            hitBox = new Rectangle((int)pos.X, (int)pos.Y, bosstex.Width, bosstex.Height);
+            hitBox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
-            if (pos.X < 0)
+            if (pos.X < tex.Width / 2)
             {
                 Right();
             }
-            else if (pos.X > stopX)
+            else if (pos.X > viewport.Width - (tex.Width / 2))
             {
                 Left();
             }
-            if(life < 1)
+            if(HP < 1)
             {
                 velocity.X = 0;
                 velocity.Y = 0;
             }
             pos += velocity;
-            bulletpos = new Vector2(pos.X + 80, pos.Y + 120); // + texture.Width / 2  .. 
-            bulletpos1 = new Vector2(pos.X + 20, pos.Y + 65);
-            bulletpos2 = new Vector2(pos.X + bosstex.Width, pos.Y + 65);
+            bulletpos = new Vector2(pos.X, pos.Y + 80); // + texture.Width / 2  .. 
+            bulletpos1 = new Vector2(pos.X - tex.Width / 2 + 20, pos.Y + 60);
+            bulletpos2 = new Vector2(pos.X + tex.Width / 2 - 20, pos.Y + 60);
 
 
             //
-            if (bulletTimer >= bulletIntervall && life > 50) //Ha en bullethastighet som är relativt till bossen.
+            if (bulletTimer >= bulletIntervall && HP > 50) //Ha en bullethastighet som är relativt till bossen.
             {
                 CreateBullet(bulletpos, 10f, new Vector2(0, 1));
                 bulletTimer = 0;
             }
-            if (bulletTimer >= bulletIntervall && life <= 50 && life > 20)
+            if (bulletTimer >= bulletIntervall && HP <= 50 && HP > 20)
             {
                 bulletIntervall = 0.4f;
                 CreateBullet(bulletpos, 10f, new Vector2(0, 1));
-                CreateBullet(bulletpos1, 10f, new Vector2(1, 1));
-                CreateBullet(bulletpos2, 10f, new Vector2(-1, 1));
+				CreateBullet(bulletpos1, 10f, new Vector2(-1, 1));
+				CreateBullet(bulletpos2, 10f, new Vector2(1, 1));
                 bulletTimer = 0;
             }
-            if (bulletTimer >= bulletIntervall && life <= 20 && life > 0)
+            if (bulletTimer >= bulletIntervall && HP <= 20 && HP > 0)
             {
                 bulletIntervall = 0.1f;
                 CreateBullet(bulletpos, 5f, new Vector2(0, 1));
@@ -89,22 +82,23 @@ namespace Masteroids
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if(life >= 1)
-            spriteBatch.Draw(bosstex, pos, Color.White);
-            if (life < 1 ) //Tag Bort måsvingarna LAILA!! :)
+			var drawPos = pos - new Vector2(tex.Width / 2, tex.Height / 2);
+            if(HP >= 1)
+				spriteBatch.Draw(tex, drawPos, Color.White);
+            if (HP < 1 ) //Tag Bort måsvingarna LAILA!! :)
             {
-                spriteBatch.Draw(bosstex, pos, Color.Red);
+                spriteBatch.Draw(tex, drawPos, Color.Red);
             }
         }
         public bool Left()
         {
-            velocity.X = -4;
+            //velocity.X = -4;
             return true;
         }
 
         public bool Right()
         {
-            velocity.X = 4;
+            //velocity.X = 4;
             return true;
         }
 
