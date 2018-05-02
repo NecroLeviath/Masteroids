@@ -196,6 +196,10 @@ namespace Masteroids
                     new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
                 base.Draw(spriteBatch);
             }
+            else if(!IsAlive)
+            {
+
+            }
         }
 
         protected override void WrapDraw(SpriteBatch spriteBatch)
@@ -208,6 +212,8 @@ namespace Masteroids
 		{
             if (other is Bullet)
                 HP -= (other as Bullet).Damage;
+            if (other is Asteroid)
+                HP -= (other as Asteroid).Damage;
         }
 	}
 }
