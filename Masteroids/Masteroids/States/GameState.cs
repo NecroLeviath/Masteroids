@@ -16,7 +16,7 @@ namespace Masteroids.States
 		Viewport viewport;
 
 		EntityManager entityMgr;
-		AsteroidSpawner asteroidSpawner;
+		Spawner spawner;
 
 		Vector2 bossFontPos;
 		SpriteFont bossFont;
@@ -26,24 +26,21 @@ namespace Masteroids.States
 			: base(game, graphicsDevice, content)
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
-		}
+            spawner = new AsteroidSpawner(entityMgr, viewport);
+        }
 
 		// Masteroids
 		public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers, BaseBoss boss)
 			: base(game, graphicsDevice, content)
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
-            Shooter shooter = new Shooter(Art.EnemySheet, new Vector2(20), 100, entityMgr, viewport);
-            entityMgr.Add(shooter);
-			entityMgr.Add(boss);
-			entityMgr.Bosses[0].Start();
+            spawner = new MasteroidSpawner(entityMgr, viewport, boss, 10);
 		}
 
 		private void CommonConstructor(GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers)
 		{
 			viewport = graphicsDevice.Viewport;
 			entityMgr = entityManager;
-			asteroidSpawner = new AsteroidSpawner(entityMgr, viewport);
 			bossFont = content.Load<SpriteFont>("BossLife");
 			bossFontPos = new Vector2(1000, 20);
 			font = content.Load<SpriteFont>(@"Fonts/font");
@@ -64,7 +61,7 @@ namespace Masteroids.States
 
 		public override void Update(GameTime gameTime)
 		{
-			asteroidSpawner.Update(gameTime);
+			spawner.Update(gameTime);
 			entityMgr.Update(gameTime);
 			#region Out-commented
 			//GamePadCapabilities capabilities =

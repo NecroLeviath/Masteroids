@@ -31,12 +31,14 @@ namespace Masteroids
             {
                 var pos = new Vector2();
                 Shooter shooter = new Shooter(Art.EnemySheet, pos, 100, entityMgr, viewport);
+                entityMgr.Add(shooter);
                 nrOfEnemies--;
                 spawnTimer = 0;
             }
-            else if (!hasBossSpawned)
+            else if (nrOfEnemies == 0 && !hasBossSpawned)
             {
                 entityMgr.Add(boss);
+                entityMgr.Bosses[0].Start();
                 hasBossSpawned = true;
             }
         }
