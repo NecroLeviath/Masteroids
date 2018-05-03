@@ -59,6 +59,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="Enemies\Shooter.cs" />
     <Compile Include="Sound.cs" />
+    <Compile Include="Spawner.cs" />
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\MenuState.cs" />
     <Compile Include="States\State.cs" />
