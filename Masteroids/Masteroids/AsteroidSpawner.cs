@@ -27,6 +27,7 @@ namespace Masteroids
 				Asteroid asteroid = new Asteroid(Art.AsteroidTex, speed, pos, viewport);
 				entityMgr.Add(asteroid);
             }
+            
         }
     }
 }

@@ -8,29 +8,33 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    class Boss : BaseBoss //public fields börjar med stor bokstav. tex TextureData.
+    class Boss : BaseBoss 
     {
-        Vector2 bulletpos, bulletpos1, bulletpos2; //bulletPos1-2-3 istället för en bulletPos
-        public Rectangle hitBox;
-        int stopX = 1780;   //Lägga in åtkomst och sortera.
-        float bulletTimer, bulletIntervall = 0.5f;
-        EntityManager entityMgr;
+        public Vector2 BulletPos, BulletPos1, BulletPos2; 
+        public Rectangle HitBox;
+        public int StopX = 1780;   
+        protected float BulletTimer, BulletIntervall = 0.5f;
+        EntityManager EntityMgr;
 
         public Boss(Texture2D texture, Vector2 position, float speed, int hitPoints, Viewport viewport, EntityManager entityMgr)
 			: base(texture, position, speed, hitPoints, viewport)
         {
             tex = texture;
-            this.entityMgr = entityMgr;
+            this.EntityMgr = entityMgr;
             velocity = new Vector2(0, 0);
             pos = position;
             Left();
-            HP = hitPoints; // DEV: life should be HP
+            HP = hitPoints; 
 			Radius = tex.Width / 2;
+            HP = 100;
+            if (HP < 0)
+                HP = 0;
         }
+
         public override void Update(GameTime gameTime)
         {
-            bulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            hitBox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
+            BulletTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            HitBox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
             if (pos.X < tex.Width / 2)
             {
@@ -46,49 +50,49 @@ namespace Masteroids
                 velocity.Y = 0;
             }
             pos += velocity;
-            bulletpos = new Vector2(pos.X, pos.Y + 80); // + texture.Width / 2  .. 
-            bulletpos1 = new Vector2(pos.X - tex.Width / 2 + 20, pos.Y + 60);
-            bulletpos2 = new Vector2(pos.X + tex.Width / 2 - 20, pos.Y + 60);
+            BulletPos = new Vector2(pos.X, pos.Y + 80);
+            BulletPos1 = new Vector2(pos.X - tex.Width / 2 + 20, pos.Y + 60);
+            BulletPos2 = new Vector2(pos.X + tex.Width / 2 - 20, pos.Y + 60);
 
 
-            //
-            if (bulletTimer >= bulletIntervall && HP > 50) //Ha en bullethastighet som är relativt till bossen.
+            if (BulletTimer >= BulletIntervall && HP > 50) //Ha en bullethastighet som är relativt till bossen.
             {
-                CreateBullet(bulletpos, 10f, new Vector2(0, 1));
-                bulletTimer = 0;
+                CreateBullet(BulletPos, 10f, new Vector2(0, 1));
+                BulletTimer = 0;
             }
-            if (bulletTimer >= bulletIntervall && HP <= 50 && HP > 20)
+            if (BulletTimer >= BulletIntervall && HP <= 50 && HP > 20)
             {
-                bulletIntervall = 0.4f;
-                CreateBullet(bulletpos, 10f, new Vector2(0, 1));
-				CreateBullet(bulletpos1, 10f, new Vector2(-1, 1));
-				CreateBullet(bulletpos2, 10f, new Vector2(1, 1));
-                bulletTimer = 0;
+                BulletIntervall = 0.4f;
+                CreateBullet(BulletPos, 10f, new Vector2(0, 1));
+				CreateBullet(BulletPos1, 10f, new Vector2(-1, 1));
+				CreateBullet(BulletPos2, 10f, new Vector2(1, 1));
+                BulletTimer = 0;
             }
-            if (bulletTimer >= bulletIntervall && HP <= 20 && HP > 0)
+            if (BulletTimer >= BulletIntervall && HP <= 20 && HP > 0)
             {
-                bulletIntervall = 0.1f;
-                CreateBullet(bulletpos, 5f, new Vector2(0, 1));
-                CreateBullet(bulletpos, 5f, new Vector2(1, 1));
-                CreateBullet(bulletpos, 5f, new Vector2(-1, 1));
-                CreateBullet(bulletpos, 5f, new Vector2(2, 1));
-                CreateBullet(bulletpos, 5f, new Vector2(-2, 1));
-                CreateBullet(bulletpos, 5f, new Vector2(3, 1));
-                CreateBullet(bulletpos, 5f, new Vector2(-3, 1));
-                CreateBullet(bulletpos1, 10f, new Vector2(-1, 0));
-                CreateBullet(bulletpos2, 10f, new Vector2(1, 0));
-                bulletTimer = 0;
+                BulletIntervall = 0.1f;
+                CreateBullet(BulletPos, 5f, new Vector2(0, 1));
+                CreateBullet(BulletPos, 5f, new Vector2(1, 1));
+                CreateBullet(BulletPos, 5f, new Vector2(-1, 1));
+                CreateBullet(BulletPos, 5f, new Vector2(2, 1));
+                CreateBullet(BulletPos, 5f, new Vector2(-2, 1));
+                CreateBullet(BulletPos, 5f, new Vector2(3, 1));
+                CreateBullet(BulletPos, 5f, new Vector2(-3, 1));
+                CreateBullet(BulletPos1, 10f, new Vector2(-1, 0));
+                CreateBullet(BulletPos2, 10f, new Vector2(1, 0));
+                BulletTimer = 0;
             }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
 			var drawPos = pos - new Vector2(tex.Width / 2, tex.Height / 2);
-            if(HP >= 1)
+            if(HP >= 30)
 				spriteBatch.Draw(tex, drawPos, Color.White);
-            if (HP < 1 ) //Tag Bort måsvingarna LAILA!! :)
+            if (HP < 30 && HP >= 1)
             {
                 spriteBatch.Draw(tex, drawPos, Color.Red);
             }
+
         }
         public bool Left()
         {
@@ -105,13 +109,13 @@ namespace Masteroids
 		private void CreateBullet(Vector2 position, float speed, Vector2 direction)
 		{
 			Bullet bullet = new Bullet(Art.BulletTex, position, speed, 10, direction, viewport, this);
-			entityMgr.Add(bullet);
+			EntityMgr.Add(bullet);
 		}
 
 		public override void HandleCollision(GameObject other)
 		{
-			if (other is Bullet)
-				HP -= (other as Bullet).Damage;
+            if (other is Bullet && HP >= 1)
+                HP -=5;
 		}
-	}
+    }
 }

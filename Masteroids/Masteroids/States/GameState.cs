@@ -17,6 +17,8 @@ namespace Masteroids.States
 
 		EntityManager entityMgr;
 		Spawner spawner;
+		AsteroidSpawner asteroidSpawner;
+        Boss boss;
 
 		Vector2 bossFontPos;
 		SpriteFont bossFont;
@@ -35,6 +37,11 @@ namespace Masteroids.States
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
             spawner = new MasteroidSpawner(entityMgr, viewport, boss, 10);
+            Shooter shooter = new Shooter(Art.EnemySheet, new Vector2(20), 100, entityMgr, viewport);
+            boss = new Boss(Art.BossTex, new Vector2(-100,100), 1, 3, viewport, entityMgr);
+            entityMgr.Add(shooter);
+			entityMgr.Add(boss);
+			entityMgr.Bosses[0].Start();
 		}
 
 		private void CommonConstructor(GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers)
