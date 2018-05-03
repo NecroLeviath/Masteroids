@@ -10,13 +10,9 @@ namespace Masteroids
 {
     class AsteroidSpawner : Spawner
     {
-        Random rnd;
-
         public AsteroidSpawner(EntityManager entityManager, Viewport viewport)
-            : base(entityManager, viewport)
-        {
-            rnd = new Random();
-        }
+            : base(entityManager, viewport) { }
+
         public override void Update(GameTime gameTime)
         {
             //how many asteroids that spawns and how their movement is.
