@@ -51,9 +51,6 @@ namespace Masteroids //Laila
                 base.Draw(spriteBatch);
             }
         }
-            spriteBatch.Draw(tex, pos - texOffset, Color.White);
-            base.Draw(spriteBatch);
-        }
 
         public int Damage //ANDREAS SOM FIFFLAT TILL 1 damage till ASTEROIDERNA
         {
