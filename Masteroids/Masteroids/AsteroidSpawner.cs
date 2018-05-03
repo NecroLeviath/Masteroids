@@ -8,19 +8,20 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    class AsteroidSpawner
+    class AsteroidSpawner : Spawner
     {
         Viewport viewport;
         EntityManager entityMgr;
         private Random rnd;
 
-        public AsteroidSpawner(EntityManager entityMgr, Viewport viewport)
+        public AsteroidSpawner(EntityManager entityManager, Viewport viewport)
+            : base(entityManager, viewport)
         {
-            this.entityMgr = entityMgr;
+            entityMgr = entityManager;
             this.viewport = viewport;
             rnd = new Random();
         }
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             //how many asteroids that spawns and how their movement is.
             if (entityMgr.Asteroids.Count < 10)
