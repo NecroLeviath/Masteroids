@@ -10,15 +10,11 @@ namespace Masteroids
 {
     class AsteroidSpawner : Spawner
     {
-        Viewport viewport;
-        EntityManager entityMgr;
-        private Random rnd;
+        Random rnd;
 
         public AsteroidSpawner(EntityManager entityManager, Viewport viewport)
             : base(entityManager, viewport)
         {
-            entityMgr = entityManager;
-            this.viewport = viewport;
             rnd = new Random();
         }
         public override void Update(GameTime gameTime)

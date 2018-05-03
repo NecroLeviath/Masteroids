@@ -10,8 +10,8 @@ namespace Masteroids
 {
     abstract class Spawner
     {
-        EntityManager entityMgr;
-        Viewport viewport;
+        protected EntityManager entityMgr;
+        protected Viewport viewport;
 
         public Spawner(EntityManager entityManager, Viewport viewport)
         {
