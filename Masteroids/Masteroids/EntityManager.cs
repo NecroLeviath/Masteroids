@@ -15,7 +15,7 @@ namespace Masteroids // Simon
         List<GameObject> entities = new List<GameObject>();
         List<GameObject> addedEntities = new List<GameObject>();
         List<Bullet> bullets = new List<Bullet>();
-        List<Enemy> enemies = new List<Enemy>();
+        public List<Enemy> Enemies = new List<Enemy>();
 		public List<BaseBoss> Bosses = new List<BaseBoss>();
         public List<Player> Players = new List<Player>();
         public List<Asteroid> Asteroids = new List<Asteroid>();
@@ -40,7 +40,7 @@ namespace Masteroids // Simon
             // Removes dead entities
             entities = entities.Where(x => x.IsAlive).ToList();
             bullets = bullets.Where(x => x.IsAlive).ToList();
-            enemies = enemies.Where(x => x.IsAlive).ToList();
+            Enemies = Enemies.Where(x => x.IsAlive).ToList();
 			Bosses = Bosses.Where(x => x.IsAlive).ToList();
 			Players = Players.Where(x => x.IsAlive).ToList();
 			Asteroids = Asteroids.Where(x => x.IsAlive).ToList();
@@ -70,7 +70,7 @@ namespace Masteroids // Simon
 			else if (entity is BaseBoss)
 				Bosses.Add(entity as BaseBoss);
 			else if (entity is Enemy)
-				enemies.Add(entity as Enemy);
+				Enemies.Add(entity as Enemy);
 			else if (entity is Player)
 				Players.Add(entity as Player);
         }
@@ -100,9 +100,9 @@ namespace Masteroids // Simon
 								asteroid.HandleCollision(bullet);
 							}
 						}
-						for (int j = 0; j < enemies.Count; j++)
+						for (int j = 0; j < Enemies.Count; j++)
 						{
-							Enemy enemy = enemies[j];
+							Enemy enemy = Enemies[j];
 							if (enemy.IsAlive && IsColliding(bullet, enemy))
 							{
 								bullet.HandleCollision(enemy);
@@ -138,9 +138,9 @@ namespace Masteroids // Simon
 				Player player = Players[i];
 				if (player.IsAlive)
 				{
-					for (int j = 0; j < enemies.Count; j++)
+					for (int j = 0; j < Enemies.Count; j++)
 					{
-						Enemy enemy = enemies[j];
+						Enemy enemy = Enemies[j];
 						if (enemy.IsAlive && IsColliding(player, enemy))
 						{
 							player.HandleCollision(enemy);
