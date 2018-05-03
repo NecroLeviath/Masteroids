@@ -40,7 +40,12 @@ namespace Masteroids //Laila
             if (other is Bullet)
             {
                 HP -= (other as Bullet).Damage;
+                IsAlive = false;
                 //entityMgr.Asteroids.Count -= 1;
+            }
+            if (other is Player)
+            {
+                IsAlive = false;
             }
         }
         public override void Draw(SpriteBatch spriteBatch)

@@ -38,7 +38,7 @@ namespace Masteroids
             velocity = Vector2.Zero;
 			Radius = tex.Height / 2;
             AsteroidMode = false;
-            HP = 1;
+            HP = 30;
         }
 
         public override void Update(GameTime gameTime)
@@ -79,14 +79,14 @@ namespace Masteroids
                 GamePadState gamePadState = GamePad.GetState(PlayerValue);
                 if (capabilities.HasLeftXThumbStick)
                 {
-                    //MInputGamePad();          //Gamepad kontroller för Masteroid
+                    MasterInputGamePad();          //Gamepad kontroller för Masteroid
 
-                    AsterInputGamePad();          //GamepadKontroller för Asteroid
+                    //AsterInputGamePad();          //GamepadKontroller för Asteroid
                 }
             }
 
-            //AInput(); //Keyboard kontroller till Asteroids
-            MasterInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
+            AsterInput(); //Keyboard kontroller till Asteroids
+            //MasterInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
             
 
             ScreenWrap();
@@ -145,8 +145,8 @@ namespace Masteroids
         {
             var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - 
                 rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
-            rotationVelocity = 2.3f;
-            speed = 0.04f;
+            rotationVelocity = 3.3f;
+            speed = 0.07f;
 
             if (keyboardState.IsKeyDown(Keys.A))            //Rotera med tangentbord Asteroids
                 rotation -= MathHelper.ToRadians(rotationVelocity);
@@ -163,7 +163,7 @@ namespace Masteroids
 
         private void AsterInputGamePad() //Asteroids kontroller för Gamepad
         {
-            rotationVelocity = 0.04f;
+            rotationVelocity = 0.08f;
             speed = 0.04f;
 
             var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - 
