@@ -24,11 +24,7 @@ namespace Masteroids
             velocity = new Vector2(0, 0);
             pos = position;
             Left();
-            HP = hitPoints; 
 			Radius = tex.Width / 2;
-            HP = 100;
-            if (HP < 0)
-                HP = 0;
         }
 
         public override void Update(GameTime gameTime)
@@ -114,8 +110,8 @@ namespace Masteroids
 
 		public override void HandleCollision(GameObject other)
 		{
-            if (other is Bullet && HP >= 1)
-                HP -=5;
+            if (other is Bullet)
+                HP -= (other as Bullet).Damage;
 		}
     }
 }

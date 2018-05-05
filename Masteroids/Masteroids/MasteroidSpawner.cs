@@ -11,6 +11,7 @@ namespace Masteroids
     class MasteroidSpawner : Spawner
     {
         int nrOfEnemies;
+		public int BossMaxHP { get; private set; }
         BaseBoss boss;
         float spawnTimer, spawnInterval = 1f;
         bool hasBossSpawned = false;
@@ -39,6 +40,8 @@ namespace Masteroids
             {
                 entityMgr.Add(boss);
                 entityMgr.Bosses[0].Start();
+				for (int i = 0; i < entityMgr.Bosses.Count; i++)
+					BossMaxHP += entityMgr.Bosses[i].MaxHP;
                 hasBossSpawned = true;
             }
         }

@@ -99,7 +99,11 @@ namespace Masteroids.States
 				int bossHP = 0;
 				for (int i = 0; i < entityMgr.Bosses.Count; i++)    // Summarizes the HP of the boss.
 					bossHP += entityMgr.Bosses[i].HP;
-				spriteBatch.DrawString(bossFont, "Life: " + bossHP, bossFontPos, Color.White);  // DEV: Might be changed to a health bar instead of a number
+				//spriteBatch.DrawString(bossFont, "Life: " + bossHP + " / " + (spawner as MasteroidSpawner).BossMaxHP, bossFontPos, Color.White);  // DEV: Might be changed to a health bar instead of a number
+				Rectangle bleh = new Rectangle(((viewport.Width - 300) / 2), 50, 300, 10);
+				spriteBatch.Draw(Art.CentipedeTex, bleh, new Rectangle(30, 30, 1, 1), Color.DarkRed);
+				bleh.Width = bleh.Width * bossHP / (spawner as MasteroidSpawner).BossMaxHP;
+				spriteBatch.Draw(Art.CentipedeTex, bleh, new Rectangle(30, 30, 1, 1), Color.Red);
 			}
 
 			#region Out-commented
