@@ -12,13 +12,26 @@ namespace Masteroids // Simon
     {
         public static Texture2D BossTex;
         public static Texture2D BulletTex;
-        public static Texture2D AsteroidTex;
+		public static Texture2D[] AsteroidTexs;
+        public static Texture2D PlayerTex;
+        public static Texture2D CentipedeTex;
+        public static Texture2D CentipedeSheet;
+        public static Texture2D EnemySheet;
 
         public static void Initialize(ContentManager content)
         {
-            BossTex = content.Load<Texture2D>("boss");
+            BossTex = content.Load<Texture2D>("ballBoss");
             BulletTex = content.Load<Texture2D>("laser");
-            AsteroidTex = content.Load<Texture2D>("asteroid3");
+			AsteroidTexs = new Texture2D[]
+			{
+				content.Load<Texture2D>("astTex"),
+				content.Load<Texture2D>("ast2Tex"),
+				content.Load<Texture2D>("ast4Tex")
+			};
+            PlayerTex = content.Load<Texture2D>("shipTex");
+            CentipedeTex = content.Load<Texture2D>("CentipedeTemp");
+            CentipedeSheet = content.Load<Texture2D>("pacmanSheetMod");
+            EnemySheet = content.Load<Texture2D>("shooterSheet");
         }
     }
 }

@@ -43,12 +43,15 @@
   <ItemGroup>
     <Compile Include="Asteroid.cs" />
     <Compile Include="AsteroidSpawner.cs" />
-    <Compile Include="Boss.cs" />
+    <Compile Include="Enemies\BaseBoss.cs" />
+    <Compile Include="Enemies\Boss.cs" />
     <Compile Include="Bullet.cs" />
+    <Compile Include="Enemies\Centipede.cs" />
     <Compile Include="Enemies\Enemy.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="MasteroidSpawner.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +59,8 @@
     <Compile Include="Art.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Enemies\Shooter.cs" />
+    <Compile Include="Sound.cs" />
+    <Compile Include="Spawner.cs" />
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\MenuState.cs" />
     <Compile Include="States\State.cs" />
@@ -68,12 +73,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\asteroid3.png" />
+    <Content Include="Content\ast2Tex.png" />
+    <Content Include="Content\ast3Tex.png" />
+    <Content Include="Content\ast4Tex.png" />
+    <Content Include="Content\astTex.png" />
+    <Content Include="Content\ballBoss.png" />
     <Content Include="Content\boss.png" />
+    <Content Include="Content\CentipedeTemp.png" />
+    <Content Include="Content\deathSheet.png" />
     <Content Include="Content\laser.png" />
+    <Content Include="Content\pacmanSheet.png" />
     <Content Include="Content\playerShip.png" />
+    <Content Include="Content\ponyBoss.png" />
     <Content Include="Content\shipTex.png" />
+    <Content Include="Content\shooterSheet.png" />
     <Content Include="Content\skott.png" />
+    <Content Include="Content\Sound\ChillnDestroy.wav" />
+    <Content Include="Content\Sound\MasteroidsTheme.wav" />
+    <Content Include="Content\ufoBoss.png" />
+    <Content Include="Content\Sound\Castle Crashers - Jumper.mp3" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
