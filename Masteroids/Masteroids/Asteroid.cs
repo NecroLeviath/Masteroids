@@ -104,15 +104,15 @@ namespace Masteroids //Laila
 			direction = Vector2.Normalize(velocity);
 			rotation = (float)Math.Atan2(direction.Y, direction.X);
 
-			var newRotation = MathHelper.WrapAngle(rotation + 0.4f);
+			var newRotation = MathHelper.WrapAngle(rotation + 0.2f);
 			var newDirection = new Vector2((float)Math.Cos(newRotation), (float)Math.Sin(newRotation));
 			var newSpeed = velocity.Length();
 			var newSize = size - 1;
 
-			Asteroid asteroid = new Asteroid(newTex, pos, direction, newSpeed, newSize, entityMgr, viewport);
+			Asteroid asteroid = new Asteroid(newTex, pos, newDirection, newSpeed, newSize, entityMgr, viewport);
 			entityMgr.Add(asteroid);
 
-			newRotation = MathHelper.WrapAngle(rotation - 0.4f);
+			newRotation = MathHelper.WrapAngle(rotation - 0.2f);
 			newDirection = new Vector2((float)Math.Cos(newRotation), (float)Math.Sin(newRotation));
 
 			asteroid = new Asteroid(newTex, pos, newDirection, newSpeed, newSize, entityMgr, viewport);
