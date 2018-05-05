@@ -100,8 +100,8 @@ namespace Masteroids //Laila
 				newTex = Art.AsteroidTexs[1];
 			else if (size == 2)
 				newTex = Art.AsteroidTexs[0];
-
-			direction = Vector2.Normalize(velocity);
+			
+			direction = velocity == Vector2.Zero ? Vector2.Zero : Vector2.Normalize(velocity);
 			rotation = (float)Math.Atan2(direction.Y, direction.X);
 
 			var newRotation = MathHelper.WrapAngle(rotation + 0.2f);
