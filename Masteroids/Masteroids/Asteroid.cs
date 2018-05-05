@@ -20,12 +20,11 @@ namespace Masteroids //Laila
 			get { return damage; }
 		}
 
-		public Asteroid(Texture2D texture, Vector2 speed, Vector2 position, Viewport viewport)
+		public Asteroid(Texture2D texture, Vector2 speed, Vector2 position, EntityManager entityManager, Viewport viewport)
 			: base(texture, position, viewport)
 		{
-			tex = texture;
-			pos = position;
 			velocity = speed;
+			this.entityMgr = entityManager;
 			shouldWrap = true;
 			texOffset = new Vector2(tex.Width / 2, tex.Height / 2);
 			sourceRectangle = new Rectangle(0, 0, tex.Width, tex.Height);
@@ -35,12 +34,13 @@ namespace Masteroids //Laila
 			size = 3;
 		}
 
-		public Asteroid(Texture2D texture, Vector2 position, Vector2 direction, float speed, int size, Viewport viewport)
+		public Asteroid(Texture2D texture, Vector2 position, Vector2 direction, float speed, int size, EntityManager entityManager, Viewport viewport)
 			: base(texture, position, viewport)
 		{
 			this.direction = direction;
 			this.speed = speed;
 			this.size = size;
+			entityMgr = entityManager;
 			texOffset = new Vector2(tex.Width / 2, tex.Height / 2);
 			sourceRectangle = new Rectangle(0, 0, tex.Width, tex.Height);
 			Radius = tex.Width / 2;
@@ -58,7 +58,7 @@ namespace Masteroids //Laila
 			{
 				if (size > 1)
 				{
-					Split();
+					 Split();
 				}
 				IsAlive = false;
 			}
@@ -100,16 +100,22 @@ namespace Masteroids //Laila
 				newTex = Art.AsteroidTexs[1];
 			else if (size == 2)
 				newTex = Art.AsteroidTexs[0];
+
 			direction = Vector2.Normalize(velocity);
 			rotation = (float)Math.Atan2(direction.Y, direction.X);
+
 			var newRotation = MathHelper.WrapAngle(rotation + 0.4f);
 			var newDirection = new Vector2((float)Math.Cos(newRotation), (float)Math.Sin(newRotation));
 			var newSpeed = velocity.Length();
-			Asteroid asteroid = new Asteroid(newTex, pos, direction, newSpeed, size--, viewport);
+			var newSize = size - 1;
+
+			Asteroid asteroid = new Asteroid(newTex, pos, direction, newSpeed, newSize, entityMgr, viewport);
 			entityMgr.Add(asteroid);
+
 			newRotation = MathHelper.WrapAngle(rotation - 0.4f);
 			newDirection = new Vector2((float)Math.Cos(newRotation), (float)Math.Sin(newRotation));
-			asteroid = new Asteroid(newTex, pos, newDirection, newSpeed, size--, viewport);
+
+			asteroid = new Asteroid(newTex, pos, newDirection, newSpeed, newSize, entityMgr, viewport);
 			entityMgr.Add(asteroid);
 		}
 	}
