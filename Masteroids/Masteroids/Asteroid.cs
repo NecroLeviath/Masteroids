@@ -14,22 +14,18 @@ namespace Masteroids //Laila
 		EntityManager entityMgr;
 		float HP;
 		int size;
-		private int damage;
-		public int Damage //ANDREAS SOM FIFFLAT TILL 1 damage till ASTEROIDERNA
-		{
-			get { return damage; }
-		}
+		public int Damage { get; private set; } //ANDREAS SOM FIFFLAT TILL 1 damage till ASTEROIDERNA
 
 		public Asteroid(Texture2D texture, Vector2 speed, Vector2 position, EntityManager entityManager, Viewport viewport)
 			: base(texture, position, viewport)
 		{
 			velocity = speed;
-			this.entityMgr = entityManager;
+			entityMgr = entityManager;
 			shouldWrap = true;
 			texOffset = new Vector2(tex.Width / 2, tex.Height / 2);
 			sourceRectangle = new Rectangle(0, 0, tex.Width, tex.Height);
 			Radius = tex.Width / 2;
-			damage = 1; //ANDREAS SOM FIFFLAT TILL 1 damage till ASTEROIDERNA
+			Damage = 1; //ANDREAS SOM FIFFLAT TILL 1 damage till ASTEROIDERNA
 			HP = 1;
 			size = 3;
 		}
@@ -44,7 +40,7 @@ namespace Masteroids //Laila
 			texOffset = new Vector2(tex.Width / 2, tex.Height / 2);
 			sourceRectangle = new Rectangle(0, 0, tex.Width, tex.Height);
 			Radius = tex.Width / 2;
-			damage = 1;
+			Damage = 1;
 			HP = 1;
 			shouldWrap = true;
 			velocity = direction * speed;
@@ -52,14 +48,12 @@ namespace Masteroids //Laila
 
 		public override void Update(GameTime gameTime)
 		{
-			pos = pos + velocity;
+			pos += velocity;
 
 			if (HP <= 0)
 			{
 				if (size > 1)
-				{
 					 Split();
-				}
 				IsAlive = false;
 			}
 
@@ -68,32 +62,24 @@ namespace Masteroids //Laila
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			if (HP == 1)
-			{
-				spriteBatch.Draw(tex, pos - texOffset, Color.White);
-				base.Draw(spriteBatch);
-			}
+			spriteBatch.Draw(tex, pos - texOffset, Color.White);
+			base.Draw(spriteBatch);
 		}
 
 		protected override void WrapDraw(SpriteBatch spriteBatch)
 		{
-			if (HP == 1)
-				spriteBatch.Draw(tex, pos - texOffset + wrapOffset, Color.White);
+			spriteBatch.Draw(tex, pos - texOffset + wrapOffset, Color.White);
 		}
 
 		public override void HandleCollision(GameObject other)
 		{
 			if (other is Bullet)
-			{
 				HP -= (other as Bullet).Damage;
-			}
 			else if (other is Player)
-			{
 				HP = 0;
-			}
 		}
 
-		public void Split()
+		public void Split() // Simon
 		{
 			var newTex = tex;
 			if (size == 3)
@@ -109,7 +95,7 @@ namespace Masteroids //Laila
 			var newSpeed = velocity.Length();
 			var newSize = size - 1;
 
-			Asteroid asteroid = new Asteroid(newTex, pos, newDirection, newSpeed, newSize, entityMgr, viewport);
+			var asteroid = new Asteroid(newTex, pos, newDirection, newSpeed, newSize, entityMgr, viewport);
 			entityMgr.Add(asteroid);
 
 			newRotation = MathHelper.WrapAngle(rotation - 0.2f);
