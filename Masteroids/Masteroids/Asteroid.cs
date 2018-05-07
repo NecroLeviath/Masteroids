@@ -24,10 +24,8 @@ namespace Masteroids //Laila
             texOffset = new Vector2(tex.Width / 2, tex.Height / 2);
             sourceRectangle = new Rectangle(0, 0, tex.Width, tex.Height);
 			Radius = tex.Width / 2;
-            HP = 1;
-        
+            HP = 1;       
         }
-
         public override void Update(GameTime gameTime)
         {
             pos = pos + velocity;
@@ -36,10 +34,7 @@ namespace Masteroids //Laila
         public override void HandleCollision(GameObject other)
         {
             if (other is Bullet)
-            {
                 HP -= (other as Bullet).Damage;
-                //entityMgr.Asteroids.Count -= 1;
-            }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
