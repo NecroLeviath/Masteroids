@@ -38,7 +38,7 @@ namespace Masteroids
             velocity = Vector2.Zero;
 			Radius = tex.Height / 2;
             AsteroidMode = false;
-            HP = 30;
+            HP = 1;
         }
 
         public override void Update(GameTime gameTime)
@@ -85,8 +85,8 @@ namespace Masteroids
                 }
             }
 
-            AsterInput(); //Keyboard kontroller till Asteroids
-            //MasterInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
+            //AsterInput(); //Keyboard kontroller till Asteroids
+            MasterInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
 
 
             ScreenWrap();

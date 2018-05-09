@@ -63,7 +63,7 @@ namespace Masteroids.States
                 QuitGameButton,
             };
         }
-
+        
         private void NewGameButton_click(object sender, EventArgs e)
 		{
             //boss = new Boss(Art.BossTex, new Vector2(-100, 100), 1, 100, _graphicsDevice.Viewport, entityMgr);
