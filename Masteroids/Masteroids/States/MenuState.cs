@@ -17,13 +17,12 @@ namespace Masteroids.States
 		EntityManager entityMgr;
 		BaseBoss boss;
 
-        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager)
-			: base(game, graphicsDevice, content)
+
         Viewport viewport;
-        EntityManager entityMgr;
+
         AsteroidSpawner asteroidSpawner;
 
-        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
+        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content , EntityManager entityManager) : base(game, graphicsDevice, content)
         {
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
             SpriteFont buttonFont = _content.Load<SpriteFont>("Fonts/MenuFont");
@@ -43,7 +42,7 @@ namespace Masteroids.States
                 Text = "New Game"
             };
 
-            Button highScoreButton = new Button(buttonTexture, buttonFont)
+            Button HighScoreButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2((x - buttonTexture.Width) / 2, 675),
                 Text = "Highscore"
