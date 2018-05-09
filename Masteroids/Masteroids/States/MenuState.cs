@@ -19,44 +19,50 @@ namespace Masteroids.States
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager)
 			: base(game, graphicsDevice, content)
+        Viewport viewport;
+        EntityManager entityMgr;
+        AsteroidSpawner asteroidSpawner;
+
+        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
-            SpriteFont buttonFont = _content.Load<SpriteFont>(@"Fonts/Font");
+            SpriteFont buttonFont = _content.Load<SpriteFont>("Fonts/MenuFont");
             Sound.Load(content);
-            //MediaPlayer.Play(Sound.Music);
             Sound.MusicInstance.Play();
 			entityMgr = entityManager;
             int x = graphicsDevice.Viewport.Width;
             int y = graphicsDevice.Viewport.Height;
 
-            Button newGameButton = new Button(buttonTexture, buttonFont)
+            viewport = graphicsDevice.Viewport;
+            entityMgr = new EntityManager(viewport);
+            asteroidSpawner = new AsteroidSpawner(entityMgr, viewport);
+
+            Button NewGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 200),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 625),
                 Text = "New Game"
             };
 
             Button highScoreButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 250),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 675),
                 Text = "Highscore"
             };
 
-            Button quitGameButton = new Button(buttonTexture, buttonFont)
+            Button QuitGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2((x - buttonTexture.Width) / 2, 300),
+                Position = new Vector2((x - buttonTexture.Width) / 2, 800),
                 Text = "Quit Game"
             };
-            newGameButton.Click += NewGameButton_click;
-            highScoreButton.Click += HighScoreButton_click;
-            quitGameButton.Click += quitGameButton_click;
+            NewGameButton.Click += NewGameButton_click;
+            HighScoreButton.Click += HighScoreButton_click;
+            QuitGameButton.Click += QuitGameButton_click;
             _components = new List<Component>()
             {
-                newGameButton,
-                highScoreButton,
-                quitGameButton,
+                NewGameButton,
+                HighScoreButton,
+                QuitGameButton,
             };
-
-
         }
 
         private void NewGameButton_click(object sender, EventArgs e)
@@ -72,19 +78,17 @@ namespace Masteroids.States
         {
             //_game.ChangeState(new GameState(_game, _graphicsDevice, _content));
         }
-        private void quitGameButton_click(object sender, EventArgs e)
+        private void QuitGameButton_click(object sender, EventArgs e)
         {
             _game.Exit();
-
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             //spriteBatch.Begin();
-
-            foreach (Component component in _components)
+            entityMgr.Draw(spriteBatch);
+            foreach (Masteroids.Component component in _components)
                 component.Draw(gameTime, spriteBatch);
-
             //spriteBatch.End();
         }
 
@@ -95,7 +99,9 @@ namespace Masteroids.States
 
         public override void Update(GameTime gameTime)
         {
-            foreach (Component component in _components)
+            asteroidSpawner.Update(gameTime);
+            entityMgr.Update(gameTime);
+            foreach (Masteroids.Component component in _components)
                 component.Update(gameTime);
         }
     }

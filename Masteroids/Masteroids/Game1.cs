@@ -39,7 +39,6 @@ namespace Masteroids
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             defaultView = GraphicsDevice.Viewport;
             Art.Initialize(Content);
 			EntityManager entityMgr = new EntityManager(defaultView);

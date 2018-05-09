@@ -17,6 +17,7 @@ namespace Masteroids // Simon
         public static Texture2D CentipedeTex;
         public static Texture2D CentipedeSheet;
         public static Texture2D EnemySheet;
+        public static Texture2D MenuTitleTex;
 
         public static void Initialize(ContentManager content)
         {
@@ -32,6 +33,7 @@ namespace Masteroids // Simon
             CentipedeTex = content.Load<Texture2D>("CentipedeTemp");
             CentipedeSheet = content.Load<Texture2D>("pacmanSheetMod");
             EnemySheet = content.Load<Texture2D>("shooterSheet");
+            MenuTitleTex = content.Load<Texture2D>("MenuTitleTex");
         }
     }
 }
