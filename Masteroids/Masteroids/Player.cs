@@ -85,8 +85,8 @@ namespace Masteroids
                 }
             }
 
-            //AsterInput(); //Keyboard kontroller till Asteroids
-            MasterInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
+            AsterInput(); //Keyboard kontroller till Asteroids
+            //MasterInput(); //Keyboard + mus kontroller till Masteroids. Denna metod måste läggas som kommentar för att inte störa andras rotation.
 
 
             ScreenWrap();
@@ -128,16 +128,15 @@ namespace Masteroids
 
         private void MasterInputGamePad() //Masteroids kontroller för Gamepad
         {
-            velocity.X += gamePadStateCurrent.ThumbSticks.Left.X * speed;
-            velocity.Y -= gamePadStateCurrent.ThumbSticks.Left.Y * speed;
+            velocity.X += gamePadStateCurrent.ThumbSticks.Left.X * speed*3;
+            velocity.Y -= gamePadStateCurrent.ThumbSticks.Left.Y * speed*3;
 
             //rotation = gamePadState.ThumbSticks.Right.Y;
 
             if (gamePadStateCurrent.ThumbSticks.Right.X != 0)
-                rotation = gamePadStateCurrent.ThumbSticks.Right.X;
+                rotation = (float)Math.Atan2(-gamePadStateCurrent.ThumbSticks.Right.Y, gamePadStateCurrent.ThumbSticks.Right.X) + MathHelper.PiOver2;
 
-            if (gamePadStateCurrent.Buttons.RightShoulder == ButtonState.Pressed && 
-                gamePadStatePrevious.Buttons.RightShoulder == ButtonState.Released)
+            if (gamePadStateCurrent.Triggers.Right > 0 && gamePadStatePrevious.Triggers.Right == 0)
                 CreateBullet();
         }
 
