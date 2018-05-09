@@ -10,10 +10,8 @@ namespace Masteroids
 {
     class AsteroidSpawner : Spawner
     {
-        private Viewport viewport;
-        EntityManager entityMgr;
-        private Random rnd;
         private int positionX, positionY, position, move, speedX, speedY;
+
         public AsteroidSpawner(EntityManager entityManager, Viewport viewport)
             : base(entityManager, viewport) { }
 
