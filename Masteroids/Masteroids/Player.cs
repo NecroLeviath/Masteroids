@@ -13,7 +13,11 @@ namespace Masteroids
     {
         private float scale = 0.5f, rotationVelocity, maxSpeed = 6f;
         private float bulletTimer, bulletInterval;
-        private Vector2 distance, bulletPos;
+		private float respawnTimer, respawnInterval = 3f;
+		private float invulnerabilityTimer;
+		private int lives;
+		private int startHP;
+		private Vector2 distance, bulletPos;
         private MouseState mouseStateCurrent, mouseStatePrevious;
         private KeyboardState keyboardState, pastKeyboardState;
         private GamePadState gamePadStateCurrent, gamePadStatePrevious;
@@ -38,7 +42,9 @@ namespace Masteroids
             velocity = Vector2.Zero;
 			Radius = tex.Height / 2;
             AsteroidMode = false;
-            HP = 1;
+			startHP = 1;
+            HP = startHP;
+			lives = 3;
         }
 
         public override void Update(GameTime gameTime)
@@ -66,11 +72,29 @@ namespace Masteroids
             }
             pos += velocity;
 
-            if (HP <= 0)
-            {
-                HP = 0;
-                IsAlive = false;
-            }
+			if (HP <= 0 && respawnTimer <= 0)
+			{
+				HP = 0;
+				if (lives > 0)
+				{
+					respawnTimer = respawnInterval;
+					lives--;
+				}
+				else
+					IsAlive = false;
+			}
+			if (respawnTimer > 0)
+			{
+				respawnTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+				if (respawnTimer <= 0)
+				{
+					invulnerabilityTimer = 3;
+					HP = startHP;
+					pos = new Vector2(viewport.Width / 2, viewport.Height / 2);
+				}
+			}
+			if (invulnerabilityTimer > 0)
+				invulnerabilityTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             GamePadCapabilities capabilities =              
                 GamePad.GetCapabilities(PlayerValue);
@@ -189,30 +213,32 @@ namespace Masteroids
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (IsAlive)
+            if (respawnTimer <= 0)
             {
                 spriteBatch.Draw(tex, pos, sourceRectangle, Color.White, rotation, 
                     new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
                 base.Draw(spriteBatch);
             }
-            else if(!IsAlive)
-            {
-
-            }
         }
 
         protected override void WrapDraw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos + wrapOffset, sourceRectangle, Color.White, 
-                rotation, new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
+			if (respawnTimer <= 0)
+			{
+				spriteBatch.Draw(tex, pos + wrapOffset, sourceRectangle, Color.White,
+					rotation, new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
+			}
         }
 
 		public override void HandleCollision(GameObject other)
 		{
-            if (other is Bullet)
-                HP -= (other as Bullet).Damage;
-            if (other is Asteroid)
-                HP -= (other as Asteroid).Damage;
+			if (invulnerabilityTimer <= 0 && respawnTimer <= 0)
+			{
+				if (other is Bullet)
+					HP -= (other as Bullet).Damage;
+				if (other is Asteroid)
+					HP -= (other as Asteroid).Damage;
+			}
         }
 	}
 }
