@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Asteroid.cs" />
+    <Compile Include="PlayerHandler.cs" />
     <Compile Include="Spawners\AsteroidSpawner.cs" />
     <Compile Include="Enemies\BaseBoss.cs" />
     <Compile Include="Enemies\Boss.cs" />
