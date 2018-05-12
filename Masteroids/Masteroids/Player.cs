@@ -124,7 +124,7 @@ namespace Masteroids
 
             if (bulletTimer >= bulletInterval)
             {
-				Bullet bullet = new Bullet(Art.BulletTex, pos, 10f, 10, direction, viewport, this);
+				Bullet bullet = new Bullet(Assets.BulletTex, pos, 10f, 10, direction, viewport, this);
 				entityMgr.Add(bullet);
                 bulletTimer = 0;
             }

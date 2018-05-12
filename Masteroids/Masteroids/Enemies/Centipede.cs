@@ -51,7 +51,7 @@ namespace Masteroids
 			Centipede previous = this;
 			for (int i = 0; i < nrSegments; i++)
 			{
-				Centipede next = new Centipede(Art.CentipedeSheet, pos, speed, 3, viewport, previous, entityMgr);
+				Centipede next = new Centipede(Assets.CentipedeSheet, pos, speed, 3, viewport, previous, entityMgr);
 				entityMgr.Add(next);
 				previous = next;
 			}

@@ -61,7 +61,7 @@ namespace Masteroids // Simon
                 bulletTimer += delta;
                 if (bulletTimer >= bulletInterval)
                 {
-                    Bullet bullet = new Bullet(Art.BulletTex, pos, 5, 1, playerDir, viewport, this);
+                    Bullet bullet = new Bullet(Assets.BulletTex, pos, 5, 1, playerDir, viewport, this);
                     entityMgr.Add(bullet);
                     bulletTimer = 0;
                 }

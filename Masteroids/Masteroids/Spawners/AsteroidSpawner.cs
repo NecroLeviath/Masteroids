@@ -33,7 +33,7 @@ namespace Masteroids
 				Location();
 				Vector2 pos = new Vector2(positionX, positionY);
 				Vector2 speed = new Vector2(speedX, speedY);
-				Asteroid asteroid = new Asteroid(Art.AsteroidTexs[2], speed, pos, entityMgr, viewport);
+				Asteroid asteroid = new Asteroid(Assets.AsteroidTexs[2], speed, pos, entityMgr, viewport);
 				entityMgr.Add(asteroid);
             }           
         }
