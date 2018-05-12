@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Asteroid.cs" />
-    <Compile Include="AsteroidSpawner.cs" />
+    <Compile Include="Spawners\AsteroidSpawner.cs" />
     <Compile Include="Enemies\BaseBoss.cs" />
     <Compile Include="Enemies\Boss.cs" />
     <Compile Include="Bullet.cs" />
@@ -51,7 +51,7 @@
     <Compile Include="Component.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="MasteroidSpawner.cs" />
+    <Compile Include="Spawners\MasteroidSpawner.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,7 +60,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="Enemies\Shooter.cs" />
     <Compile Include="Sound.cs" />
-    <Compile Include="Spawner.cs" />
+    <Compile Include="Spawners\Spawner.cs" />
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\MenuState.cs" />
     <Compile Include="States\State.cs" />
