@@ -28,9 +28,7 @@ namespace Masteroids
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 			if (playerHandlers.All(x => x.Lives == 0))
-			{
 				game.ChangeState(new MenuState(game, game.GraphicsDevice, game.Content, entityMgr));
-			}
             spawnTimer += delta;
             if (nrOfEnemies > 0 && (entityMgr.Enemies.Count == 0 || spawnTimer >= spawnInterval))
             {
