@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-	class PlayerHandler
+	public class PlayerHandler
 	{
 		PlayerIndex playerIndex;
 		EntityManager entityMgr;
@@ -33,7 +33,7 @@ namespace Masteroids
 		{
 			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			
-			if (Lives > 0 && !player.IsAlive && respawnTimer <= 0)
+			if (Lives >= 0 && !player.IsAlive && respawnTimer <= 0)
 				respawnTimer = respawnInterval;
 			if (respawnTimer > 0)
 			{
