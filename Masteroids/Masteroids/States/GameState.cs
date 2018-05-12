@@ -17,6 +17,7 @@ namespace Masteroids.States
 
 		EntityManager entityMgr;
 		Spawner spawner;
+		List<PlayerHandler> playerHandlers;
 
 		//Vector2 bossFontPos;
 		//Vector2 bossFontPos;
@@ -43,6 +44,7 @@ namespace Masteroids.States
 		{
 			viewport = graphicsDevice.Viewport;
 			entityMgr = entityManager;
+			playerHandlers = new List<PlayerHandler>();
 			//bossFont = content.Load<SpriteFont>("BossLife");
 			//bossFontPos = new Vector2(1000, 20);
 			font = content.Load<SpriteFont>(@"Fonts/font");
@@ -56,8 +58,10 @@ namespace Masteroids.States
 			};
 			for (int i = 0; i < numberOfPlayers; i++)
 			{
-				Player player = new Player(Art.PlayerTex, new Vector2(viewport.Width / 2, viewport.Height / 2), players[i], entityMgr, viewport);
-				entityMgr.Add(player);
+				PlayerHandler playerHandler = new PlayerHandler(players[i], entityMgr, viewport);
+				playerHandlers.Add(playerHandler);
+				//Player player = new Player(Art.PlayerTex, new Vector2(viewport.Width / 2, viewport.Height / 2), players[i], entityMgr, viewport);
+				//entityMgr.Add(player);
 			}
 		}
 
@@ -65,6 +69,8 @@ namespace Masteroids.States
 		{
 			spawner.Update(gameTime);
 			entityMgr.Update(gameTime);
+			foreach (PlayerHandler ph in playerHandlers)
+				ph.Update(gameTime);
 			#region Out-commented
 			//GamePadCapabilities capabilities =
 			//    GamePad.GetCapabilities(PlayerIndex.Two);
