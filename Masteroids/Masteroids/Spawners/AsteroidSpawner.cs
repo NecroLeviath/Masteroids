@@ -20,13 +20,19 @@ namespace Masteroids
             //how many asteroids that spawns and how their movement is.
             if (entityMgr.Asteroids.Count < 15)
             {
-                Location();
-                //positionX = rnd.Next(0, viewport.Width + Art.AsteroidTex.Width);
-                //positionY = rnd.Next(0, viewport.Height + Art.AsteroidTex.Height);
-                //speedX = rnd.Next(-2, 2);   //Asteroider kan spawna utan att kunna röra sig.
-                //speedY = rnd.Next(-2, 2);
-                Vector2 pos = new Vector2(positionX, positionY);
-                Vector2 speed = new Vector2(speedX, speedY);
+				//positionX = rnd.Next(0, viewport.Width + Art.AsteroidTex.Width);
+				//positionY = rnd.Next(0, viewport.Height + Art.AsteroidTex.Height);
+				//speedX = rnd.Next(-2, 2);   //Asteroider kan spawna utan att kunna röra sig.
+				//speedY = rnd.Next(-2, 2);
+
+				//Vector2 pos = RandomLocation();
+				//Vector2 dir = RandomDirection();
+				//float speed = RandomSpeed();
+				//Asteroid asteroid = new Asteroid(Art.AsteroidTexs[2], pos, dir, speed, 3, entityMgr, viewport);
+
+				Location();
+				Vector2 pos = new Vector2(positionX, positionY);
+				Vector2 speed = new Vector2(speedX, speedY);
 				Asteroid asteroid = new Asteroid(Art.AsteroidTexs[2], speed, pos, entityMgr, viewport);
 				entityMgr.Add(asteroid);
             }           
@@ -61,7 +67,21 @@ namespace Masteroids
                 speedX = rnd.Next(-2, 2); 
                 speedY = rnd.Next(-2, 2);
             }
+        }
 
+        private Vector2 RandomDirection()
+        {
+            var rotation = (float)rnd.NextDouble() * MathHelper.TwoPi;
+            var x = (float)Math.Cos(rotation);
+            var y = (float)Math.Sin(rotation);
+            var direction = new Vector2(x, y);
+            return direction;
+        }
+
+        private float RandomSpeed()
+        {
+            var speed = (float)rnd.NextDouble() + 1;
+            return speed;
         }
     }
 }
