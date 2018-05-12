@@ -36,7 +36,7 @@ namespace Masteroids
                 nrOfEnemies--;
                 spawnTimer = 0;
             }
-            else if (nrOfEnemies == 0 && !hasBossSpawned)
+            else if (nrOfEnemies == 0 && !hasBossSpawned && spawnTimer >= spawnInterval)
             {
                 entityMgr.Add(boss);
                 entityMgr.Bosses[0].Start();
