@@ -50,6 +50,10 @@ namespace Masteroids
 					BossMaxHP += entityMgr.Bosses[i].MaxHP;
                 hasBossSpawned = true;
             }
+			else if (hasBossSpawned && entityMgr.Bosses.Count == 0)
+			{
+				// DEV: For when the player has defeated the boss
+			}
         }
     }
 }
