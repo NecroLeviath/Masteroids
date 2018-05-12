@@ -23,7 +23,7 @@ namespace Masteroids
 
         public abstract void Update(GameTime gameTime);
 
-		private Vector2 RandomLocation()
+		protected Vector2 RandomLocation()
 		{
 			var temp = rnd.Next(4);
 			var x = 0;
