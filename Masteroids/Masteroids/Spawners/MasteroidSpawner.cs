@@ -30,7 +30,7 @@ namespace Masteroids
             spawnTimer += delta;
             if (nrOfEnemies > 0 && (entityMgr.Enemies.Count == 0 || spawnTimer >= spawnInterval))
             {
-                var pos = RandomLocation();
+                var pos = RandomSide();
                 Shooter shooter = new Shooter(Art.EnemySheet, pos, 100, entityMgr, viewport);
                 entityMgr.Add(shooter);
                 nrOfEnemies--;

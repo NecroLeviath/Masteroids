@@ -25,7 +25,7 @@ namespace Masteroids
 				//speedX = rnd.Next(-2, 2);   //Asteroider kan spawna utan att kunna röra sig.
 				//speedY = rnd.Next(-2, 2);
 
-				//Vector2 pos = RandomLocation();
+				//Vector2 pos = RandomSide();
 				//Vector2 dir = RandomDirection();
 				//float speed = RandomSpeed();
 				//Asteroid asteroid = new Asteroid(Art.AsteroidTexs[2], pos, dir, speed, 3, entityMgr, viewport);
