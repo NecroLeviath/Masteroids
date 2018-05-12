@@ -16,7 +16,8 @@ namespace Masteroids
 		Vector2 spawnPos;
 		Player player;
 		float respawnTimer, respawnInterval = 3f;
-		int lives;
+		public int Lives { get; private set; }
+		public int Score;
 
 		public PlayerHandler(PlayerIndex playerIndex, EntityManager entityManager, Viewport viewport)
 		{
@@ -24,7 +25,7 @@ namespace Masteroids
 			entityMgr = entityManager;
 			this.viewport = viewport;
 			spawnPos = new Vector2(viewport.Width / 2, viewport.Height / 2);
-			lives = 3;
+			Lives = 3;
 			CreatePlayer();
 		}
 
@@ -32,14 +33,14 @@ namespace Masteroids
 		{
 			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			
-			if (lives > 0 && !player.IsAlive && respawnTimer <= 0)
+			if (Lives > 0 && !player.IsAlive && respawnTimer <= 0)
 				respawnTimer = respawnInterval;
 			if (respawnTimer > 0)
 			{
 				respawnTimer -= delta;
 				if (respawnTimer <= 0)
 				{
-					lives--;
+					Lives--;
 					CreatePlayer();
 				}
 			}
