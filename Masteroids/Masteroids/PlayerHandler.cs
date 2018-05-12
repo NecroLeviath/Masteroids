@@ -48,7 +48,7 @@ namespace Masteroids
 
 		private void CreatePlayer()
 		{
-			player = new Player(Art.PlayerTex, spawnPos, playerIndex, entityMgr, viewport);
+			player = new Player(Assets.PlayerTex, spawnPos, playerIndex, entityMgr, this, viewport);
 			entityMgr.Add(player);
 		}
 	}

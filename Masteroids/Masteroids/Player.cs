@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Masteroids
 {
-    public class Player : GameObject //Andreas
+    class Player : GameObject //Andreas
     {
         private float scale = 0.5f, rotationVelocity, maxSpeed = 6f;
         private float bulletTimer, bulletInterval;
@@ -25,13 +25,16 @@ namespace Masteroids
 
         List<Bullet> bulletList = new List<Bullet>();
         EntityManager entityMgr;
+		PlayerHandler playerHandler;
 
-        public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue, EntityManager entityMgr, Viewport viewport)
+
+		public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue, EntityManager entityManager, PlayerHandler playerHandler, Viewport viewport)
             : base(texture, position, viewport)
         {
             PlayerValue = playerValue; ////Avgör spelare. -> återfinns på loadcontent Game1
             tex = texture;
-            this.entityMgr = entityMgr;
+            entityMgr = entityManager;
+			this.playerHandler = playerHandler;
             sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             startPosition = new Vector2(200, 200);
             IsAlive = true;
@@ -221,5 +224,10 @@ namespace Masteroids
 					HP -= (other as Asteroid).Damage;
 			}
         }
+
+		public void IncrementScore(int value)
+		{
+			playerHandler.Score += value;
+		}
 	}
 }
