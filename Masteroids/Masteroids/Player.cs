@@ -13,7 +13,7 @@ namespace Masteroids
     {
         private float scale = 0.5f, rotationVelocity, maxSpeed = 6f;
         private float bulletTimer, bulletInterval;
-		private float invulnerabilityTimer;
+		private float invulnerabilityTimer, blinkTimer;
 		private Vector2 distance, bulletPos;
         private MouseState mouseStateCurrent, mouseStatePrevious;
         private KeyboardState keyboardState, pastKeyboardState;
@@ -40,7 +40,7 @@ namespace Masteroids
 			Radius = tex.Height / 2;
             AsteroidMode = false;
 			HP = 1;
-			invulnerabilityTimer = 3;
+			invulnerabilityTimer = 2;
 		}
 
         public override void Update(GameTime gameTime)
@@ -72,9 +72,15 @@ namespace Masteroids
 				IsAlive = false;
 
 			if (invulnerabilityTimer > 0)
+			{
 				invulnerabilityTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+				if (blinkTimer <= 0)
+					blinkTimer = invulnerabilityTimer / 10;
+			}
+			if (blinkTimer > 0)
+				blinkTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            GamePadCapabilities capabilities =              
+			GamePadCapabilities capabilities =              
                 GamePad.GetCapabilities(PlayerValue);
             if (capabilities.IsConnected)
             {
@@ -191,9 +197,12 @@ namespace Masteroids
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-                spriteBatch.Draw(tex, pos, sourceRectangle, Color.White, rotation, 
-                    new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
-                base.Draw(spriteBatch);
+			if (blinkTimer <= 0)
+			{
+				spriteBatch.Draw(tex, pos, sourceRectangle, Color.White, rotation,
+					new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
+				base.Draw(spriteBatch);
+			}
         }
 
         protected override void WrapDraw(SpriteBatch spriteBatch)
