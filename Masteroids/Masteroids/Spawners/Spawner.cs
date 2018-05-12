@@ -11,12 +11,14 @@ namespace Masteroids
     abstract class Spawner
     {
         protected EntityManager entityMgr;
+		protected List<PlayerHandler> playerHandlers;
         protected Viewport viewport;
         protected Random rnd;
 
-        public Spawner(EntityManager entityManager, Viewport viewport)
+        public Spawner(EntityManager entityManager, List<PlayerHandler> playerHandlers, Viewport viewport)
         {
             entityMgr = entityManager;
+			this.playerHandlers = playerHandlers;
             this.viewport = viewport;
             rnd = new Random();
         }

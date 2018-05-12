@@ -28,7 +28,7 @@ namespace Masteroids.States
 			: base(game, graphicsDevice, content)
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
-            spawner = new AsteroidSpawner(entityMgr, viewport);
+            spawner = new AsteroidSpawner(entityMgr, playerHandlers, viewport);
         }
 
 		// Masteroids
@@ -36,7 +36,7 @@ namespace Masteroids.States
 			: base(game, graphicsDevice, content)
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
-            spawner = new MasteroidSpawner(entityMgr, viewport, boss, 10);
+            spawner = new MasteroidSpawner(entityMgr, playerHandlers, viewport, boss, 10);
             
 		}
 

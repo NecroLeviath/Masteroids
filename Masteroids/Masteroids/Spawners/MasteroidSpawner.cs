@@ -16,8 +16,8 @@ namespace Masteroids
         float spawnTimer, spawnInterval = 1f;
         bool hasBossSpawned = false;
 
-        public MasteroidSpawner(EntityManager entityManager, Viewport viewport, BaseBoss boss, int numberOfEnemies)
-            : base(entityManager, viewport)
+        public MasteroidSpawner(EntityManager entityManager, List<PlayerHandler> playerHandlers, Viewport viewport, BaseBoss boss, int numberOfEnemies)
+            : base(entityManager, playerHandlers, viewport)
         {
             this.boss = boss;
             nrOfEnemies = numberOfEnemies;
