@@ -13,10 +13,7 @@ namespace Masteroids
     {
         private float scale = 0.5f, rotationVelocity, maxSpeed = 6f;
         private float bulletTimer, bulletInterval;
-		private float respawnTimer, respawnInterval = 3f;
 		private float invulnerabilityTimer;
-		private int lives;
-		private int startHP;
 		private Vector2 distance, bulletPos;
         private MouseState mouseStateCurrent, mouseStatePrevious;
         private KeyboardState keyboardState, pastKeyboardState;
@@ -42,10 +39,9 @@ namespace Masteroids
             velocity = Vector2.Zero;
 			Radius = tex.Height / 2;
             AsteroidMode = false;
-			startHP = 1;
-            HP = startHP;
-			lives = 3;
-        }
+			HP = 1;
+			invulnerabilityTimer = 3;
+		}
 
         public override void Update(GameTime gameTime)
         {
@@ -72,27 +68,9 @@ namespace Masteroids
             }
             pos += velocity;
 
-			if (HP <= 0 && respawnTimer <= 0)
-			{
-				HP = 0;
-				if (lives > 0)
-				{
-					respawnTimer = respawnInterval;
-					lives--;
-				}
-				else
-					IsAlive = false;
-			}
-			if (respawnTimer > 0)
-			{
-				respawnTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-				if (respawnTimer <= 0)
-				{
-					invulnerabilityTimer = 3;
-					HP = startHP;
-					pos = new Vector2(viewport.Width / 2, viewport.Height / 2);
-				}
-			}
+			if (HP <= 0)
+				IsAlive = false;
+
 			if (invulnerabilityTimer > 0)
 				invulnerabilityTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -213,26 +191,20 @@ namespace Masteroids
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (respawnTimer <= 0)
-            {
                 spriteBatch.Draw(tex, pos, sourceRectangle, Color.White, rotation, 
                     new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
                 base.Draw(spriteBatch);
-            }
         }
 
         protected override void WrapDraw(SpriteBatch spriteBatch)
         {
-			if (respawnTimer <= 0)
-			{
 				spriteBatch.Draw(tex, pos + wrapOffset, sourceRectangle, Color.White,
 					rotation, new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
-			}
         }
 
 		public override void HandleCollision(GameObject other)
 		{
-			if (invulnerabilityTimer <= 0 && respawnTimer <= 0)
+			if (invulnerabilityTimer <= 0)
 			{
 				if (other is Bullet)
 					HP -= (other as Bullet).Damage;
