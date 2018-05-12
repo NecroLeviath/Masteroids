@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
-namespace Masteroids.States
+namespace Masteroids
 {
     public class MenuState : State
     {
@@ -26,7 +26,7 @@ namespace Masteroids.States
         {
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
             SpriteFont buttonFont = _content.Load<SpriteFont>("Fonts/MenuFont");
-            Sound.Load(content);
+			Sound.Load(content);
             Sound.MusicInstance.Play();
 			entityMgr = entityManager;
             int x = graphicsDevice.Viewport.Width;

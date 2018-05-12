@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Masteroids.States
+namespace Masteroids
 {
     public abstract class State
     {

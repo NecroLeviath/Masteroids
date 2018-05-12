@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Masteroids.States
+namespace Masteroids
 {
 	public class GameState : State
 	{
@@ -28,7 +28,7 @@ namespace Masteroids.States
 			: base(game, graphicsDevice, content)
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
-            spawner = new AsteroidSpawner(entityMgr, playerHandlers, viewport);
+            spawner = new AsteroidSpawner(game, entityMgr, playerHandlers, viewport);
         }
 
 		// Masteroids
@@ -36,8 +36,7 @@ namespace Masteroids.States
 			: base(game, graphicsDevice, content)
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
-            spawner = new MasteroidSpawner(entityMgr, playerHandlers, viewport, boss, 10);
-            
+            spawner = new MasteroidSpawner(game, entityMgr, playerHandlers, viewport, boss, 10);
 		}
 
 		private void CommonConstructor(GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers)
