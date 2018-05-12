@@ -222,6 +222,8 @@ namespace Masteroids
 					HP -= (other as Bullet).Damage;
 				if (other is Asteroid)
 					HP -= (other as Asteroid).Damage;
+				if (other is Enemy)
+					HP = 0;
 			}
         }
 
