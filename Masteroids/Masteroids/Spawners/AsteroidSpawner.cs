@@ -20,23 +20,29 @@ namespace Masteroids
 
         public override void Update(GameTime gameTime)
         {
-            //how many asteroids that spawns and how their movement is.
-            if (entityMgr.Asteroids.Count < 15)
+			if (playerHandlers != null && playerHandlers.All(x => x.Lives < 0))
+			{
+				game.ChangeState(new MenuState(game, game.GraphicsDevice, game.Content, entityMgr));
+				// DEV: This is where the score will be added to the high score list
+			}
+
+			//how many asteroids that spawns and how their movement is.
+			if (entityMgr.Asteroids.Count < 15)
             {
 				//positionX = rnd.Next(0, viewport.Width + Art.AsteroidTex.Width);
 				//positionY = rnd.Next(0, viewport.Height + Art.AsteroidTex.Height);
 				//speedX = rnd.Next(-2, 2);   //Asteroider kan spawna utan att kunna röra sig.
 				//speedY = rnd.Next(-2, 2);
 
-				//Vector2 pos = RandomSide();
-				//Vector2 dir = RandomDirection();
-				//float speed = RandomSpeed();
-				//Asteroid asteroid = new Asteroid(Art.AsteroidTexs[2], pos, dir, speed, 3, entityMgr, viewport);
+				Vector2 pos = RandomSide();
+				Vector2 dir = RandomDirection();
+				float speed = RandomSpeed();
+				Asteroid asteroid = new Asteroid(Assets.AsteroidTexs[2], pos, dir, speed, 3, entityMgr, viewport);
 
-				Location();
-				Vector2 pos = new Vector2(positionX, positionY);
-				Vector2 speed = new Vector2(speedX, speedY);
-				Asteroid asteroid = new Asteroid(Assets.AsteroidTexs[2], speed, pos, entityMgr, viewport);
+				//Location();
+				//Vector2 pos = new Vector2(positionX, positionY);
+				//Vector2 speed = new Vector2(speedX, speedY);
+				//Asteroid asteroid = new Asteroid(Assets.AsteroidTexs[2], speed, pos, entityMgr, viewport);
 				entityMgr.Add(asteroid);
             }           
         }
