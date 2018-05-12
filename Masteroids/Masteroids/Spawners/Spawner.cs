@@ -10,18 +10,27 @@ namespace Masteroids
 {
     abstract class Spawner
     {
+		protected Game1 game;
         protected EntityManager entityMgr;
 		protected List<PlayerHandler> playerHandlers;
         protected Viewport viewport;
         protected Random rnd;
 
-        public Spawner(EntityManager entityManager, List<PlayerHandler> playerHandlers, Viewport viewport)
+        public Spawner(Game1 game, EntityManager entityManager, List<PlayerHandler> playerHandlers, Viewport viewport)
         {
+			this.game = game;
             entityMgr = entityManager;
 			this.playerHandlers = playerHandlers;
             this.viewport = viewport;
             rnd = new Random();
         }
+
+		public Spawner(EntityManager entityManager, Viewport viewport)
+		{
+			entityMgr = entityManager;
+			this.viewport = viewport;
+			rnd = new Random();
+		}
 
         public abstract void Update(GameTime gameTime);
 

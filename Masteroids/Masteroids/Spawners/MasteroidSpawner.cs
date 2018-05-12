@@ -16,8 +16,8 @@ namespace Masteroids
         float spawnTimer, spawnInterval = 1f;
         bool hasBossSpawned = false;
 
-        public MasteroidSpawner(EntityManager entityManager, List<PlayerHandler> playerHandlers, Viewport viewport, BaseBoss boss, int numberOfEnemies)
-            : base(entityManager, playerHandlers, viewport)
+        public MasteroidSpawner(Game1 game, EntityManager entityManager, List<PlayerHandler> playerHandlers, Viewport viewport, BaseBoss boss, int numberOfEnemies)
+            : base(game, entityManager, playerHandlers, viewport)
         {
             this.boss = boss;
             nrOfEnemies = numberOfEnemies;
@@ -27,6 +27,10 @@ namespace Masteroids
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+			if (playerHandlers.All(x => x.Lives == 0))
+			{
+				game.ChangeState(new MenuState(game, game.GraphicsDevice, game.Content, entityMgr));
+			}
             spawnTimer += delta;
             if (nrOfEnemies > 0 && (entityMgr.Enemies.Count == 0 || spawnTimer >= spawnInterval))
             {

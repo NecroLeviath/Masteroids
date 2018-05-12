@@ -12,8 +12,11 @@ namespace Masteroids
     {
         private int positionX, positionY, position, move, speedX, speedY;
 
-        public AsteroidSpawner(EntityManager entityManager, List<PlayerHandler> playerHandlers, Viewport viewport)
-            : base(entityManager, playerHandlers, viewport) { }
+        public AsteroidSpawner(Game1 game, EntityManager entityManager, List<PlayerHandler> playerHandlers, Viewport viewport)
+            : base(game, entityManager, playerHandlers, viewport) { }
+
+		public AsteroidSpawner(EntityManager entityManager, Viewport viewport)
+			: base(entityManager, viewport) { }
 
         public override void Update(GameTime gameTime)
         {
