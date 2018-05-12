@@ -83,9 +83,9 @@ namespace Masteroids //Laila
 		{
 			var newTex = tex;
 			if (size == 3)
-				newTex = Art.AsteroidTexs[1];
+				newTex = Assets.AsteroidTexs[1];
 			else if (size == 2)
-				newTex = Art.AsteroidTexs[0];
+				newTex = Assets.AsteroidTexs[0];
 			
 			direction = velocity == Vector2.Zero ? Vector2.Zero : Vector2.Normalize(velocity);
 			rotation = (float)Math.Atan2(direction.Y, direction.X);

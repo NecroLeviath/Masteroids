@@ -105,9 +105,9 @@ namespace Masteroids
 					bossHP += entityMgr.Bosses[i].HP;
 				//spriteBatch.DrawString(bossFont, "Life: " + bossHP + " / " + (spawner as MasteroidSpawner).BossMaxHP, bossFontPos, Color.White);
 				Rectangle bossHPRect = new Rectangle(((viewport.Width - 300) / 2), 50, 300, 10);
-				spriteBatch.Draw(Art.CentipedeTex, bossHPRect, new Rectangle(30, 30, 1, 1), Color.DarkRed);
+				spriteBatch.Draw(Assets.CentipedeTex, bossHPRect, new Rectangle(30, 30, 1, 1), Color.DarkRed);
 				bossHPRect.Width = bossHPRect.Width * bossHP / (spawner as MasteroidSpawner).BossMaxHP;
-				spriteBatch.Draw(Art.CentipedeTex, bossHPRect, new Rectangle(30, 30, 1, 1), Color.Red);
+				spriteBatch.Draw(Assets.CentipedeTex, bossHPRect, new Rectangle(30, 30, 1, 1), Color.Red);
 			}
 
 			#region Out-commented

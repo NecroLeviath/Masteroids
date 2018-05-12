@@ -39,7 +39,7 @@ namespace Masteroids
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             defaultView = GraphicsDevice.Viewport;
-            Art.Initialize(Content);
+            Assets.Initialize(Content);
 			EntityManager entityMgr = new EntityManager(defaultView);
             _currentstate = new MenuState(this, graphics.GraphicsDevice, Content, entityMgr);
         }
