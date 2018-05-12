@@ -17,11 +17,10 @@ namespace Masteroids.States
 
 		EntityManager entityMgr;
 		Spawner spawner;
-		AsteroidSpawner asteroidSpawner;
-        Boss boss;
 
-		Vector2 bossFontPos;
-		SpriteFont bossFont;
+		//Vector2 bossFontPos;
+		//Vector2 bossFontPos;
+		//SpriteFont bossFont;
 
 		// Asteroids
 		public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers)
@@ -44,8 +43,8 @@ namespace Masteroids.States
 		{
 			viewport = graphicsDevice.Viewport;
 			entityMgr = entityManager;
-			bossFont = content.Load<SpriteFont>("BossLife");
-			bossFontPos = new Vector2(1000, 20);
+			//bossFont = content.Load<SpriteFont>("BossLife");
+			//bossFontPos = new Vector2(1000, 20);
 			font = content.Load<SpriteFont>(@"Fonts/font");
 
 			PlayerIndex[] players = new PlayerIndex[]
