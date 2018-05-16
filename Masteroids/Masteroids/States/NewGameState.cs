@@ -12,7 +12,7 @@ namespace Masteroids.States
 {
     class NewGameState : State
     {
-        List<Component> _components;
+        List<Component> components;
         EntityManager entityMgr;
         AsteroidSpawner asteroidSpawner;
         BaseBoss boss;
@@ -52,7 +52,7 @@ namespace Masteroids.States
             ClassicGameButton.Click += ClassicGameButton_click;
             MasteroidsGameButton.Click += MasteroidsGameButton_click;
             ReturnButton.Click += ReturnButton_click;
-            _components = new List<Component>()
+            components = new List<Component>()
             {
                 ClassicGameButton,
                 MasteroidsGameButton,
@@ -80,7 +80,7 @@ namespace Masteroids.States
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             entityMgr.Draw(spriteBatch);
-            foreach (Masteroids.Component component in _components)
+            foreach (Masteroids.Component component in components)
                 component.Draw(gameTime, spriteBatch);
         }
 
@@ -93,7 +93,7 @@ namespace Masteroids.States
         {
             asteroidSpawner.Update(gameTime);
             entityMgr.Update(gameTime);
-            foreach (Masteroids.Component component in _components)
+            foreach (Masteroids.Component component in components)
                 component.Update(gameTime);
         }
     }
