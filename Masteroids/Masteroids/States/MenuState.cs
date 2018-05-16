@@ -15,7 +15,7 @@ namespace Masteroids.States
     {
         private List<Component> _components;
 		EntityManager entityMgr;
-		BaseBoss boss;
+
 
 
         Viewport viewport;
@@ -66,20 +66,13 @@ namespace Masteroids.States
         
         private void NewGameButton_click(object sender, EventArgs e)
 		{
-            //boss = new Boss(Art.BossTex, new Vector2(-100, 100), 1, 100, _graphicsDevice.Viewport, entityMgr);
             _game.ChangeState(new NewGameState(_game, _graphicsDevice, _content, entityMgr));
-
-            //boss = new Centipede(Art.CentipedeSheet, new Vector2(200), 240, 3, 99, _graphicsDevice.Viewport, entityMgr);
-            //_game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, 1, boss));
-
-            //_game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, 1));
-            //här startar spelet
         }
 
         private void HighScoreButton_click(object sender, EventArgs e) 
         {
-            _game.ChangeState(new NewGameState(_game, _graphicsDevice, _content, entityMgr));
-            //_game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, 1));
+            _game.ChangeState(new HighScoreState(_game, _graphicsDevice, _content));
+
         }
         private void QuitGameButton_click(object sender, EventArgs e)
         {
