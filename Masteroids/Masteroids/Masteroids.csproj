@@ -62,7 +62,9 @@
     <Compile Include="Sound.cs" />
     <Compile Include="Spawner.cs" />
     <Compile Include="States\GameState.cs" />
+    <Compile Include="States\HighscoreState.cs" />
     <Compile Include="States\MenuState.cs" />
+    <Compile Include="States\NewGameState.cs" />
     <Compile Include="States\State.cs" />
   </ItemGroup>
   <ItemGroup>
