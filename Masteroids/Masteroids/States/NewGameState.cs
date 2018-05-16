@@ -43,14 +43,20 @@ namespace Masteroids.States
                 Position = new Vector2((x - buttonTexture.Width) / 2, 675),
                 Text = "Classic Mode"
             };
-
+            Button ReturnButton = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2((x - buttonTexture.Width) / 2, 800),
+                Text = "Return"
+            };
 
             ClassicGameButton.Click += ClassicGameButton_click;
             MasteroidsGameButton.Click += MasteroidsGameButton_click;
+            ReturnButton.Click += ReturnButton_click;
             _components = new List<Component>()
             {
                 ClassicGameButton,
                 MasteroidsGameButton,
+                ReturnButton,
 
             };
         }
@@ -64,6 +70,10 @@ namespace Masteroids.States
         private void ClassicGameButton_click(object sender, EventArgs e)
         {
             _game.ChangeState(new GameState(_game, _graphicsDevice, _content, EntityMgr, 1));
+        }
+        private void ReturnButton_click(object sender, EventArgs e)
+        {
+            _game.ChangeState(new MenuState(_game, _graphicsDevice, _content, EntityMgr));
         }
 
 
