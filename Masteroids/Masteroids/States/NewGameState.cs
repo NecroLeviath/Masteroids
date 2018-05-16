@@ -12,16 +12,17 @@ namespace Masteroids.States
 {
     class NewGameState : State
     {
-        private List<Component> _components;
-        private EntityManager entityMgr;
-        private BaseBoss boss;
+        List<Component> _components;
+        EntityManager entityMgr;
+        BaseBoss boss;
 
-        public NewGameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
+        Viewport viewport;
+
+        public NewGameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content , EntityManager entityManager) : base(game, graphicsDevice, content)
         {
             Texture2D buttonTexture = content.Load<Texture2D>("button");
             SpriteFont buttonFont = content.Load<SpriteFont>("Fonts/MenuFont");
-            Sound.Load(content);
-            Sound.MusicInstance.Play();
+
 
             int x = graphicsDevice.Viewport.Width;
             int y = graphicsDevice.Viewport.Height;
@@ -48,13 +49,13 @@ namespace Masteroids.States
         }
         private void ClassicGameButton_click(object sender, EventArgs e)
         {
-            game.ChangeState(new GameState(game, graphicsDevice, content, entityMgr, 1));
+            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, 1));
         }
 
         private void MasteroidsGameButton_click(object sender, EventArgs e)
         {
-            boss = new Centipede(Art.CentipedeSheet, new Vector2(200), 240, 3, 99, graphicsDevice.Viewport, entityMgr);
-            game.ChangeState(new GameState(game, graphicsDevice, content, entityMgr, 1, boss));
+            boss = new Centipede(Art.CentipedeSheet, new Vector2(200), 240, 3, 99, _graphicsDevice.Viewport, entityMgr);
+            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, 1, boss));
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -64,12 +65,13 @@ namespace Masteroids.States
 
         public override void PostUpdate(GameTime gameTime)
         {
-            throw new NotImplementedException();
+
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            foreach (Masteroids.Component component in _components)
+                component.Update(gameTime);
         }
     }
 }
