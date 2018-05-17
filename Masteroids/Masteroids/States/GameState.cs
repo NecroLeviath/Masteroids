@@ -55,9 +55,16 @@ namespace Masteroids
 				PlayerIndex.Three,
 				PlayerIndex.Four
 			};
+			Vector2[] phDrawPos = new Vector2[] // DEV: Add the other vectors
+			{
+				new Vector2(0, 0),
+				new Vector2(),
+				new Vector2(),
+				new Vector2()
+			};
 			for (int i = 0; i < numberOfPlayers; i++)
 			{
-				PlayerHandler playerHandler = new PlayerHandler(players[i], entityMgr, viewport);
+				PlayerHandler playerHandler = new PlayerHandler(players[i], phDrawPos[i], Assets.ButtonFont, entityMgr, viewport);
 				playerHandlers.Add(playerHandler);
 				//Player player = new Player(Art.PlayerTex, new Vector2(viewport.Width / 2, viewport.Height / 2), players[i], entityMgr, viewport);
 				//entityMgr.Add(player);
@@ -97,6 +104,8 @@ namespace Masteroids
 		public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
 		{
 			entityMgr.Draw(spriteBatch);
+			foreach (PlayerHandler ph in playerHandlers)
+				ph.Draw(spriteBatch);
 
 			if (entityMgr.Bosses.Count > 0)
 			{

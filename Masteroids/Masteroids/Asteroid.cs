@@ -74,7 +74,11 @@ namespace Masteroids //Laila
 		public override void HandleCollision(GameObject other)
 		{
 			if (other is Bullet)
+			{
 				HP -= (other as Bullet).Damage;
+				if (HP <= 0)
+					((other as Bullet).Owner as Player).IncrementScore(size * 10); // Increases the players score
+			}
 			else if (other is Player)
 				HP = 0;
 		}
