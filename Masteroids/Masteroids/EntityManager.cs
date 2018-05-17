@@ -52,7 +52,7 @@ namespace Masteroids // Simon
                 o.Draw(spriteBatch);
         }
 
-        public void Add(GameObject entity) // DEV: This will replace CreateBullet and CreateAsteroid in other classes
+        public void Add(GameObject entity)
         {
             if (!isUpdating)
                 AddEntity(entity);
@@ -92,45 +92,15 @@ namespace Masteroids // Simon
 					if (bullet.Owner is Player)
 					{
 						for (int j = 0; j < Asteroids.Count; j++)
-						{
-							Asteroid asteroid = Asteroids[j];
-							if (asteroid.IsAlive && IsColliding(bullet, asteroid))
-							{
-								bullet.HandleCollision(asteroid);
-								asteroid.HandleCollision(bullet);
-							}
-						}
+							CheckAndHandleCollision(bullet, Asteroids[j]);
 						for (int j = 0; j < Enemies.Count; j++)
-						{
-							Enemy enemy = Enemies[j];
-							if (enemy.IsAlive && IsColliding(bullet, enemy))
-							{
-								bullet.HandleCollision(enemy);
-								enemy.HandleCollision(bullet);
-							}
-						}
+							CheckAndHandleCollision(bullet, Enemies[j]);
 						for (int j = 0; j < Bosses.Count; j++)
-						{
-							BaseBoss boss = Bosses[j];
-							if (boss.IsAlive && IsColliding(bullet, boss))
-							{
-								bullet.HandleCollision(boss);
-								boss.HandleCollision(bullet);
-							}
-						}
+							CheckAndHandleCollision(bullet, Bosses[j]);
 					}
 					else
-					{
 						for (int j = 0; j < Players.Count; j++)
-						{
-							Player player = Players[j];
-							if (player.IsAlive && IsColliding(bullet, player))
-							{
-								bullet.HandleCollision(player);
-								player.HandleCollision(bullet);
-							}
-						}
-					}
+							CheckAndHandleCollision(bullet, Players[j]);
 				}
 			}
 			for (int i = 0; i < Players.Count; i++)
@@ -139,34 +109,22 @@ namespace Masteroids // Simon
 				if (player.IsAlive)
 				{
 					for (int j = 0; j < Enemies.Count; j++)
-					{
-						Enemy enemy = Enemies[j];
-						if (enemy.IsAlive && IsColliding(player, enemy))
-						{
-							player.HandleCollision(enemy);
-							enemy.HandleCollision(player);
-						}
-					}
+						CheckAndHandleCollision(player, Enemies[j]);
 					for (int j = 0; j < Bosses.Count; j++)
-					{
-						BaseBoss boss = Bosses[j];
-						if (boss.IsAlive && IsColliding(player, boss))
-						{
-							player.HandleCollision(boss);
-							boss.HandleCollision(player);
-						}
-					}
+						CheckAndHandleCollision(player, Bosses[j]);
 					for (int j = 0; j < Asteroids.Count; j++)
-					{
-						Asteroid asteroid = Asteroids[j];
-						if (asteroid.IsAlive && IsColliding(player, asteroid))
-						{
-							player.HandleCollision(asteroid);
-							asteroid.HandleCollision(player);
-						}
-					}
+						CheckAndHandleCollision(player, Asteroids[j]);
 				}
 			}
         }
+
+		private void CheckAndHandleCollision(GameObject a, GameObject b)
+		{
+			if (b.IsAlive && IsColliding(a, b))
+			{
+				a.HandleCollision(b);
+				b.HandleCollision(a);
+			}
+		}
     }
 }
