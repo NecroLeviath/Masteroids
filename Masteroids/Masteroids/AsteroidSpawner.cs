@@ -23,14 +23,9 @@ namespace Masteroids
         }
         public void Update(GameTime gameTime)
         {
-            //how many asteroids that spawns and how their movement is.
             if (entityMgr.Asteroids.Count < 15)
             {
                 Location();
-                //positionX = rnd.Next(0, viewport.Width + Art.AsteroidTex.Width);
-                //positionY = rnd.Next(0, viewport.Height + Art.AsteroidTex.Height);
-                //speedX = rnd.Next(-2, 2);   //Asteroider kan spawna utan att kunna röra sig.
-                //speedY = rnd.Next(-2, 2);
                 Vector2 pos = new Vector2(positionX, positionY);
                 Vector2 speed = new Vector2(speedX, speedY);
 				Asteroid asteroid = new Asteroid(Art.AsteroidTex, speed, pos, viewport);
