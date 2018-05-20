@@ -11,10 +11,10 @@ namespace Masteroids
         SpriteBatch spriteBatch;
         Viewport defaultView;
         int screenWidth = 1920, screenHeight = 1080;
-        private State _currentstate;
-        private State _nextState;
+        private State _currentstate;	// CR: _ före variabelnamn finns ej i riktlinjerna
+        private State _nextState;		//
 
-        public void ChangeState(State state) {
+        public void ChangeState(State state) {		// CR: Måsvingar bör börja under metodhuvudet
             _nextState = state;
         }
 
@@ -44,7 +44,7 @@ namespace Masteroids
             _currentstate = new MenuState(this, graphics.GraphicsDevice, Content, entityMgr);
         }
 
-        protected override void UnloadContent()
+        protected override void UnloadContent()	// CR: Tomma metoder kan ha måsvingar efter metodhuvudet
         {
         }
 
@@ -54,7 +54,7 @@ namespace Masteroids
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             
-            if (_nextState != null) {
+            if (_nextState != null) {	// CR: Måsvingar bör börja under metodhuvudet
                 _currentstate = _nextState;
                 _nextState = null;
             }

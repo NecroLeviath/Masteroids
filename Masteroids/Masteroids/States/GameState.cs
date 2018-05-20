@@ -12,7 +12,7 @@ namespace Masteroids
 {
 	public class GameState : State
 	{
-		SpriteFont font;
+		SpriteFont font;    // CR: font används ej och kan tas bort
 		Viewport viewport;
 
 		EntityManager entityMgr;
@@ -20,7 +20,7 @@ namespace Masteroids
 		List<PlayerHandler> playerHandlers;
 
 		//Vector2 bossFontPos;
-		//Vector2 bossFontPos;
+		//Vector2 bossFontPos; // CR: Kan tas bort
 		//SpriteFont bossFont;
 
 		// Asteroids
@@ -45,7 +45,7 @@ namespace Masteroids
 			entityMgr = entityManager;
 			playerHandlers = new List<PlayerHandler>();
 			//bossFont = content.Load<SpriteFont>("BossLife");
-			//bossFontPos = new Vector2(1000, 20);
+			//bossFontPos = new Vector2(1000, 20);	// CR: Kan tas bort
 			font = content.Load<SpriteFont>(@"Fonts/font");
 
 			PlayerIndex[] players = new PlayerIndex[]
@@ -60,7 +60,7 @@ namespace Masteroids
 				PlayerHandler playerHandler = new PlayerHandler(players[i], entityMgr, viewport);
 				playerHandlers.Add(playerHandler);
 				//Player player = new Player(Art.PlayerTex, new Vector2(viewport.Width / 2, viewport.Height / 2), players[i], entityMgr, viewport);
-				//entityMgr.Add(player);
+				//entityMgr.Add(player);	// CR: Kan tas bort
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace Masteroids
 			//    player2.Update(gameTime);
 			//}
 			#endregion
-		}
+		}   // CR: Kan ta bort utkommenterad kod
 
 		public override void PostUpdate(GameTime gameTime) { }
 
@@ -100,7 +100,7 @@ namespace Masteroids
 
 			if (entityMgr.Bosses.Count > 0)
 			{
-				int bossHP = 0;
+				int bossHP = 0;	// CR: Hade kunnat använda var istället för int, men int kanske är tydligare
 				for (int i = 0; i < entityMgr.Bosses.Count; i++)    // Summarizes the HP of the boss.
 					bossHP += entityMgr.Bosses[i].HP;
 				//spriteBatch.DrawString(bossFont, "Life: " + bossHP + " / " + (spawner as MasteroidSpawner).BossMaxHP, bossFontPos, Color.White);
@@ -120,6 +120,6 @@ namespace Masteroids
 			//    spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
 			//}
 			#endregion
-		}
+		}   // CR: Kan ta bort utkommenterad kod
 	}
 }

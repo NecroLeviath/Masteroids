@@ -12,9 +12,9 @@ namespace Masteroids.Controls
     public class Button : Component
     {
         #region
-        private MouseState _currentMouse;
-
-        private SpriteFont _font;
+        private MouseState _currentMouse;   // CR: _ före variabelnamn finns ej i riktlinjerna
+											// CR: Hade tagit mindre plats om utan mellanrum mellan alla fields
+		private SpriteFont _font;
 
         private bool _isHovering;
 
@@ -45,13 +45,13 @@ namespace Masteroids.Controls
             _texture = texture;
             _font = font;
             PenColour = Color.Black;
-
+			// CR: Onödigt mellanrum
         }
-        #endregion
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+		#endregion
+		// CR: Regionen hade kunnat vara markerad "Fields" eller liknande
+		public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)	// CR: Hade kunnat byta plats på Draw och Update för att matcha andra klasser
         {
-            var colour = Color.White;
+            var colour = Color.White;	// CR: Då colour endast används på ett ställe så hade det inte behövt vara en variabel
             if (_isHovering)
                 PenColour = Color.Yellow;
             else 
@@ -79,11 +79,11 @@ namespace Masteroids.Controls
                 _isHovering = true;
                 if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed)
                 {
-                    Click.Invoke(this, new EventArgs());
+                    Click.Invoke(this, new EventArgs());	// CR: Enradig if-sats behöver ej måsvingar
                 }
             }
-
+			// CR: Onödigt mellanrum
         }
-
-    }
+		// CR: Onödigt mellanrum
+	}
 }
