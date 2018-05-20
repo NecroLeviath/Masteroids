@@ -33,7 +33,7 @@ namespace Masteroids
             }           
         }
 
-        public void Location()
+        private void Location()
         {
             move = rnd.Next(1, 4);
             if(move == 1)

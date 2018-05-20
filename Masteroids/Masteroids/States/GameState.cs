@@ -26,11 +26,14 @@ namespace Masteroids.States
 		public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers)
 			: base(game, graphicsDevice, content)
 		{
-			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
-		}
+            CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
+            Shooter shooter = new Shooter(Art.EnemySheet, new Vector2(20), 100, entityMgr, viewport);
+            entityMgr.Add(shooter);
 
-		// Masteroids
-		public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers, BaseBoss boss)
+        }
+
+        // Masteroids
+        public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers, BaseBoss boss)
 			: base(game, graphicsDevice, content)
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
@@ -103,6 +106,7 @@ namespace Masteroids.States
 					bossHP += entityMgr.Bosses[i].HP;
 				spriteBatch.DrawString(bossFont, "Life: " + bossHP, bossFontPos, Color.White);  // DEV: Might be changed to a health bar instead of a number
 			}
+           
 
 			#region Out-commented
 			//if (enteredGame)
@@ -115,5 +119,5 @@ namespace Masteroids.States
 			//}
 			#endregion
 		}
-	}
+    }
 }
