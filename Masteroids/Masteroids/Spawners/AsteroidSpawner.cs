@@ -11,16 +11,21 @@ namespace Masteroids
     class AsteroidSpawner : Spawner
     {
         private int positionX, positionY, position, move, speedX, speedY;
+        float spawnTimer, spawnInterval = 1f;
+        int nrOfEnemies;
 
-        public AsteroidSpawner(Game1 game, EntityManager entityManager, List<PlayerHandler> playerHandlers, Viewport viewport)
-            : base(game, entityManager, playerHandlers, viewport) { }
+
+        public AsteroidSpawner(Game1 game, EntityManager entityManager, List<PlayerHandler> playerHandlers, Viewport viewport, int numberOfEnemies)
+            : base(game, entityManager, playerHandlers, viewport) { nrOfEnemies = numberOfEnemies; }
 
 		public AsteroidSpawner(EntityManager entityManager, Viewport viewport)
 			: base(entityManager, viewport) { }
 
         public override void Update(GameTime gameTime)
         {
-			if (playerHandlers != null && playerHandlers.All(x => x.Lives < 0))
+            var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            spawnTimer += delta;
+            if (playerHandlers != null && playerHandlers.All(x => x.Lives < 0))
 			{
 				game.ChangeState(new MenuState(game, game.GraphicsDevice, game.Content, entityMgr));
 				// DEV: This is where the score will be added to the high score list
@@ -44,7 +49,16 @@ namespace Masteroids
 				//Vector2 speed = new Vector2(speedX, speedY);
 				//Asteroid asteroid = new Asteroid(Assets.AsteroidTexs[2], speed, pos, entityMgr, viewport);
 				entityMgr.Add(asteroid);
-            }           
+            }
+            if (nrOfEnemies > 0 && (entityMgr.Enemies.Count == 0 || spawnTimer >= spawnInterval))
+            {
+                var pos = RandomSide();
+                Shooter shooter = new Shooter(Assets.EnemySheet, pos, 100, entityMgr, viewport);
+                entityMgr.Add(shooter);
+                nrOfEnemies--;
+                spawnTimer = 0;
+            }
+           
         }
 
         public void Location()

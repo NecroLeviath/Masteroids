@@ -28,7 +28,7 @@ namespace Masteroids
 			: base(game, graphicsDevice, content)
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
-            spawner = new AsteroidSpawner(game, entityMgr, playerHandlers, viewport);
+            spawner = new AsteroidSpawner(game, entityMgr, playerHandlers, viewport, 2);
         }
 
 		// Masteroids

@@ -42,7 +42,7 @@ namespace Masteroids
             velocity = Vector2.Zero;
 			Radius = tex.Height / 2;
             AsteroidMode = false;
-			HP = 1;
+			HP = 30;
 			invulnerabilityTimer = 2;
 		}
 
