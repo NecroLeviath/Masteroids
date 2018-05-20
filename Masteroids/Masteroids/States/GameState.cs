@@ -55,12 +55,12 @@ namespace Masteroids
 				PlayerIndex.Three,
 				PlayerIndex.Four
 			};
-			Vector2[] phDrawPos = new Vector2[] // DEV: Add the other vectors
+			Vector2[] phDrawPos = new Vector2[]
 			{
 				new Vector2(0, 0),
-				new Vector2(),
-				new Vector2(),
-				new Vector2()
+				new Vector2(300, 0),
+				new Vector2(600, 0),
+				new Vector2(900, 0)
 			};
 			for (int i = 0; i < numberOfPlayers; i++)
 			{
