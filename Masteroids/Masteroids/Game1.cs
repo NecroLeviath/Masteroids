@@ -11,11 +11,11 @@ namespace Masteroids
         SpriteBatch spriteBatch;
         Viewport defaultView;
         int screenWidth = 1920, screenHeight = 1080;
-        private State _currentstate;
-        private State _nextState;
+        private State _currentstate; // bort med "_" johns misstag
+        private State _nextState; // bort med "_" johns misstag
 
-        public void ChangeState(State state) {
-            _nextState = state;
+        public void ChangeState(State state) { //måsvinge
+            _nextState = state; // bort med "_" johns misstag
         }
 
         public Game1()
@@ -41,7 +41,7 @@ namespace Masteroids
             defaultView = GraphicsDevice.Viewport;
             Assets.Initialize(Content);
 			EntityManager entityMgr = new EntityManager(defaultView);
-            _currentstate = new MenuState(this, graphics.GraphicsDevice, Content, entityMgr);
+            _currentstate = new MenuState(this, graphics.GraphicsDevice, Content, entityMgr); // bort med "_" johns misstag
         }
 
         protected override void UnloadContent()
@@ -54,12 +54,12 @@ namespace Masteroids
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             
-            if (_nextState != null) {
+            if (_nextState != null) { //måsvinge johns misstag
                 _currentstate = _nextState;
                 _nextState = null;
             }
-            _currentstate.Update(gameTime);
-            _currentstate.PostUpdate(gameTime);
+            _currentstate.Update(gameTime); // bort med "_" johns misstag
+            _currentstate.PostUpdate(gameTime); // bort med "_" johns misstag
 
             base.Update(gameTime);
         }
@@ -69,7 +69,7 @@ namespace Masteroids
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
-            _currentstate.Draw(gameTime, spriteBatch);
+            _currentstate.Draw(gameTime, spriteBatch); // bort med "_" johns misstag
             spriteBatch.End();
 
             base.Draw(gameTime);
