@@ -24,13 +24,13 @@ namespace Masteroids
         public override void Update(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             spawnTimer += delta;
-            if (playerHandlers != null && playerHandlers.All(x => x.Lives < 0))
-			{
+
+            if (playerHandlers != null && playerHandlers.All(x => x.Lives < 0))			
 				game.ChangeState(new MenuState(game, game.GraphicsDevice, game.Content, entityMgr));
 				// DEV: This is where the score will be added to the high score list
-			}
-
+			
 			//how many asteroids that spawns and how their movement is.
 			if (entityMgr.Asteroids.Count < 15)
             {
