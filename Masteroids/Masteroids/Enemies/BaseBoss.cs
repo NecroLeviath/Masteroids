@@ -11,7 +11,6 @@ namespace Masteroids
 	public abstract class BaseBoss : Enemy // Simon
 	{
 		public int MaxHP { get; private set; }
-		public int HP { get; protected set; }
 
 		public BaseBoss(Texture2D texture, Vector2 position, float speed, int hitPoints, Viewport viewport)
 			: base(texture, position, speed, viewport)
