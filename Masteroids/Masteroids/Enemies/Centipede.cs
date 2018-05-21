@@ -27,11 +27,9 @@ namespace Masteroids
 		{
 			this.entityMgr = entityMgr;
 			isHead = true;
-			Radius = 30;
-			Beacons = new List<Vector2>();
-            sourceRectangle = new Rectangle(texture.Width / 5, 0, texture.Width / 5, texture.Height);
             rnd = new Random();
 			nrSegments = numberOfSegments;
+			CommonConstructor();
 		}
 
         public Centipede(Texture2D texture, Vector2 position, float speed, int hitPoints, Viewport viewport, Centipede parent, EntityManager entityMgr)
@@ -40,10 +38,16 @@ namespace Masteroids
             this.parent = parent;
             this.entityMgr = entityMgr;
             isHead = false;
-			Radius = 30;
+			CommonConstructor();
+		}
+
+		private void CommonConstructor()
+		{
 			Beacons = new List<Vector2>();
-            sourceRectangle = new Rectangle(texture.Width / 5, 0, texture.Width / 5, texture.Height);
-        }
+			sourceRectangle = new Rectangle(tex.Width / 5, 0, tex.Width / 5, tex.Height);
+			Radius = 30;
+			scoreValue = 10;
+		}
 
 		public override void Start()
 		{
@@ -127,7 +131,7 @@ namespace Masteroids
 		public override void HandleCollision(GameObject other)
 		{
 			if (other is Bullet)
-				HP -= (other as Bullet).Damage;
+				BulletCollision(other as Bullet);
 		}
 
 		private void FindGoal(float delta)

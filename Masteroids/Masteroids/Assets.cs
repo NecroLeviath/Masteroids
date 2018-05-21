@@ -34,6 +34,9 @@ namespace Masteroids // Simon
 		//public static SoundEffect SEffect { get { return sEffects[rnd.Next(sEffects.Length)]; } }
 		#endregion
 
+		#region Font
+		public static SpriteFont ButtonFont;
+		#endregion
 		public static void Initialize(ContentManager content)
         {
 			#region Art
@@ -60,6 +63,10 @@ namespace Masteroids // Simon
 			//SEffect = content.Load<SoundEffect>("");
 			// DEV: Or for sound effects with variation
 			// sEffects = Enumerable.Range(1, #).Select(x => content.Load<SoundEffect>("" + x)).ToArray();
+			#endregion
+
+			#region Font
+			ButtonFont = content.Load<SpriteFont>("Fonts/MenuFont");
 			#endregion
 		}
 	}

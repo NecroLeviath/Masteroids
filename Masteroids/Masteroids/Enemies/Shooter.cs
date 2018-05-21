@@ -27,11 +27,16 @@ namespace Masteroids // Simon
             var rnd = new Random();
             sourceRectangle = new Rectangle(rnd.Next(4) * texture.Width / 4, rnd.Next(2) * texture.Height / 2, texture.Width / 4, texture.Height / 2);
             Radius = texture.Height / 4;
+			HP = 1;
+			scoreValue = 50;
         }
 
         public override void Update(GameTime gameTime)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+			if (HP <= 0)
+				IsAlive = false;
 
             ChooseTarget();
             if (target != null)
@@ -99,7 +104,8 @@ namespace Masteroids // Simon
 
         public override void HandleCollision(GameObject other)
         {
-            IsAlive = false;
+			if (other is Bullet)
+				BulletCollision(other as Bullet);
         }
     }
 }
