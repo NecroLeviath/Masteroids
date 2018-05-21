@@ -10,7 +10,7 @@ namespace Masteroids
 {
     class AsteroidSpawner : Spawner
     {
-        private int positionX, positionY, position, move, speedX, speedY;
+        private int positionX, positionY, move, speedX, speedY;
         float spawnTimer, spawnInterval = 1f;
         int nrOfEnemies;
 
@@ -34,23 +34,14 @@ namespace Masteroids
 			//how many asteroids that spawns and how their movement is.
 			if (entityMgr.Asteroids.Count < 15)
             {
-				//positionX = rnd.Next(0, viewport.Width + Art.AsteroidTex.Width);
-				//positionY = rnd.Next(0, viewport.Height + Art.AsteroidTex.Height);
-				//speedX = rnd.Next(-2, 2);   //Asteroider kan spawna utan att kunna röra sig.
-				//speedY = rnd.Next(-2, 2);
-
 				Vector2 pos = RandomSide();
 				Vector2 dir = RandomDirection();
 				float speed = RandomSpeed();
 				Asteroid asteroid = new Asteroid(Assets.AsteroidTexs[2], pos, dir, speed, 3, entityMgr, viewport);
 
-				//Location();
-				//Vector2 pos = new Vector2(positionX, positionY);
-				//Vector2 speed = new Vector2(speedX, speedY);
-				//Asteroid asteroid = new Asteroid(Assets.AsteroidTexs[2], speed, pos, entityMgr, viewport);
 				entityMgr.Add(asteroid);
             }
-            if (nrOfEnemies > 0 && (entityMgr.Enemies.Count == 0 || spawnTimer >= spawnInterval))
+            if (nrOfEnemies > 0 && (entityMgr.Enemies.Count < 2 || spawnTimer >= spawnInterval))
             {
                 var pos = RandomSide();
                 Shooter shooter = new Shooter(Assets.EnemySheet, pos, 100, entityMgr, viewport);
@@ -58,7 +49,6 @@ namespace Masteroids
                 nrOfEnemies--;
                 spawnTimer = 0;
             }
-           
         }
 
         public void Location()
