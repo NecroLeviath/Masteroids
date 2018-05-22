@@ -16,18 +16,20 @@ namespace Masteroids.States
         EntityManager entityMgr;
         AsteroidSpawner asteroidSpawner;
         BaseBoss boss;
+        State previousState;
 
         Viewport viewport;
 
         public EntityManager EntityMgr { get => entityMgr; set => entityMgr = value; }
 
-        public NewGameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content , EntityManager entityManager) : base(game, graphicsDevice, content)
+        public NewGameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content , EntityManager entityManager,State previousState) : base(game, graphicsDevice, content)
         {
             Texture2D buttonTexture = content.Load<Texture2D>("button");
             SpriteFont buttonFont = content.Load<SpriteFont>("Fonts/MenuFont");
+            this.previousState = previousState;
 
             viewport = graphicsDevice.Viewport;
-            entityMgr = new EntityManager(viewport);
+            entityMgr = entityManager;
             asteroidSpawner = new AsteroidSpawner(entityMgr, viewport);
 
             int x = graphicsDevice.Viewport.Width;
@@ -73,7 +75,7 @@ namespace Masteroids.States
         }
         private void ReturnButton_click(object sender, EventArgs e)
         {
-            _game.ChangeState(new MenuState(_game, _graphicsDevice, _content, EntityMgr));
+            _game.ChangeState(previousState);
         }
 
 

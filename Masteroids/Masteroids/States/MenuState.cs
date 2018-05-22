@@ -66,12 +66,12 @@ namespace Masteroids.States
 
         private void NewGameButton_click(object sender, EventArgs e)
 		{
-            _game.ChangeState(new NewGameState(_game, _graphicsDevice, _content, entityMgr));
+            _game.ChangeState(new NewGameState(_game, _graphicsDevice, _content, entityMgr,this));
         }
 
         private void HighScoreButton_click(object sender, EventArgs e) 
         {
-            _game.ChangeState(new HighScoreState(_game, _graphicsDevice, _content, entityMgr));
+            _game.ChangeState(new HighScoreState(_game, _graphicsDevice, _content, entityMgr,this));
 
         }
         private void QuitGameButton_click(object sender, EventArgs e)
