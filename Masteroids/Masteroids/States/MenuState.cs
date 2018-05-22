@@ -20,8 +20,8 @@ namespace Masteroids.States
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content , EntityManager entityManager) : base(game, graphicsDevice, content)
         {
-            Texture2D buttonTexture = _content.Load<Texture2D>("button");
-            SpriteFont buttonFont = _content.Load<SpriteFont>("Fonts/MenuFont");
+            Texture2D buttonTexture = content.Load<Texture2D>("button");
+            SpriteFont buttonFont = content.Load<SpriteFont>("Fonts/MenuFont");
             Sound.Load(content);
             Sound.MusicInstance.Play();
 			entityMgr = entityManager;
@@ -47,7 +47,7 @@ namespace Masteroids.States
             Button QuitGameButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2((x - buttonTexture.Width) / 2, 800),
-                Text = "Quit Game"
+                Text = "Quit"
             };
             NewGameButton.Click += NewGameButton_click;
             HighScoreButton.Click += HighScoreButton_click;
@@ -66,17 +66,17 @@ namespace Masteroids.States
 
         private void NewGameButton_click(object sender, EventArgs e)
 		{
-            _game.ChangeState(new NewGameState(_game, _graphicsDevice, _content, entityMgr,this));
+            game.ChangeState(new NewGameState(game, graphicsDevice, content, entityMgr,this));
         }
 
         private void HighScoreButton_click(object sender, EventArgs e) 
         {
-            _game.ChangeState(new HighScoreState(_game, _graphicsDevice, _content, entityMgr,this));
+            game.ChangeState(new HighScoreState(game, graphicsDevice, content, entityMgr,this));
 
         }
         private void QuitGameButton_click(object sender, EventArgs e)
         {
-            _game.Exit();
+            game.Exit();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

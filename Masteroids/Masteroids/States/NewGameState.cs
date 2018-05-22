@@ -64,18 +64,18 @@ namespace Masteroids.States
         }
         private void MasteroidsGameButton_click(object sender, EventArgs e)
         {
-            boss = new Centipede(Art.CentipedeSheet, new Vector2(200), 240, 3, 99, _graphicsDevice.Viewport, EntityMgr);
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, EntityMgr, 1, boss));
+            boss = new Centipede(Art.CentipedeSheet, new Vector2(200), 240, 3, 99, graphicsDevice.Viewport, EntityMgr);
+            game.ChangeState(new GameState(game, graphicsDevice, content, EntityMgr, 1, boss));
             //_game.ChangeState(new GameState(_game, _graphicsDevice, _content, EntityMgr, 1));
         }
 
         private void ClassicGameButton_click(object sender, EventArgs e)
         {
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, EntityMgr, 1));
+            game.ChangeState(new GameState(game, graphicsDevice, content, EntityMgr, 1));
         }
         private void ReturnButton_click(object sender, EventArgs e)
         {
-            _game.ChangeState(previousState);
+            game.ChangeState(previousState);
         }
 
 

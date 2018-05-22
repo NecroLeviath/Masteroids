@@ -41,7 +41,7 @@ namespace Masteroids.States
         }
             private void ReturnButton_click(object sender, EventArgs e)
             {
-            _game.ChangeState(previousState);
+            game.ChangeState(previousState);
             }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -130,6 +130,8 @@ namespace Masteroids.States
             File.WriteAllLines("astHighscore.txt", astS);
 
         }
+
+
 
     }
 }
