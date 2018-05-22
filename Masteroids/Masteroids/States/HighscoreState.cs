@@ -13,11 +13,11 @@ namespace Masteroids.States
     class HighScoreState : State
     {
         List<Component> components;
+        EntityManager entityMgr;
 
-
-        public HighScoreState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
+        public HighScoreState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content,EntityManager entityManager) : base(game, graphicsDevice, content)
         {
-
+            entityMgr = entityManager;
             Texture2D buttonTexture = content.Load<Texture2D>("button");
             SpriteFont buttonFont = content.Load<SpriteFont>("Fonts/MenuFont");
             int x = graphicsDevice.Viewport.Width;
@@ -36,7 +36,7 @@ namespace Masteroids.States
         }
             private void ReturnButton_click(object sender, EventArgs e)
             {
-            _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
+            _game.ChangeState(new MenuState(_game, _graphicsDevice, _content, entityMgr));
             }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
