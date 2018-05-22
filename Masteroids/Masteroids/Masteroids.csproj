@@ -87,6 +87,7 @@
     <Content Include="Content\pacmanSheet.png" />
     <Content Include="Content\playerShip.png" />
     <Content Include="Content\ponyBoss.png" />
+    <Content Include="Content\shipOutlineTex.png" />
     <Content Include="Content\shipTex.png" />
     <Content Include="Content\shooterSheet.png" />
     <Content Include="Content\skott.png" />
