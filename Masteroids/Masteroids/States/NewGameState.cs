@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Masteroids.States
+namespace Masteroids
 {
     class NewGameState : State
     {
@@ -64,7 +64,7 @@ namespace Masteroids.States
         }
         private void MasteroidsGameButton_click(object sender, EventArgs e)
         {
-            boss = new Centipede(Art.CentipedeSheet, new Vector2(200), 240, 3, 99, graphicsDevice.Viewport, EntityMgr);
+            boss = new Centipede(Assets.CentipedeSheet, new Vector2(200), 240, 3, 99, graphicsDevice.Viewport, EntityMgr);
             game.ChangeState(new GameState(game, graphicsDevice, content, EntityMgr, 1, boss));
             //_game.ChangeState(new GameState(_game, _graphicsDevice, _content, EntityMgr, 1));
         }

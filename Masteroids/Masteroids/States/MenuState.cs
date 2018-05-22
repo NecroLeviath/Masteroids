@@ -20,8 +20,8 @@ namespace Masteroids
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content , EntityManager entityManager) : base(game, graphicsDevice, content)
         {
-            Texture2D buttonTexture = _content.Load<Texture2D>("button");
-            SpriteFont buttonFont = _content.Load<SpriteFont>("Fonts/MenuFont");
+            Texture2D buttonTexture = content.Load<Texture2D>("button");
+            SpriteFont buttonFont = content.Load<SpriteFont>("Fonts/MenuFont");
             Assets.MusicInstance.Play();
 			entityMgr = entityManager;
             int x = graphicsDevice.Viewport.Width;

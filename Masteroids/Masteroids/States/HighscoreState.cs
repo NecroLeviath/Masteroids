@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Masteroids.Controls;
 using System.IO;
 
-namespace Masteroids.States
+namespace Masteroids
 {
     class HighScoreState : State
     {
