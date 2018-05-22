@@ -42,7 +42,7 @@ namespace Masteroids
             shouldWrap = true;
             velocity = Vector2.Zero;
 			Radius = tex.Height / 2;
-            ClassicMode = false;
+            ClassicMode = true;
 			HP = 1;
 			invulnerabilityTimer = 2;
             GamePadMode = false;
@@ -94,15 +94,15 @@ namespace Masteroids
                 GamePadState gamePadState = GamePad.GetState(PlayerValue);
                 if (capabilities.HasLeftXThumbStick)
                 {
-                    if(ClassicMode)
-                        AsterInputGamePad();          //GamepadKontroller för Asteroid
+                    if(!ClassicMode)
+                        AsterInputGamePad();          //DEV: !ClassicMode för MasterInputGamePad
                     else
-                        MasterInputGamePad();          //Gamepad kontroller för Masteroid
+                        MasterInputGamePad();
                 }
             }
             else if(PlayerValue == PlayerIndex.One)
             {
-                if (!ClassicMode)
+                if (!ClassicMode)                       //DEV: !ClassicMode för MasterInput
                     AsterInput();
                 else
                     MasterInput();
@@ -131,9 +131,8 @@ namespace Masteroids
 
         private void MasterInput()   //Masteroids kontroller för Keyboard och Mus
         {
-            
             rotation = (float)Math.Atan2(distance.Y, distance.X) + (float)Math.PI / 2;
-            speed = 0.3f;
+            speed = 0.2f;
 
             if (keyboardState.IsKeyDown(Keys.A))
                 velocity.X -= speed;
@@ -156,8 +155,6 @@ namespace Masteroids
             velocity.X += gamePadStateCurrent.ThumbSticks.Left.X * speed*3;
             velocity.Y -= gamePadStateCurrent.ThumbSticks.Left.Y * speed*3;
 
-            //rotation = gamePadState.ThumbSticks.Right.Y;
-
             if (gamePadStateCurrent.ThumbSticks.Right != Vector2.Zero)
                 rotation = (float)Math.Atan2(-gamePadStateCurrent.ThumbSticks.Right.Y, gamePadStateCurrent.ThumbSticks.Right.X) + MathHelper.PiOver2;
 
@@ -170,7 +167,7 @@ namespace Masteroids
             var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - 
                 rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
             rotationVelocity = 4f;
-            speed = 0.05f;
+            speed = 0.08f;
 
             if (keyboardState.IsKeyDown(Keys.A))            //Rotera med tangentbord Asteroids
                 rotation -= MathHelper.ToRadians(rotationVelocity);
@@ -188,7 +185,7 @@ namespace Masteroids
         private void AsterInputGamePad() //Asteroids kontroller för Gamepad
         {
             rotationVelocity = 0.08f;
-            speed = 0.04f;
+            speed = 0.07f;
 
             var direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - 
                 rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
@@ -205,8 +202,6 @@ namespace Masteroids
 
             if (gamePadStateCurrent.DPad.Up == ButtonState.Pressed)
                 velocity += direction * speed;
-            //if (gamePadStateCurrent.DPad.Down == ButtonState.Pressed)
-            //    velocity -= direction * speed;
             if (gamePadStateCurrent.DPad.Left == ButtonState.Pressed)
                 rotation -= rotationVelocity;
             if (gamePadStateCurrent.DPad.Right == ButtonState.Pressed)
@@ -217,18 +212,12 @@ namespace Masteroids
 
             if (gamePadStateCurrent.Triggers.Right > 0)
                 CreateBullet();
-            //{
-            //    velocity.X = 0;
-            //    velocity.Y = 0;
-            //}
-
 
             /*&& gamePadStatePrevious.Buttons.RightShoulder == ButtonState.Released*/
             //    CreateBullet();
             //if (gamePadStateCurrent.Buttons.X == ButtonState.Pressed
             //&& gamePadStatePrevious.Buttons.X == ButtonState.Released)
             //if (gamePadStateCurrent.Buttons.RightShoulder == ButtonState.Pressed)
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
