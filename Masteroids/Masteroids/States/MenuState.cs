@@ -13,13 +13,9 @@ namespace Masteroids
 {
     public class MenuState : State
     {
-        private List<Component> _components;
+        private List<Component> components;
 		EntityManager entityMgr;
-		BaseBoss boss;
-
-
         Viewport viewport;
-
         AsteroidSpawner asteroidSpawner;
 
         public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content , EntityManager entityManager) : base(game, graphicsDevice, content)
@@ -50,45 +46,43 @@ namespace Masteroids
             Button QuitGameButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2((x - buttonTexture.Width) / 2, 800),
-                Text = "Quit Game"
+                Text = "Quit"
             };
             NewGameButton.Click += NewGameButton_click;
             HighScoreButton.Click += HighScoreButton_click;
             QuitGameButton.Click += QuitGameButton_click;
-            _components = new List<Component>()
+            components = new List<Component>()
             {
                 NewGameButton,
                 HighScoreButton,
                 QuitGameButton,
             };
         }
-        
+
+        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
+        {
+        }
+
         private void NewGameButton_click(object sender, EventArgs e)
 		{
-            //boss = new Boss(Art.BossTex, new Vector2(-100, 100), 1, 100, _graphicsDevice.Viewport, entityMgr);
-            boss = new Centipede(Assets.CentipedeSheet, new Vector2(200), 240, 3, 99, _graphicsDevice.Viewport, entityMgr);
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, 1, boss));
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, 1));
-            //här startar spelet
+            game.ChangeState(new NewGameState(game, graphicsDevice, content, entityMgr,this));
         }
 
         private void HighScoreButton_click(object sender, EventArgs e) 
         {
-            //_game.ChangeState(new GameState(_game, _graphicsDevice, _content));
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content, entityMgr, 1));
+            game.ChangeState(new HighScoreState(game, graphicsDevice, content, entityMgr,this));
+
         }
         private void QuitGameButton_click(object sender, EventArgs e)
         {
-            _game.Exit();
+            game.Exit();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            //spriteBatch.Begin();
             entityMgr.Draw(spriteBatch);
-            foreach (Masteroids.Component component in _components)
+            foreach (Masteroids.Component component in components)
                 component.Draw(gameTime, spriteBatch);
-            //spriteBatch.End();
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -100,7 +94,7 @@ namespace Masteroids
         {
             asteroidSpawner.Update(gameTime);
             entityMgr.Update(gameTime);
-            foreach (Masteroids.Component component in _components)
+            foreach (Masteroids.Component component in components)
                 component.Update(gameTime);
         }
     }

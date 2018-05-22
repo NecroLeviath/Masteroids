@@ -11,11 +11,12 @@ namespace Masteroids
         SpriteBatch spriteBatch;
         Viewport defaultView;
         int screenWidth = 1920, screenHeight = 1080;
-        private State _currentstate;
-        private State _nextState;
+        private State currentstate;
+        private State nextState;
 
-        public void ChangeState(State state) {
-            _nextState = state;
+        public void ChangeState(State state)
+        {
+            nextState = state;
         }
 
         public Game1()
@@ -41,7 +42,13 @@ namespace Masteroids
             defaultView = GraphicsDevice.Viewport;
             Assets.Initialize(Content);
 			EntityManager entityMgr = new EntityManager(defaultView);
-            _currentstate = new MenuState(this, graphics.GraphicsDevice, Content, entityMgr);
+            HighScoreState.GetHighscore();
+            HighScoreState.SetAsteoidScore(10);
+            int r;
+            int.TryParse("007365", out r);
+            HighScoreState.SetMasteroidScore(r);
+
+            currentstate = new MenuState(this, graphics.GraphicsDevice, Content, entityMgr);
         }
 
         protected override void UnloadContent()
@@ -54,12 +61,13 @@ namespace Masteroids
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             
-            if (_nextState != null) {
-                _currentstate = _nextState;
-                _nextState = null;
+            if (nextState != null)
+            {
+                currentstate = nextState;
+                nextState = null;
             }
-            _currentstate.Update(gameTime);
-            _currentstate.PostUpdate(gameTime);
+            currentstate.Update(gameTime);
+            currentstate.PostUpdate(gameTime);
 
             base.Update(gameTime);
         }
@@ -69,7 +77,7 @@ namespace Masteroids
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
-            _currentstate.Draw(gameTime, spriteBatch);
+            currentstate.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
