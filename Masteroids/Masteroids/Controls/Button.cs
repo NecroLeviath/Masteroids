@@ -11,14 +11,13 @@ namespace Masteroids.Controls
 {
     public class Button : Component
     {
-        #region
-        private MouseState _currentMouse;
+        private MouseState currentMouse;
 
         private SpriteFont _font;
 
-        private bool _isHovering;
+        private bool isHovering;
 
-        private MouseState _previousMouse;
+        private MouseState previousMouse;
 
         private Texture2D _texture;
 
@@ -47,12 +46,11 @@ namespace Masteroids.Controls
             PenColour = Color.Black;
 
         }
-        #endregion
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             var colour = Color.White;
-            if (_isHovering)
+            if (isHovering)
                 PenColour = Color.Yellow;
             else 
                 PenColour = Color.White;
@@ -69,15 +67,15 @@ namespace Masteroids.Controls
         
         public override void Update(GameTime gameTime)
         {
-            _previousMouse = _currentMouse;
-            _currentMouse = Mouse.GetState();
-            Rectangle mouseRectangle = new Rectangle(_currentMouse.X, _currentMouse.Y, 1, 1);
-            _isHovering = false;
+            previousMouse = currentMouse;
+            currentMouse = Mouse.GetState();
+            Rectangle mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
+            isHovering = false;
 
             if (mouseRectangle.Intersects(Rectangle))
             {
-                _isHovering = true;
-                if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed)
+                isHovering = true;
+                if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)
                 {
                     Click.Invoke(this, new EventArgs());
                 }
