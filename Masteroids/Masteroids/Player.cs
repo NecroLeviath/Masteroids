@@ -46,11 +46,8 @@ namespace Masteroids
             shouldWrap = true;
             velocity = Vector2.Zero;
 			Radius = tex.Height / 2;
-            ClassicMode = true;
 			HP = 1;
 			invulnerabilityTimer = 2;
-            GamePadMode = false;
-            //gameState.ClassicMode = false;
 		}
 
         public override void Update(GameTime gameTime)
@@ -94,8 +91,6 @@ namespace Masteroids
                 GamePad.GetCapabilities(PlayerValue);
             if (capabilities.IsConnected)
             {
-                GamePadMode = true;
-
                 GamePadState gamePadState = GamePad.GetState(PlayerValue);
                 if (capabilities.HasLeftXThumbStick)
                 {
