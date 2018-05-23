@@ -10,7 +10,6 @@ namespace Masteroids
 {
 	public class PlayerHandler
 	{
-		PlayerIndex playerIndex;
 		Vector2 drawPos;
 		SpriteFont font;
 		EntityManager entityMgr;
@@ -19,13 +18,14 @@ namespace Masteroids
 		Player player;
 		float respawnTimer, respawnInterval = 3f;
 		float seconds, minutes;
+		public PlayerIndex PlayerIndex;
 		public int Lives { get; private set; }
 		public int Score;
 		public Color Color { get; private set; }
 
 		public PlayerHandler(PlayerIndex playerIndex, Vector2 statsDrawPos, SpriteFont font, Color color, EntityManager entityManager, Viewport viewport)
 		{
-			this.playerIndex = playerIndex;
+			PlayerIndex = playerIndex;
 			drawPos = statsDrawPos;
 			this.font = font;
 			Color = color;
@@ -49,22 +49,23 @@ namespace Masteroids
 					minutes++;
 				}
 			}
-			if (Lives >= 0 && !player.IsAlive && respawnTimer <= 0)
-				respawnTimer = respawnInterval;
 			if (respawnTimer > 0)
 			{
 				respawnTimer -= delta;
 				if (respawnTimer <= 0)
 				{
+					if (Lives > 0)
+						CreatePlayer();
 					Lives--;
-					CreatePlayer();
 				}
 			}
+			if (Lives >= 0 && !player.IsAlive && respawnTimer <= 0)
+				respawnTimer = respawnInterval;
 		}
 
 		public void Draw(SpriteBatch spriteBatch)
 		{
-			var scoreText = GetScoreString();
+			var scoreText = "Score: " + GetScoreString();
 			var scoreTextDimensions = font.MeasureString(scoreText);
 			var timeText = GetTimeString();
 
@@ -74,20 +75,20 @@ namespace Masteroids
 			{
 				var texSize = 30;
 				var drawRect = new Rectangle((int)(drawPos.X + scoreTextDimensions.X) - (i + 1) * (texSize + 5), (int)(drawPos.Y + scoreTextDimensions.Y), texSize, texSize);
-				spriteBatch.Draw(Assets.PlayerTex, drawRect, null, Color, 0, Vector2.Zero, SpriteEffects.None, 0);
+				spriteBatch.Draw(Assets.PlayerOutline, drawRect, null, Color, 0, Vector2.Zero, SpriteEffects.None, 0);
 			}
 		}
 
-		private string GetScoreString()
+		public string GetScoreString()
 		{
-			var text = "Score: ";
+			var text = "";
 			for (int i = 0; i < 9 - Score.ToString().Length; i++)
 				text += '0';
 			text += Score;
 			return text;
 		}
 
-		private string GetTimeString()
+		public string GetTimeString()
 		{
 			var text = "";
 			for (int i = 0; i < 2 - ((int)minutes).ToString().Length; i++)
@@ -101,7 +102,7 @@ namespace Masteroids
 
 		private void CreatePlayer()
 		{
-			player = new Player(Assets.PlayerTex, spawnPos, playerIndex, entityMgr, this, viewport);
+			player = new Player(Assets.PlayerTex, spawnPos, PlayerIndex, entityMgr, this, viewport);
 			entityMgr.Add(player);
 		}
 	}

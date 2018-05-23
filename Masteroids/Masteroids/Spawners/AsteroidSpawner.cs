@@ -27,9 +27,8 @@ namespace Masteroids
             spawnInterval = 10;
             spawnTimer += delta;
 
-            if (playerHandlers != null && playerHandlers.All(x => x.Lives < 0))			
-				game.ChangeState(new MenuState(game, game.GraphicsDevice, game.Content, entityMgr));
-				// DEV: This is where the score will be added to the high score list
+            if (playerHandlers != null && playerHandlers.All(x => x.Lives < 0))
+				game.ChangeState(new EnterHighscoreState(game, playerHandlers, this, game.GraphicsDevice, game.Content, entityMgr));
 			
 			//how many asteroids that spawns and how their movement is.
 			if (entityMgr.Asteroids.Count < 15)

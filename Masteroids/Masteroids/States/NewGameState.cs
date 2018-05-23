@@ -21,8 +21,6 @@ namespace Masteroids
 
         Viewport viewport;
 
-        public EntityManager EntityMgr { get => entityMgr; set => entityMgr = value; }
-
         public NewGameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content , EntityManager entityManager,State previousState) : base(game, graphicsDevice, content)
         {
             Texture2D buttonTexture = content.Load<Texture2D>("button");
@@ -65,15 +63,15 @@ namespace Masteroids
         }
         private void MasteroidsGameButton_click(object sender, EventArgs e)
         {
-            boss = new Centipede(Assets.CentipedeSheet, new Vector2(200), 240, 3, 99, graphicsDevice.Viewport, EntityMgr);
-            game.ChangeState(new GameState(game, graphicsDevice, content, EntityMgr, 1, boss));
+            boss = new Centipede(Assets.CentipedeSheet, new Vector2(200), 240, 3, 99, graphicsDevice.Viewport, entityMgr);
+            game.ChangeState(new GameState(game, graphicsDevice, content, entityMgr, 1, boss));
             //_game.ChangeState(new GameState(_game, _graphicsDevice, _content, EntityMgr, 1));
             Player.ClassicMode = false;
         }
 
         private void ClassicGameButton_click(object sender, EventArgs e)
         {
-            game.ChangeState(new GameState(game, graphicsDevice, content, EntityMgr, 1));
+            game.ChangeState(new GameState(game, graphicsDevice, content, entityMgr, 1));
             Player.ClassicMode = true;
         }
         private void ReturnButton_click(object sender, EventArgs e)

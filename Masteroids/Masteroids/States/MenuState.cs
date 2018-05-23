@@ -14,16 +14,18 @@ namespace Masteroids
     public class MenuState : State
     {
         private List<Component> components;
-		EntityManager entityMgr;
+        EntityManager entityMgr;
         Viewport viewport;
         AsteroidSpawner asteroidSpawner;
 
-        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content , EntityManager entityManager) : base(game, graphicsDevice, content)
+        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager)
+            : base(game, graphicsDevice, content)
         {
             Texture2D buttonTexture = content.Load<Texture2D>("button");
             SpriteFont buttonFont = content.Load<SpriteFont>("Fonts/MenuFont");
-            Assets.MusicInstance.Play();
-			entityMgr = entityManager;
+            if (Assets.MusicInstance.State != Microsoft.Xna.Framework.Audio.SoundState.Playing)
+                Assets.MusicInstance.Play();
+            entityMgr = entityManager;
             int x = graphicsDevice.Viewport.Width;
             int y = graphicsDevice.Viewport.Height;
 
@@ -59,18 +61,14 @@ namespace Masteroids
             };
         }
 
-        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
-        {
-        }
-
         private void NewGameButton_click(object sender, EventArgs e)
-		{
-            game.ChangeState(new NewGameState(game, graphicsDevice, content, entityMgr,this));
+        {
+            game.ChangeState(new NewGameState(game, graphicsDevice, content, entityMgr, this));
         }
 
-        private void HighScoreButton_click(object sender, EventArgs e) 
+        private void HighScoreButton_click(object sender, EventArgs e)
         {
-            game.ChangeState(new HighScoreState(game, graphicsDevice, content, entityMgr,this));
+            game.ChangeState(new HighScoreState(game, graphicsDevice, content, entityMgr, this));
 
         }
         private void QuitGameButton_click(object sender, EventArgs e)

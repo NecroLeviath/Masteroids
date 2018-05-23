@@ -28,32 +28,28 @@ namespace Masteroids
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 			if (playerHandlers.All(x => x.Lives < 0))
-			{
 				game.ChangeState(new MenuState(game, game.GraphicsDevice, game.Content, entityMgr));
-				// DEV: This is where the score will be added to the high score list
-			}
 
             spawnTimer += delta;
-            if (nrOfEnemies > 0 && (entityMgr.Enemies.Count == 0 || spawnTimer >= spawnInterval))
-            {
-                var pos = RandomSide();
-                Shooter shooter = new Shooter(Assets.EnemySheet, pos, 100, entityMgr, viewport);
-                entityMgr.Add(shooter);
-                nrOfEnemies--;
-                spawnTimer = 0;
-            }
-            else if (nrOfEnemies == 0 && !hasBossSpawned && spawnTimer >= spawnInterval)
-            {
-                entityMgr.Add(boss);
-                entityMgr.Bosses[0].Start();
+			if (nrOfEnemies > 0 && (entityMgr.Enemies.Count == 0 || spawnTimer >= spawnInterval))
+			{
+				var pos = RandomSide();
+				Shooter shooter = new Shooter(Assets.EnemySheet, pos, 100, entityMgr, viewport);
+				entityMgr.Add(shooter);
+				nrOfEnemies--;
+				spawnTimer = 0;
+			}
+			else if (nrOfEnemies == 0 && !hasBossSpawned && spawnTimer >= spawnInterval)
+			{
+				entityMgr.Add(boss);
+				entityMgr.Bosses[0].Start();
 				for (int i = 0; i < entityMgr.Bosses.Count; i++)
 					BossMaxHP += entityMgr.Bosses[i].MaxHP;
-                hasBossSpawned = true;
-            }
-			else if (hasBossSpawned && entityMgr.Bosses.Count == 0)
-			{
-				// DEV: For when the player has defeated the boss
+				hasBossSpawned = true;
 			}
-        }
+			else if (hasBossSpawned && entityMgr.Bosses.Count == 0)
+				game.ChangeState(new EnterHighscoreState(game, playerHandlers, this, game.GraphicsDevice, game.Content, entityMgr));
+
+		}
     }
 }
