@@ -92,8 +92,7 @@ namespace Masteroids
             var mastS = File.ReadAllLines(@".../.../.../.../Content/mastHighscore.txt").ToList();
             mastHighscore = mastS.Select(x =>
             {
-                int r;
-                if (int.TryParse(x.ToString(), out r))
+                if (int.TryParse(x.ToString(), out int r))
                     return r;
                 else
                     return 0;
@@ -102,12 +101,42 @@ namespace Masteroids
             var astS = File.ReadAllLines(@".../.../.../.../Content/astHighscore.txt").ToList();
             astHighscore = astS.Select(x =>
             {
-                int r;
-                if (int.TryParse(x.ToString(), out r))
+                if (int.TryParse(x.ToString(), out int r))
                     return r;
                 else
                     return 0;
             }).ToList();
+        }
+
+        static List<Tuple<string, int>> masteroidsHighscore = new List<Tuple<string, int>>();
+        static List<string> mastStringScore;
+        public static void NewGetHighscore()
+        {
+            RetrieveScore(@".../.../.../.../Content/mastHighscore.txt", masteroidsHighscore);
+        }
+
+        private static void RetrieveScore(string path, List<Tuple<string, int>> list)
+        {
+            mastStringScore = File.ReadAllLines(path).ToList();
+            var splitList = mastStringScore.Select(x => x.Split(' ')).ToList();
+            var names = splitList.Select(x => x[0]).ToList();
+            var scores = splitList.Select(x =>
+            {
+                if (int.TryParse(x[1], out int r))
+                    return r;
+                else
+                    return 0;
+            }).ToList();
+            for (int i = 0; i < splitList.Count; i++)
+            {
+                var tuple = Tuple.Create(names[i], scores[i]);
+                masteroidsHighscore.Add(tuple);
+            }
+        }
+
+        private void Bleh() // DEV: Rename
+        {
+            
         }
         
         public static void SetMasteroidScore(int score)
@@ -128,10 +157,6 @@ namespace Masteroids
                 astHighscore.RemoveAt(0);
             var astS = astHighscore.Select(x => x.ToString()).ToArray();
             File.WriteAllLines(".../.../.../.../Content/astHighscore.txt", astS);
-
         }
-
-
-
     }
 }
