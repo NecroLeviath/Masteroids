@@ -127,7 +127,7 @@ namespace Masteroids
             {
 				Bullet bullet = new Bullet(Assets.BulletTex, pos, 10f, 10, direction, viewport, this);
 				entityMgr.Add(bullet);
-                bulletTimer = 0;
+                bulletTimer = 0f;
             }
         }
 

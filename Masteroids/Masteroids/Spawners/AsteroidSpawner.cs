@@ -11,7 +11,7 @@ namespace Masteroids
     class AsteroidSpawner : Spawner
     {
         private int positionX, positionY, move, speedX, speedY;
-        float spawnTimer, spawnInterval = 1f;
+        float spawnTimer, spawnInterval;
         int nrOfEnemies;
 
 
@@ -24,7 +24,7 @@ namespace Masteroids
         public override void Update(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+            spawnInterval = 10;
             spawnTimer += delta;
 
             if (playerHandlers != null && playerHandlers.All(x => x.Lives < 0))			
@@ -41,13 +41,13 @@ namespace Masteroids
 
 				entityMgr.Add(asteroid);
             }
-            if (nrOfEnemies > 0 && (entityMgr.Enemies.Count < 2 || spawnTimer >= spawnInterval))
+            if (entityMgr.Enemies.Count < 0 || spawnTimer >= spawnInterval)
             {
                 var pos = RandomSide();
                 Shooter shooter = new Shooter(Assets.EnemySheet, pos, 100, entityMgr, viewport);
                 entityMgr.Add(shooter);
-                nrOfEnemies--;
-                spawnTimer = 0;
+                //nrOfEnemies--;
+                spawnTimer -= 10;
             }
         }
 
