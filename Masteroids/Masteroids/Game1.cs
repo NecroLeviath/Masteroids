@@ -42,12 +42,7 @@ namespace Masteroids
             defaultView = GraphicsDevice.Viewport;
             Assets.Initialize(Content);
 			EntityManager entityMgr = new EntityManager(defaultView);
-            //HighScoreState.GetHighscore();
-            //HighScoreState.SetAsteoidScore(10);
-            int r;
-            int.TryParse("007365", out r);
-            //HighScoreState.SetMasteroidScore(r);
-            HighScoreState.NewGetHighscore();
+            HighScoreState.GetHighscore();
 
             currentstate = new MenuState(this, graphics.GraphicsDevice, Content, entityMgr);
         }
