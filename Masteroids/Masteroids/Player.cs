@@ -11,6 +11,7 @@ namespace Masteroids
 {
     public class Player : GameObject //Andreas
     {
+		private Texture2D outlineTex;
         private float scale = 0.5f, rotationVelocity, maxSpeed = 6f;
         private float bulletTimer, bulletInterval;
 		private float invulnerabilityTimer, blinkTimer;
@@ -36,7 +37,8 @@ namespace Masteroids
             tex = texture;
             entityMgr = entityManager;
 			this.playerHandler = playerHandler;
-            sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
+			outlineTex = Assets.PlayerOutline;
+			sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             startPosition = new Vector2(200, 200);
             IsAlive = true;
             shouldWrap = true;
@@ -224,6 +226,8 @@ namespace Masteroids
         {
 			if (blinkTimer <= 0)
 			{
+				spriteBatch.Draw(outlineTex, pos, null, playerHandler.Color, rotation,
+					new Vector2(outlineTex.Width / 2, outlineTex.Height - 23), scale, entityFx, 0);
 				spriteBatch.Draw(tex, pos, sourceRectangle, Color.White, rotation,
 					new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
 				base.Draw(spriteBatch);
@@ -231,10 +235,15 @@ namespace Masteroids
         }
 
         protected override void WrapDraw(SpriteBatch spriteBatch)
-        {
-				spriteBatch.Draw(tex, pos + wrapOffset, sourceRectangle, Color.White,
-					rotation, new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
-        }
+		{
+			if (blinkTimer <= 0)
+			{
+				spriteBatch.Draw(outlineTex, pos, null, playerHandler.Color, rotation,
+					new Vector2(outlineTex.Width / 2, outlineTex.Height - 23), scale, entityFx, 0);
+				spriteBatch.Draw(tex, pos, sourceRectangle, Color.White, rotation,
+					new Vector2(tex.Width / 2, tex.Height - 20), scale, entityFx, 0);
+			}
+		}
 
 		public override void HandleCollision(GameObject other)
 		{

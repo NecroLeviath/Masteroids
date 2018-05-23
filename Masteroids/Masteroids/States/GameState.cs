@@ -53,9 +53,16 @@ namespace Masteroids
 				new Vector2(600, 0),
 				new Vector2(900, 0)
 			};
+			Color[] colors = new Color[]
+			{
+				Color.Red,
+				Color.Cyan,
+				Color.Orange,
+				Color.Pink
+			};
 			for (int i = 0; i < numberOfPlayers; i++)
 			{
-				PlayerHandler playerHandler = new PlayerHandler(players[i], phDrawPos[i], Assets.ButtonFont, entityMgr, viewport);
+				PlayerHandler playerHandler = new PlayerHandler(players[i], phDrawPos[i], Assets.ButtonFont, colors[i], entityMgr, viewport);
 				playerHandlers.Add(playerHandler);
 			}
 		}

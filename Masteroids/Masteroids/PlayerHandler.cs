@@ -21,12 +21,14 @@ namespace Masteroids
 		float seconds, minutes;
 		public int Lives { get; private set; }
 		public int Score;
+		public Color Color { get; private set; }
 
-		public PlayerHandler(PlayerIndex playerIndex, Vector2 statsDrawPos, SpriteFont font, EntityManager entityManager, Viewport viewport)
+		public PlayerHandler(PlayerIndex playerIndex, Vector2 statsDrawPos, SpriteFont font, Color color, EntityManager entityManager, Viewport viewport)
 		{
 			this.playerIndex = playerIndex;
 			drawPos = statsDrawPos;
 			this.font = font;
+			Color = color;
 			entityMgr = entityManager;
 			this.viewport = viewport;
 			spawnPos = new Vector2(viewport.Width / 2, viewport.Height / 2);
@@ -66,13 +68,13 @@ namespace Masteroids
 			var scoreTextDimensions = font.MeasureString(scoreText);
 			var timeText = GetTimeString();
 
-			spriteBatch.DrawString(font, scoreText, drawPos, Color.White);
-			spriteBatch.DrawString(font, timeText, drawPos + new Vector2(0, scoreTextDimensions.Y), Color.White);
+			spriteBatch.DrawString(font, scoreText, drawPos, Color);
+			spriteBatch.DrawString(font, timeText, drawPos + new Vector2(0, scoreTextDimensions.Y), Color);
 			for (int i = 0; i < Lives; i++)
 			{
 				var texSize = 30;
 				var drawRect = new Rectangle((int)(drawPos.X + scoreTextDimensions.X) - (i + 1) * (texSize + 5), (int)(drawPos.Y + scoreTextDimensions.Y), texSize, texSize);
-				spriteBatch.Draw(Assets.PlayerTex, drawRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+				spriteBatch.Draw(Assets.PlayerTex, drawRect, null, Color, 0, Vector2.Zero, SpriteEffects.None, 0);
 			}
 		}
 

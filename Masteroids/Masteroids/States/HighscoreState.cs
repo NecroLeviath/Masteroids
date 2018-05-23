@@ -89,7 +89,7 @@ namespace Masteroids
 
         public static void GetHighscore()
         {
-            var mastS = File.ReadAllLines("mastHighscore.txt").ToList();
+            var mastS = File.ReadAllLines(@".../.../.../.../Content/mastHighscore.txt").ToList();
             mastHighscore = mastS.Select(x =>
             {
                 int r;
@@ -99,7 +99,7 @@ namespace Masteroids
                     return 0;
             }).ToList();
 
-            var astS = File.ReadAllLines("astHighscore.txt").ToList();
+            var astS = File.ReadAllLines(@".../.../.../.../Content/astHighscore.txt").ToList();
             astHighscore = astS.Select(x =>
             {
                 int r;
@@ -117,7 +117,7 @@ namespace Masteroids
             while (mastHighscore.Count > 10)
                 mastHighscore.RemoveAt(0);
             var mastS = mastHighscore.Select(x => x.ToString()).ToArray();
-            File.WriteAllLines("mastHighscore.txt", mastS);
+            File.WriteAllLines(".../.../.../.../Content/mastHighscore.txt", mastS);
         }
         
         public static void SetAsteoidScore(int score)
@@ -127,7 +127,7 @@ namespace Masteroids
             while (astHighscore.Count > 10)
                 astHighscore.RemoveAt(0);
             var astS = astHighscore.Select(x => x.ToString()).ToArray();
-            File.WriteAllLines("astHighscore.txt", astS);
+            File.WriteAllLines(".../.../.../.../Content/astHighscore.txt", astS);
 
         }
 
