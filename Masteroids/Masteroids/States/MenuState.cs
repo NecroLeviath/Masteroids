@@ -83,6 +83,7 @@ namespace Masteroids
             entityMgr.Draw(spriteBatch);
             foreach (Masteroids.Component component in components)
                 component.Draw(gameTime, spriteBatch);
+            HighScoreState.ShowDraw(spriteBatch);
         }
 
         public override void PostUpdate(GameTime gameTime)

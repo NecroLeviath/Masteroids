@@ -16,11 +16,9 @@ namespace Masteroids
         List<Component> components;
         EntityManager entityMgr;
         State previousState;
-        static List<int> mastHighscore = new List<int>();
-        static List<int> astHighscore = new List<int>();
         SpriteFont buttonFont;
 
-        public HighScoreState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content,EntityManager entityManager,State previousState) : base(game, graphicsDevice, content)
+        public HighScoreState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, State previousState) : base(game, graphicsDevice, content)
         {
             entityMgr = entityManager;
             Texture2D buttonTexture = content.Load<Texture2D>("button");
@@ -39,10 +37,11 @@ namespace Masteroids
                 ReturnButton,
             };
         }
-            private void ReturnButton_click(object sender, EventArgs e)
-            {
+
+        private void ReturnButton_click(object sender, EventArgs e)
+        {
             game.ChangeState(previousState);
-            }
+        }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -50,29 +49,28 @@ namespace Masteroids
             foreach (Masteroids.Component component in components)
                 component.Draw(gameTime, spriteBatch);
 
-            var pos = new Vector2(650,500);
-            spriteBatch.DrawString(buttonFont, "MASTEROIDS",pos, Color.White);
-            for (int i = mastHighscore.Count - 1; i >= 0; i--)
-            {
-                pos.X = 750;
-                pos.Y += 30;
-                var text = mastHighscore[i].ToString();
-                var x = buttonFont.MeasureString(text).X/2;
-                var offset = new Vector2(x,0);
-                spriteBatch.DrawString(buttonFont, text, pos-offset, Color.White);
-            }
-            pos = new Vector2(1100,500);
-            spriteBatch.DrawString(buttonFont, "ASTEROIDS", pos, Color.White);
-            for (int i = astHighscore.Count - 1; i >= 0; i--)
-            {
-                pos.X = 1190;
-                pos.Y += 30;
-                var text = astHighscore[i].ToString();
-                var x = buttonFont.MeasureString(text).X / 2;
-                var offset = new Vector2(x, 0);
-                spriteBatch.DrawString(buttonFont, text, pos-offset, Color.White);
-            }
+            DrawScoreList("MASTEROIDS", new Vector2(650, 500), mastStringScore, spriteBatch);
+            DrawScoreList("ASTEROIDS", new Vector2(1100, 500), astStringScore, spriteBatch);
+        }
 
+        private static void DrawScoreList(string header, Vector2 position, List<string> list, SpriteBatch spriteBatch)
+        {
+            var pos = position;
+            spriteBatch.DrawString(Assets.ButtonFont, header, pos, Color.White);
+            for (int i = 0; i < list.Count; i++)
+            {
+                pos.Y += 30;
+                var text = list[i];
+                spriteBatch.DrawString(Assets.ButtonFont, text, pos, Color.White);
+            }
+        }
+
+        public static void ShowDraw(SpriteBatch spriteBatch)
+        {
+            var pos = new Vector2(100, 500);
+            DrawScoreList("MASTEROIDS", pos, mastStringScore, spriteBatch);
+            pos.X = 1920 - Assets.ButtonFont.MeasureString("0000000000000").X - 100;
+            DrawScoreList("ASTEROIDS", pos, astStringScore, spriteBatch);
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -87,51 +85,63 @@ namespace Masteroids
             entityMgr.Update(gameTime);
         }
 
+        #region Highscore manipulation
+        static List<Tuple<string, int>> masteroidsHighscore = new List<Tuple<string, int>>();
+        static List<string> mastStringScore = new List<string>();
+        static List<Tuple<string, int>> asteroidsHighscore = new List<Tuple<string, int>>();
+        static List<string> astStringScore = new List<string>();
+
         public static void GetHighscore()
         {
-            var mastS = File.ReadAllLines(@".../.../.../.../Content/mastHighscore.txt").ToList();
-            mastHighscore = mastS.Select(x =>
+            RetrieveScore(@".../.../.../.../Content/mastHighscore.txt", masteroidsHighscore, ref mastStringScore);
+            RetrieveScore(@".../.../.../.../Content/astHighscore.txt", asteroidsHighscore, ref astStringScore);
+        }
+
+        private static void RetrieveScore(string path, List<Tuple<string, int>> tupleList, ref List<string> stringList)
+        {
+            stringList = File.ReadAllLines(path).ToList();                  // Reads from external text file
+            var splitList = stringList.Select(x => x.Split(' ')).ToList();  // Splits the strings into "name" and "score" strings
+            var names = splitList.Select(x => x[0]).ToList();               // Adds all names to a list
+            var scores = splitList.Select(x =>                              // Adds all scores to a list
             {
-                int r;
-                if (int.TryParse(x.ToString(), out r))
+                if (int.TryParse(x[1], out int r))  // Converts the number strings into integers
                     return r;
                 else
-                    return 0;
+                    return 0;                       // If it can't convert it, it returns 0 instead
             }).ToList();
-
-            var astS = File.ReadAllLines(@".../.../.../.../Content/astHighscore.txt").ToList();
-            astHighscore = astS.Select(x =>
+            for (int i = 0; i < splitList.Count; i++)                       // Adds all names and scores to a list
             {
-                int r;
-                if (int.TryParse(x.ToString(), out r))
-                    return r;
-                else
-                    return 0;
+                var tuple = Tuple.Create(names[i], scores[i]);  // Creates a tuple of the name and score
+                tupleList.Add(tuple);                           // Adds the tuple to a list
+            }
+        }
+
+        public static void SetMasteroidScore(string name, int score)
+        {
+            SetScore(@".../.../.../.../Content/mastHighscore.txt", name, score, masteroidsHighscore, ref mastStringScore);
+        }
+
+        public static void SetAsteroidScore(string name, int score)
+        {
+            SetScore(@".../.../.../.../Content/astHighscore.txt", name, score, asteroidsHighscore, ref astStringScore);
+        }
+
+        private static void SetScore(string path, string name, int score, List<Tuple<string, int>> tupleList, ref List<string> stringList)
+        {
+            tupleList.Add(Tuple.Create(name, score));                   // Creates a tuple with the name and the score and adds it to the tuple list
+            tupleList.Sort((x, y) => y.Item2.CompareTo(x.Item2));       // Sorts the list by score
+            while (tupleList.Count > 10)                                // Checks if there are more than 10 saved scores...
+                tupleList.RemoveAt(10);                                 // ... and removes the last score if there are
+            stringList = tupleList.Select(x =>                          // Updates the string list to match the tuple list
+            {
+                var result = x.Item1 + " ";
+                for (int i = 0; i < 9 - x.Item2.ToString().Length; i++)
+                    result += '0';
+                result += x.Item2;
+                return result;
             }).ToList();
+            File.WriteAllLines(path, stringList.ToArray());             // Writes to external text file
         }
-        
-        public static void SetMasteroidScore(int score)
-        {
-            mastHighscore.Add(score);
-            mastHighscore.Sort();
-            while (mastHighscore.Count > 10)
-                mastHighscore.RemoveAt(0);
-            var mastS = mastHighscore.Select(x => x.ToString()).ToArray();
-            File.WriteAllLines(".../.../.../.../Content/mastHighscore.txt", mastS);
-        }
-        
-        public static void SetAsteoidScore(int score)
-        {
-            astHighscore.Add(score);
-            astHighscore.Sort();
-            while (astHighscore.Count > 10)
-                astHighscore.RemoveAt(0);
-            var astS = astHighscore.Select(x => x.ToString()).ToArray();
-            File.WriteAllLines(".../.../.../.../Content/astHighscore.txt", astS);
-
-        }
-
-
-
+        #endregion
     }
 }
