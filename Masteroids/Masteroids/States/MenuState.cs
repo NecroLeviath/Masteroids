@@ -70,7 +70,6 @@ namespace Masteroids
         {
             game.ChangeState(new HighScoreState(game, graphicsDevice, content, entityMgr, this));
 
-        }
         private void QuitGameButton_click(object sender, EventArgs e)
         {
             game.Exit();
