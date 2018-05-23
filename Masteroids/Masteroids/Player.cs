@@ -21,16 +21,18 @@ namespace Masteroids
         private GamePadState gamePadStateCurrent, gamePadStatePrevious;
         private SpriteEffects entityFx;
         public PlayerIndex PlayerValue;
-        public bool ClassicMode; //Asteroid playmode yes or no?
+        public static bool ClassicMode; //Asteroid playmode yes or no?
         public int HP;
         public bool GamePadMode;
+        NewGameState gameState;
 
         List<Bullet> bulletList = new List<Bullet>();
         EntityManager entityMgr;
 		PlayerHandler playerHandler;
 
 
-		public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue, EntityManager entityManager, PlayerHandler playerHandler, Viewport viewport)
+		public Player(Texture2D texture, Vector2 position, PlayerIndex playerValue, 
+            EntityManager entityManager, PlayerHandler playerHandler, Viewport viewport)
             : base(texture, position, viewport)
         {
             PlayerValue = playerValue; ////Avgör spelare. -> återfinns på loadcontent Game1
@@ -48,6 +50,7 @@ namespace Masteroids
 			HP = 1;
 			invulnerabilityTimer = 2;
             GamePadMode = false;
+            //gameState.ClassicMode = false;
 		}
 
         public override void Update(GameTime gameTime)
@@ -96,7 +99,7 @@ namespace Masteroids
                 GamePadState gamePadState = GamePad.GetState(PlayerValue);
                 if (capabilities.HasLeftXThumbStick)
                 {
-                    if(!ClassicMode)
+                    if(ClassicMode)
                         AsterInputGamePad();          //DEV: !ClassicMode för MasterInputGamePad
                     else
                         MasterInputGamePad();
@@ -104,7 +107,7 @@ namespace Masteroids
             }
             else if(PlayerValue == PlayerIndex.One)
             {
-                if (!ClassicMode)                       //DEV: !ClassicMode för MasterInput
+                if (ClassicMode)                       //DEV: !ClassicMode för MasterInput
                     AsterInput();
                 else
                     MasterInput();

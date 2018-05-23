@@ -17,6 +17,7 @@ namespace Masteroids
         AsteroidSpawner asteroidSpawner;
         BaseBoss boss;
         State previousState;
+        public static bool ClassicMode;
 
         Viewport viewport;
 
@@ -67,11 +68,13 @@ namespace Masteroids
             boss = new Centipede(Assets.CentipedeSheet, new Vector2(200), 240, 3, 99, graphicsDevice.Viewport, EntityMgr);
             game.ChangeState(new GameState(game, graphicsDevice, content, EntityMgr, 1, boss));
             //_game.ChangeState(new GameState(_game, _graphicsDevice, _content, EntityMgr, 1));
+            Player.ClassicMode = false;
         }
 
         private void ClassicGameButton_click(object sender, EventArgs e)
         {
             game.ChangeState(new GameState(game, graphicsDevice, content, EntityMgr, 1));
+            Player.ClassicMode = true;
         }
         private void ReturnButton_click(object sender, EventArgs e)
         {

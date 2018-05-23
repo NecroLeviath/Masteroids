@@ -21,6 +21,7 @@ namespace Masteroids // Simon
         public static Texture2D CentipedeSheet;
         public static Texture2D EnemySheet;
         public static Texture2D MenuTitleTex;
+        public static Texture2D MenuTitleLogo;
 		#endregion
 
 		#region Sound
@@ -55,11 +56,12 @@ namespace Masteroids // Simon
             CentipedeSheet = content.Load<Texture2D>("pacmanSheetMod");
             EnemySheet = content.Load<Texture2D>("shooterSheet");
             MenuTitleTex = content.Load<Texture2D>("MenuTitleTex");
-			#endregion
+            MenuTitleLogo = content.Load<Texture2D>("masteroidsLogo");
+            #endregion
 
-			#region Sound
-			//Music = content.Load<Song>("Sound/MasteroidsTheme"); // DEV: This is just a debug song and it should be replaced
-			Music = content.Load<SoundEffect>("Sound/ChillnDestroy"); // DEV: This is just a debug song and it should be replaced
+            #region Sound
+            //Music = content.Load<Song>("Sound/MasteroidsTheme"); // DEV: This is just a debug song and it should be replaced
+            Music = content.Load<SoundEffect>("Sound/ChillnDestroy"); // DEV: This is just a debug song and it should be replaced
 			MusicInstance = Music.CreateInstance();
 			MusicInstance.IsLooped = true;
 			//SEffect = content.Load<SoundEffect>("");
