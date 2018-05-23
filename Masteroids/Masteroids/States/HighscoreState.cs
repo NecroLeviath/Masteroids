@@ -49,22 +49,28 @@ namespace Masteroids
             foreach (Masteroids.Component component in components)
                 component.Draw(gameTime, spriteBatch);
 
-            var pos = new Vector2(650, 500);
-            spriteBatch.DrawString(buttonFont, "MASTEROIDS", pos, Color.White);
-            for (int i = 0; i < mastStringScore.Count; i++)
+            DrawScoreList("MASTEROIDS", new Vector2(650, 500), mastStringScore, spriteBatch);
+            DrawScoreList("ASTEROIDS", new Vector2(1100, 500), astStringScore, spriteBatch);
+        }
+
+        private static void DrawScoreList(string header, Vector2 position, List<string> list, SpriteBatch spriteBatch)
+        {
+            var pos = position;
+            spriteBatch.DrawString(Assets.ButtonFont, header, pos, Color.White);
+            for (int i = 0; i < list.Count; i++)
             {
                 pos.Y += 30;
-                var text = mastStringScore[i];
-                spriteBatch.DrawString(buttonFont, text, pos, Color.White);
+                var text = list[i];
+                spriteBatch.DrawString(Assets.ButtonFont, text, pos, Color.White);
             }
-            pos = new Vector2(1100, 500);
-            spriteBatch.DrawString(buttonFont, "ASTEROIDS", pos, Color.White);
-            for (int i = 0; i < astStringScore.Count; i++)
-            {
-                pos.Y += 30;
-                var text = astStringScore[i];
-                spriteBatch.DrawString(buttonFont, text, pos, Color.White);
-            }
+        }
+
+        public static void ShowDraw(SpriteBatch spriteBatch)
+        {
+            var pos = new Vector2(100, 500);
+            DrawScoreList("MASTEROIDS", pos, mastStringScore, spriteBatch);
+            pos.X = 1920 - Assets.ButtonFont.MeasureString("0000000000000").X - 100;
+            DrawScoreList("ASTEROIDS", pos, astStringScore, spriteBatch);
         }
 
         public override void PostUpdate(GameTime gameTime)
