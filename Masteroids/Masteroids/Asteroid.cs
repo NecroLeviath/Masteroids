@@ -74,7 +74,11 @@ namespace Masteroids //Laila
 		public override void HandleCollision(GameObject other)
 		{
 			if (other is Bullet)
+			{
 				HP -= (other as Bullet).Damage;
+				if (HP <= 0)
+					((other as Bullet).Owner as Player).IncrementScore(size * 10); // Increases the players score
+			}
 			else if (other is Player)
 				HP = 0;
 		}
@@ -83,9 +87,9 @@ namespace Masteroids //Laila
 		{
 			var newTex = tex;
 			if (size == 3)
-				newTex = Art.AsteroidTexs[1];
+				newTex = Assets.AsteroidTexs[1];
 			else if (size == 2)
-				newTex = Art.AsteroidTexs[0];
+				newTex = Assets.AsteroidTexs[0];
 			
 			direction = velocity == Vector2.Zero ? Vector2.Zero : Vector2.Normalize(velocity);
 			rotation = (float)Math.Atan2(direction.Y, direction.X);

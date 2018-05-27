@@ -11,13 +11,13 @@ namespace Masteroids.Controls
 {
     public class Button : Component
     {
-        private MouseState _currentMouse;
+        private MouseState currentMouse;
 
         private SpriteFont _font;
 
-        private bool _isHovering;
+        private bool isHovering;
 
-        private MouseState _previousMouse;
+        private MouseState previousMouse;
 
         private Texture2D _texture;
 
@@ -50,28 +50,33 @@ namespace Masteroids.Controls
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             var colour = Color.White;
-            if (_isHovering)
-                colour = Color.Gray;
-
+            if (isHovering)
+                PenColour = Color.Yellow;
+            else 
+                PenColour = Color.White;
+    
             spriteBatch.Draw(_texture, Rectangle, colour);
             if (!string.IsNullOrEmpty(Text))
             {
                 var x = (Rectangle.X + (Rectangle.Width / 2)) - (_font.MeasureString(Text).X / 2);
                 var y = (Rectangle.Y + (Rectangle.Height / 2)) - (_font.MeasureString(Text).Y / 2);
                 spriteBatch.DrawString(_font, Text, new Vector2(x, y), PenColour);
+                //spriteBatch.Draw(Assets.MenuTitleTex, new Vector2(Rectangle.X + (Rectangle.Width / 2)- (Assets.MenuTitleTex.Width/2), 200), Color.White);
+                spriteBatch.Draw(Assets.MenuTitleLogo, new Vector2(Rectangle.X + (Rectangle.Width / 2) - (Assets.MenuTitleLogo.Width / 2), 300), Color.White);
             }
         }
+        
         public override void Update(GameTime gameTime)
         {
-            _previousMouse = _currentMouse;
-            _currentMouse = Mouse.GetState();
-            Rectangle mouseRectangle = new Rectangle(_currentMouse.X, _currentMouse.Y, 1, 1);
-            _isHovering = false;
+            previousMouse = currentMouse;
+            currentMouse = Mouse.GetState();
+            Rectangle mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
+            isHovering = false;
 
             if (mouseRectangle.Intersects(Rectangle))
             {
-                _isHovering = true;
-                if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed)
+                isHovering = true;
+                if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)
                 {
                     Click.Invoke(this, new EventArgs());
                 }

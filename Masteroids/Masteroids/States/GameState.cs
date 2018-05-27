@@ -8,27 +8,21 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Masteroids.States
+namespace Masteroids
 {
 	public class GameState : State
 	{
-		SpriteFont font;
 		Viewport viewport;
-
 		EntityManager entityMgr;
 		Spawner spawner;
-		AsteroidSpawner asteroidSpawner;
-        Boss boss;
-
-		Vector2 bossFontPos;
-		SpriteFont bossFont;
+		List<PlayerHandler> playerHandlers;
 
 		// Asteroids
 		public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers)
 			: base(game, graphicsDevice, content)
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
-            spawner = new AsteroidSpawner(entityMgr, viewport);
+            spawner = new AsteroidSpawner(game, entityMgr, playerHandlers, viewport, 2);
         }
 
 		// Masteroids
@@ -36,17 +30,14 @@ namespace Masteroids.States
 			: base(game, graphicsDevice, content)
 		{
 			CommonConstructor(graphicsDevice, content, entityManager, numberOfPlayers);
-            spawner = new MasteroidSpawner(entityMgr, viewport, boss, 10);
-            
+            spawner = new MasteroidSpawner(game, entityMgr, playerHandlers, viewport, boss, 10);
 		}
 
 		private void CommonConstructor(GraphicsDevice graphicsDevice, ContentManager content, EntityManager entityManager, int numberOfPlayers)
 		{
 			viewport = graphicsDevice.Viewport;
 			entityMgr = entityManager;
-			bossFont = content.Load<SpriteFont>("BossLife");
-			bossFontPos = new Vector2(1000, 20);
-			font = content.Load<SpriteFont>(@"Fonts/font");
+			playerHandlers = new List<PlayerHandler>();
 
 			PlayerIndex[] players = new PlayerIndex[]
 			{
@@ -55,10 +46,24 @@ namespace Masteroids.States
 				PlayerIndex.Three,
 				PlayerIndex.Four
 			};
+			Vector2[] phDrawPos = new Vector2[]
+			{
+				new Vector2(0, 0),
+				new Vector2(300, 0),
+				new Vector2(600, 0),
+				new Vector2(900, 0)
+			};
+			Color[] colors = new Color[]
+			{
+				Color.Red,
+				Color.Cyan,
+				Color.Orange,
+				Color.Pink
+			};
 			for (int i = 0; i < numberOfPlayers; i++)
 			{
-				Player player = new Player(Art.PlayerTex, new Vector2(viewport.Width / 2, viewport.Height / 2), players[i], entityMgr, viewport);
-				entityMgr.Add(player);
+				PlayerHandler playerHandler = new PlayerHandler(players[i], phDrawPos[i], Assets.ButtonFont, colors[i], entityMgr, viewport);
+				playerHandlers.Add(playerHandler);
 			}
 		}
 
@@ -66,26 +71,8 @@ namespace Masteroids.States
 		{
 			spawner.Update(gameTime);
 			entityMgr.Update(gameTime);
-			#region Out-commented
-			//GamePadCapabilities capabilities =
-			//    GamePad.GetCapabilities(PlayerIndex.Two);
-			//GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
-			//if (capabilities.IsConnected)
-			//{
-			//    GamePadState gamePadState = GamePad.GetState(PlayerIndex.Two);
-			//    //if (capabilities.HasLeftXThumbStick)
-			//    //Player 2, Tangentboard endast
-			//    if (gamePadState.Buttons.Start == ButtonState.Pressed)
-			//    {
-			//        enteredGame = true;
-			//    }
-			//}
-
-			//if (enteredGame)
-			//{
-			//    player2.Update(gameTime);
-			//}
-			#endregion
+			foreach (PlayerHandler ph in playerHandlers)
+				ph.Update(gameTime);
 		}
 
 		public override void PostUpdate(GameTime gameTime) { }
@@ -93,29 +80,19 @@ namespace Masteroids.States
 		public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
 		{
 			entityMgr.Draw(spriteBatch);
+			foreach (PlayerHandler ph in playerHandlers)
+				ph.Draw(spriteBatch);
 
 			if (entityMgr.Bosses.Count > 0)
 			{
 				int bossHP = 0;
-				for (int i = 0; i < entityMgr.Bosses.Count; i++)    // Summarizes the HP of the boss.
+				for (int i = 0; i < entityMgr.Bosses.Count; i++) // Summarizes the HP of the boss.
 					bossHP += entityMgr.Bosses[i].HP;
-				//spriteBatch.DrawString(bossFont, "Life: " + bossHP + " / " + (spawner as MasteroidSpawner).BossMaxHP, bossFontPos, Color.White);
 				Rectangle bossHPRect = new Rectangle(((viewport.Width - 300) / 2), 50, 300, 10);
-				spriteBatch.Draw(Art.CentipedeTex, bossHPRect, new Rectangle(30, 30, 1, 1), Color.DarkRed);
+				spriteBatch.Draw(Assets.CentipedeTex, bossHPRect, new Rectangle(30, 30, 1, 1), Color.DarkRed);
 				bossHPRect.Width = bossHPRect.Width * bossHP / (spawner as MasteroidSpawner).BossMaxHP;
-				spriteBatch.Draw(Art.CentipedeTex, bossHPRect, new Rectangle(30, 30, 1, 1), Color.Red);
+				spriteBatch.Draw(Assets.CentipedeTex, bossHPRect, new Rectangle(30, 30, 1, 1), Color.Red);
 			}
-
-			#region Out-commented
-			//if (enteredGame)
-			//{
-			//    player2.Draw(spriteBatch);
-			//}
-			//else
-			//{
-			//    spriteBatch.DrawString(font, "Press start to Enter", new Vector2(1700, 980), Color.White);
-			//}
-			#endregion
 		}
 	}
 }

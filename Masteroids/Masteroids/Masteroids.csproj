@@ -42,7 +42,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Asteroid.cs" />
-    <Compile Include="AsteroidSpawner.cs" />
+    <Compile Include="States\EnterHighscoreState.cs" />
+    <Compile Include="PlayerHandler.cs" />
+    <Compile Include="Spawners\AsteroidSpawner.cs" />
     <Compile Include="Enemies\BaseBoss.cs" />
     <Compile Include="Enemies\Boss.cs" />
     <Compile Include="Bullet.cs" />
@@ -51,18 +53,19 @@
     <Compile Include="Component.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="MasteroidSpawner.cs" />
+    <Compile Include="Spawners\MasteroidSpawner.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityManager.cs" />
-    <Compile Include="Art.cs" />
+    <Compile Include="Assets.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Enemies\Shooter.cs" />
-    <Compile Include="Sound.cs" />
-    <Compile Include="Spawner.cs" />
+    <Compile Include="Spawners\Spawner.cs" />
     <Compile Include="States\GameState.cs" />
+    <Compile Include="States\HighscoreState.cs" />
     <Compile Include="States\MenuState.cs" />
+    <Compile Include="States\NewGameState.cs" />
     <Compile Include="States\State.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -82,9 +85,11 @@
     <Content Include="Content\CentipedeTemp.png" />
     <Content Include="Content\deathSheet.png" />
     <Content Include="Content\laser.png" />
+    <Content Include="Content\masteroidsLogo.png" />
     <Content Include="Content\pacmanSheet.png" />
     <Content Include="Content\playerShip.png" />
     <Content Include="Content\ponyBoss.png" />
+    <Content Include="Content\shipOutlineTex.png" />
     <Content Include="Content\shipTex.png" />
     <Content Include="Content\shooterSheet.png" />
     <Content Include="Content\skott.png" />
